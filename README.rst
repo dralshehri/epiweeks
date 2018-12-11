@@ -35,15 +35,14 @@ Features
 --------
 
 - Support for both US CDC (MMWR) and WHO (ISO) calculation methods.
-- Fully tested against multiple original references.
 - Accurate and reliable calculation.
-- Easy and intuitive usage.
+- Fully tested against multiple original references.
 - Calculation of start and end dates of week.
 - Iteration of year's weeks or week's dates.
 - Rich comparison between weeks.
 - Logical operations for weeks (addition, subtraction and containment).
 - Validation of input data.
-- More other features...
+- ...and more.
 
 Installation
 ------------
