@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from typing import Tuple, Generator
+from typing import Tuple, Iterator
 
 
 class Week:
@@ -167,7 +167,7 @@ class Week:
         enddate = self.startdate() + timedelta(days=6)
         return enddate
 
-    def iterdates(self) -> Generator[date, None, None]:
+    def iterdates(self) -> Iterator[date]:
         """Return an iterator that yield datetime.date objects for all days of
         week."""
 
@@ -225,7 +225,7 @@ class Year:
         year_end_ordinal = _year_start(self._year + 1, self._method) - 1
         return date.fromordinal(year_end_ordinal)
 
-    def iterweeks(self) -> Generator[Week, None, None]:
+    def iterweeks(self) -> Iterator[Week]:
         """Return an iterator that yield Week objects for all weeks of year."""
         for week in range(1, self.totalweeks + 1):
             yield Week(self._year, week, self._method, validate=False)
