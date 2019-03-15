@@ -4,7 +4,7 @@ Epi Weeks
 A Python package to calculate epidemiological weeks using US CDC (MMWR) and
 WHO (ISO) calculation methods.
 
-`Source Code <https://github.com/dralshehri/hijri-converter>`__
+`Source Code <https://github.com/dralshehri/epi-weeks>`__
 
 |travis| |codecov| |docs| |supported| |version|
 
@@ -69,6 +69,12 @@ Features
 - Logical operations for weeks (addition, subtraction and containment).
 - Validation of input data.
 - ...and more.
+
+Demo
+----
+
+Please visit https://www.dralshehri.com/code/epi-weeks to try the
+calculation function of this package as a simple usage example.
 
 Installation
 ------------
