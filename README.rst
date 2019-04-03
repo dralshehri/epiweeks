@@ -47,7 +47,7 @@ Features
 Demo
 ----
 
-Please visit https://www.dralshehri.com/code/epi-weeks to try the
+Please visit https://www.dralshehri.com/epi-weeks to try the
 calculation function of this package as a simple usage example.
 
 Installation
