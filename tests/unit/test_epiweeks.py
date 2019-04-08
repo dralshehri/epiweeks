@@ -22,7 +22,7 @@ def test_week_from_date(test_input, expected):
 
 
 def test_thisweek_cdc():
-    week = epi.Week.thisweek()
+    week = epi.Week.thisweek("cdc")
     today_weekday = date.today().isoweekday()
     startdate = date.today() - timedelta(days=(today_weekday % 7))
     assert week.startdate() == startdate
@@ -37,7 +37,7 @@ def test_thisweek_iso():
 
 @pytest.fixture(scope="module")
 def week_cdc():
-    return epi.Week(2015, 1)
+    return epi.Week(2015, 1, "cdc")
 
 
 @pytest.fixture(scope="module")
@@ -158,7 +158,7 @@ def test_test_week_operator_exception(week_cdc, test_input, expected):
 
 @pytest.fixture(scope="module")
 def year_cdc():
-    return epi.Year(2015)
+    return epi.Year(2015, "cdc")
 
 
 @pytest.fixture(scope="module")
@@ -179,8 +179,9 @@ def test_year_number(year_cdc):
     assert year_cdc.year == 2015
 
 
-def test_year_method(year_cdc):
+def test_year_method(year_cdc, year_iso):
     assert year_cdc.method == "cdc"
+    assert year_iso.method == "iso"
 
 
 def test_year_totalweeks(year_cdc, year_iso):
