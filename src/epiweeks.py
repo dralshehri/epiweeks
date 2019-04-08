@@ -4,7 +4,7 @@ from typing import Tuple, Iterator
 
 class Week:
     """A Week object represents a week in epidemiological week calendar
-    using CDC or WHO calculation method.
+    using CDC or ISO calculation method.
     """
 
     def __new__(cls, year: int, week: int, method: str = "cdc") -> "Week":
@@ -20,8 +20,9 @@ class Week:
         :type year: int
         :param week: epidemiological week
         :type week: int
-        :param method: calculation method, which may be ``cdc`` for MMWR weeks
-            or ``who`` for ISO weeks (default is ``cdc``)
+        :param method: calculation method, which may be ``cdc`` where the week
+            starts on Sunday or ``iso`` where the week starts on Monday
+            (default is ``cdc``)
         :type method: str
         """
 
@@ -92,8 +93,9 @@ class Week:
         :type month: int
         :param day: Gregorian day
         :type day: int
-        :param method: calculation method, which may be ``cdc`` for MMWR weeks
-            or ``who`` for ISO weeks (default is ``cdc``)
+        :param method: calculation method, which may be ``cdc`` where the week
+            starts on Sunday or ``iso`` where the week starts on Monday
+            (default is ``cdc``)
         :type method: str
         """
 
@@ -117,8 +119,9 @@ class Week:
     def thisweek(cls, method: str = "cdc") -> "Week":
         """Construct Week object from current Gregorian date.
 
-        :param method: calculation method, which may be ``cdc`` for MMWR weeks
-            or ``who`` for ISO weeks (default is ``cdc``)
+        :param method: calculation method, which may be ``cdc`` where the week
+            starts on Sunday or ``iso`` where the week starts on Monday
+            (default is ``cdc``)
         :type method: str
         """
 
@@ -174,15 +177,16 @@ class Week:
 
 class Year:
     """A Year object represents a year in epidemiological week calendar
-    using US CDC or WHO calculation method.
+    using US CDC or ISO calculation method.
     """
 
     def __init__(self, year: int, method: str = "cdc") -> None:
         """
         :param year: epidemiological year
         :type year: int
-        :param method: calculation method, which may be ``cdc`` for MMWR weeks
-            or ``who`` for ISO weeks (default is ``cdc``)
+        :param method: calculation method, which may be ``cdc`` where the week
+            starts on Sunday or ``iso`` where the week starts on Monday
+            (default is ``cdc``)
         :type method: str
         """
 
@@ -258,7 +262,7 @@ def _check_method(method: str) -> None:
     """Check type and value of calculation method."""
     if not isinstance(method, str):
         raise TypeError("method must be a string")
-    methods = ["cdc", "who"]
+    methods = ["cdc", "iso"]
     if method not in methods:
         raise ValueError("method must be '{}' or '{}'".format(*methods))
 
