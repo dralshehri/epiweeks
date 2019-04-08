@@ -133,13 +133,6 @@ def test_week_dates(week_cdc, week_who):
     assert list(week_who.iterdates()) == dates_who
 
 
-def test_week_with_no_validation():
-    try:
-        epi.Week(2015, 53, validate=False)
-    except ValueError:
-        pytest.fail("week should not be validated")
-
-
 @pytest.mark.parametrize(
     "test_input", ["__eq__", "__gt__", "__ge__", "__lt__", "__le__"]
 )
@@ -217,7 +210,10 @@ def test_year_weeks(year_cdc, year_who):
 
 
 def test_check_valid_week():
-    assert epi._check_week(2018, 1, "cdc") == 1
+    try:
+        epi._check_week(2018, 1, "cdc")
+    except (TypeError or ValueError):
+        pytest.fail("week should be valid")
 
 
 @pytest.mark.parametrize(
@@ -235,7 +231,10 @@ def test_check_invalid_week(test_input, expected):
 
 
 def test_check_valid_year():
-    assert epi._check_year(2018) == 2018
+    try:
+        epi._check_year(2018)
+    except (TypeError or ValueError):
+        pytest.fail("year should be valid")
 
 
 @pytest.mark.parametrize(
@@ -253,8 +252,11 @@ def test_check_invalid_year(test_input, expected):
 
 
 def test_check_valid_method():
-    assert epi._check_method("CDC") == "cdc"
-    assert epi._check_method("who") == "who"
+    try:
+        epi._check_method("cdc")
+        epi._check_method("who")
+    except (TypeError or ValueError):
+        pytest.fail("method should be valid")
 
 
 @pytest.mark.parametrize(

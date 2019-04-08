@@ -7,9 +7,14 @@ class Week:
     using CDC or WHO calculation method.
     """
 
-    def __init__(
-        self, year: int, week: int, method: str = "cdc", validate: bool = True
-    ) -> None:
+    def __new__(cls, year: int, week: int, method: str = "cdc") -> "Week":
+        """Construct Week object after validation"""
+        _check_year(year)
+        _check_method(method)
+        _check_week(year, week, method)
+        return super().__new__(cls)
+
+    def __init__(self, year: int, week: int, method: str = "cdc") -> None:
         """
         :param year: epidemiological year
         :type year: int
@@ -18,20 +23,11 @@ class Week:
         :param method: calculation method, which may be ``cdc`` for MMWR weeks
             or ``who`` for ISO weeks (default is ``cdc``)
         :type method: str
-        :param validate: check if values of year, week and method are valid
-            or not (default is ``True``), and you may change it to ``False``
-            only when these values are already validated.
-        :type validate: bool
         """
 
-        if validate:
-            self._year = _check_year(year)
-            self._method = _check_method(method)
-            self._week = _check_week(self._year, week, self._method)
-        else:
-            self._year = year
-            self._week = week
-            self._method = method
+        self._year = year
+        self._week = week
+        self._method = method
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
@@ -101,7 +97,7 @@ class Week:
         :type method: str
         """
 
-        method = _check_method(method)
+        _check_method(method)
         date_ordinal = date(year, month, day).toordinal()
         year_start_ordinal = _year_start(year, method)
         week = (date_ordinal - year_start_ordinal) // 7
@@ -115,7 +111,7 @@ class Week:
                 year += 1
                 week = 0
         week += 1
-        return cls(year, week, method, validate=False)
+        return _ValidatedWeek(year, week, method)
 
     @classmethod
     def thisweek(cls, method: str = "cdc") -> "Week":
@@ -190,8 +186,10 @@ class Year:
         :type method: str
         """
 
-        self._year = _check_year(year)
-        self._method = _check_method(method)
+        _check_year(year)
+        _check_method(method)
+        self._year = year
+        self._method = method
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
@@ -228,37 +226,41 @@ class Year:
     def iterweeks(self) -> Iterator[Week]:
         """Return an iterator that yield Week objects for all weeks of year."""
         for week in range(1, self.totalweeks + 1):
-            yield Week(self._year, week, self._method, validate=False)
+            yield _ValidatedWeek(self._year, week, self._method)
 
 
-def _check_year(year: int) -> int:
+class _ValidatedWeek(Week):
+    """A Week object. An implementation to avoid unnecessary validation.
+    """
+
+    def __new__(cls, *args, **kwargs) -> "Week":
+        return super(Week, cls).__new__(cls)
+
+
+def _check_year(year: int) -> None:
     """Check type and value of year."""
     if not isinstance(year, int):
         raise TypeError("year must be an integer")
     if not 1 <= year <= 9999:
         raise ValueError("year must be in 1..9999")
-    return year
 
 
-def _check_week(year: int, week: int, method: str) -> int:
+def _check_week(year: int, week: int, method: str) -> None:
     """Check type and value of week."""
     if not isinstance(week, int):
         raise TypeError("week must be an integer")
     weeks = _year_total_weeks(year, method)
     if not 1 <= week <= weeks:
         raise ValueError("week must be in 1..{} for year".format(weeks))
-    return week
 
 
-def _check_method(method: str) -> str:
+def _check_method(method: str) -> None:
     """Check type and value of calculation method."""
     if not isinstance(method, str):
         raise TypeError("method must be a string")
-    method = method.lower()
     methods = ["cdc", "who"]
     if method not in methods:
         raise ValueError("method must be '{}' or '{}'".format(*methods))
-    return method
 
 
 def _method_adjustment(method: str) -> int:
@@ -267,7 +269,7 @@ def _method_adjustment(method: str) -> int:
     """
 
     first_day = ("Mon", "Sun")
-    if method.lower() == "cdc":
+    if method == "cdc":
         return first_day.index("Sun")
     return first_day.index("Mon")
 
