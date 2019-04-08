@@ -31,7 +31,7 @@ class Week:
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
         return "{}({}, {}, {})".format(
-            class_name, self._year, self._week, self._method
+            class_name, self._year, self._week, self._method.upper()
         )
 
     def __str__(self) -> str:
@@ -139,7 +139,7 @@ class Week:
     @property
     def method(self) -> str:
         """Return calculation method as a string"""
-        return self._method
+        return self._method.upper()
 
     def weektuple(self) -> Tuple[int, int]:
         """Return week as a tuple of (year, week)."""
@@ -193,7 +193,9 @@ class Year:
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
-        return "{}({}, {})".format(class_name, self._year, self._method)
+        return "{}({}, {})".format(
+                class_name, self._year, self._method.upper()
+        )
 
     def __str__(self) -> str:
         return "{:04}".format(self._year)
@@ -206,7 +208,7 @@ class Year:
     @property
     def method(self) -> str:
         """Return calculation method as a string"""
-        return self._method
+        return self._method.upper()
 
     @property
     def totalweeks(self) -> int:
@@ -259,14 +261,14 @@ def _check_method(method: str) -> None:
     if not isinstance(method, str):
         raise TypeError("method must be a string")
     methods = ["cdc", "iso"]
-    if method not in methods:
+    if method.lower() not in methods:
         raise ValueError("method must be '{}' or '{}'".format(*methods))
 
 
 def _method_adjustment(method: str) -> int:
     """Return needed adjustment based on first day of week."""
     first_day = ("Mon", "Sun")
-    if method == "cdc":
+    if method.lower() == "cdc":
         return first_day.index("Sun")
     return first_day.index("Mon")
 
