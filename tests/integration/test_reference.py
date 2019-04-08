@@ -13,19 +13,19 @@ def load_params_from_json(file):
     return params, params_reversed
 
 
-mmwr_weeks = load_params_from_json("mmwr_weeks.json")
+cdc_weeks = load_params_from_json("cdc_weeks.json")
 iso_weeks = load_params_from_json("iso_weeks.json")
 
 
-@pytest.mark.parametrize("test_input, expected", mmwr_weeks[0])
-def test_mmwr_week_to_startdate(test_input, expected):
+@pytest.mark.parametrize("test_input, expected", cdc_weeks[0])
+def test_cdc_week_to_startdate(test_input, expected):
     year, week = test_input
     startdate = epiweeks.Week(year, week, "cdc").startdate()
     assert startdate.timetuple()[:3] == expected
 
 
-@pytest.mark.parametrize("test_input, expected", mmwr_weeks[1])
-def test_mmwr_week_from_startdate(test_input, expected):
+@pytest.mark.parametrize("test_input, expected", cdc_weeks[1])
+def test_cdc_week_from_startdate(test_input, expected):
     year, month, day = test_input
     week = epiweeks.Week.fromdate(year, month, day, "cdc").weektuple()
     assert week == expected
