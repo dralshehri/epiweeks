@@ -46,8 +46,8 @@ def week_iso():
 
 
 def test_representation_of_week(week_cdc, week_iso):
-    assert week_cdc.__repr__() == "Week(2015, 1, cdc)"
-    assert week_iso.__repr__() == "Week(2015, 1, iso)"
+    assert week_cdc.__repr__() == "Week(2015, 1, CDC)"
+    assert week_iso.__repr__() == "Week(2015, 1, ISO)"
 
 
 def test_string_representation_of_week(week_cdc):
@@ -88,8 +88,8 @@ def test_week_number(week_cdc):
 
 
 def test_week_method(week_cdc, week_iso):
-    assert week_cdc.method == "cdc"
-    assert week_iso.method == "iso"
+    assert week_cdc.method == "CDC"
+    assert week_iso.method == "ISO"
 
 
 def test_weektuple(week_cdc):
@@ -167,8 +167,8 @@ def year_iso():
 
 
 def test_representation_of_year(year_cdc, year_iso):
-    assert year_cdc.__repr__() == "Year(2015, cdc)"
-    assert year_iso.__repr__() == "Year(2015, iso)"
+    assert year_cdc.__repr__() == "Year(2015, CDC)"
+    assert year_iso.__repr__() == "Year(2015, ISO)"
 
 
 def test_string_representation_of_year(year_cdc):
@@ -180,8 +180,8 @@ def test_year_number(year_cdc):
 
 
 def test_year_method(year_cdc, year_iso):
-    assert year_cdc.method == "cdc"
-    assert year_iso.method == "iso"
+    assert year_cdc.method == "CDC"
+    assert year_iso.method == "ISO"
 
 
 def test_year_totalweeks(year_cdc, year_iso):
@@ -254,7 +254,7 @@ def test_check_invalid_year(test_input, expected):
 
 def test_check_valid_method():
     try:
-        epi._check_method("cdc")
+        epi._check_method("CDC")
         epi._check_method("iso")
     except (TypeError or ValueError):
         pytest.fail("method should be valid")
