@@ -3,9 +3,7 @@ from typing import Tuple, Iterator
 
 
 class Week:
-    """A Week object represents a week in epidemiological week calendar
-    using CDC or ISO calculation method.
-    """
+    """A Week object represents a week in epidemiological week calendar."""
 
     def __new__(cls, year: int, week: int, method: str = "cdc") -> "Week":
         """Construct Week object after validation"""
@@ -16,11 +14,11 @@ class Week:
 
     def __init__(self, year: int, week: int, method: str = "cdc") -> None:
         """
-        :param year: epidemiological year
+        :param year: Epidemiological year
         :type year: int
-        :param week: epidemiological week
+        :param week: Epidemiological week
         :type week: int
-        :param method: calculation method, which may be ``cdc`` where the week
+        :param method: Calculation method, which may be ``cdc`` where the week
             starts on Sunday or ``iso`` where the week starts on Monday
             (default is ``cdc``)
         :type method: str
@@ -93,7 +91,7 @@ class Week:
         :type month: int
         :param day: Gregorian day
         :type day: int
-        :param method: calculation method, which may be ``cdc`` where the week
+        :param method: Calculation method, which may be ``cdc`` where the week
             starts on Sunday or ``iso`` where the week starts on Monday
             (default is ``cdc``)
         :type method: str
@@ -119,7 +117,7 @@ class Week:
     def thisweek(cls, method: str = "cdc") -> "Week":
         """Construct Week object from current Gregorian date.
 
-        :param method: calculation method, which may be ``cdc`` where the week
+        :param method: Calculation method, which may be ``cdc`` where the week
             starts on Sunday or ``iso`` where the week starts on Monday
             (default is ``cdc``)
         :type method: str
@@ -176,15 +174,13 @@ class Week:
 
 
 class Year:
-    """A Year object represents a year in epidemiological week calendar
-    using US CDC or ISO calculation method.
-    """
+    """A Year object represents a year in epidemiological week calendar."""
 
     def __init__(self, year: int, method: str = "cdc") -> None:
         """
-        :param year: epidemiological year
+        :param year: Epidemiological year
         :type year: int
-        :param method: calculation method, which may be ``cdc`` where the week
+        :param method: Calculation method, which may be ``cdc`` where the week
             starts on Sunday or ``iso`` where the week starts on Monday
             (default is ``cdc``)
         :type method: str
@@ -234,10 +230,10 @@ class Year:
 
 
 class _ValidatedWeek(Week):
-    """A Week object. An implementation to avoid unnecessary validation.
-    """
+    """A Week object. An implementation to avoid unnecessary validation."""
 
     def __new__(cls, *args, **kwargs) -> "Week":
+        """Construct Week object without validation"""
         return super(Week, cls).__new__(cls)
 
 
@@ -268,10 +264,7 @@ def _check_method(method: str) -> None:
 
 
 def _method_adjustment(method: str) -> int:
-    """Return needed adjustment based on first day of week using given
-    calculation method.
-    """
-
+    """Return needed adjustment based on first day of week."""
     first_day = ("Mon", "Sun")
     if method == "cdc":
         return first_day.index("Sun")
@@ -279,10 +272,7 @@ def _method_adjustment(method: str) -> int:
 
 
 def _year_start(year: int, method: str) -> int:
-    """Return proleptic Gregorian ordinal for first day of first week for
-    given year using given calculation method.
-    """
-
+    """Return Gregorian ordinal for first day of first week for year."""
     adjustment = _method_adjustment(method)
     mid_weekday = 3 - adjustment  # Sun is 6 .. Mon is 0
     jan1 = date(year, 1, 1)
@@ -295,10 +285,7 @@ def _year_start(year: int, method: str) -> int:
 
 
 def _year_total_weeks(year: int, method: str) -> int:
-    """Return number of weeks in year for given year using given calculation
-    method.
-    """
-
+    """Return number of weeks in year."""
     year_start_ordinal = _year_start(year, method)
     next_year_start_ordinal = _year_start(year + 1, method)
     weeks = (next_year_start_ordinal - year_start_ordinal) // 7
