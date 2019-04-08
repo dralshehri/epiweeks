@@ -7,13 +7,13 @@ import epiweeks as epi
     "test_input, expected",
     [
         ((2014, 12, 28, "cdc"), (2014, 53)),
-        ((2014, 12, 28, "who"), (2014, 52)),
+        ((2014, 12, 28, "iso"), (2014, 52)),
         ((2015, 1, 2, "cdc"), (2014, 53)),
-        ((2015, 1, 2, "who"), (2015, 1)),
+        ((2015, 1, 2, "iso"), (2015, 1)),
         ((2016, 2, 14, "cdc"), (2016, 7)),
-        ((2016, 2, 14, "who"), (2016, 6)),
+        ((2016, 2, 14, "iso"), (2016, 6)),
         ((2017, 12, 31, "cdc"), (2018, 1)),
-        ((2017, 12, 31, "who"), (2017, 52)),
+        ((2017, 12, 31, "iso"), (2017, 52)),
     ],
 )
 def test_week_from_date(test_input, expected):
@@ -28,8 +28,8 @@ def test_thisweek_cdc():
     assert week.startdate() == startdate
 
 
-def test_thisweek_who():
-    week = epi.Week.thisweek("who")
+def test_thisweek_iso():
+    week = epi.Week.thisweek("iso")
     today_weekday = date.today().isoweekday()
     startdate = date.today() - timedelta(days=today_weekday - 1)
     assert week.startdate() == startdate
@@ -41,13 +41,13 @@ def week_cdc():
 
 
 @pytest.fixture(scope="module")
-def week_who():
-    return epi.Week(2015, 1, "who")
+def week_iso():
+    return epi.Week(2015, 1, "iso")
 
 
-def test_representation_of_week(week_cdc, week_who):
+def test_representation_of_week(week_cdc, week_iso):
     assert week_cdc.__repr__() == "Week(2015, 1, cdc)"
-    assert week_who.__repr__() == "Week(2015, 1, who)"
+    assert week_iso.__repr__() == "Week(2015, 1, iso)"
 
 
 def test_string_representation_of_week(week_cdc):
@@ -74,9 +74,9 @@ def test_week_subtracting(week_cdc):
     assert (week_cdc - 1) == epi.Week(2014, 53)
 
 
-def test_week_containment(week_cdc, week_who):
+def test_week_containment(week_cdc, week_iso):
     assert date(2015, 1, 5) in week_cdc
-    assert date(2015, 1, 1) in week_who
+    assert date(2015, 1, 1) in week_iso
 
 
 def test_week_year(week_cdc):
@@ -87,9 +87,9 @@ def test_week_number(week_cdc):
     assert week_cdc.week == 1
 
 
-def test_week_method(week_cdc, week_who):
+def test_week_method(week_cdc, week_iso):
     assert week_cdc.method == "cdc"
-    assert week_who.method == "who"
+    assert week_iso.method == "iso"
 
 
 def test_weektuple(week_cdc):
@@ -100,17 +100,17 @@ def test_week_isoformat(week_cdc):
     assert week_cdc.isoformat() == "2015W01"
 
 
-def test_week_startdate(week_cdc, week_who):
+def test_week_startdate(week_cdc, week_iso):
     assert week_cdc.startdate() == date(2015, 1, 4)
-    assert week_who.startdate() == date(2014, 12, 29)
+    assert week_iso.startdate() == date(2014, 12, 29)
 
 
-def test_week_enddate(week_cdc, week_who):
+def test_week_enddate(week_cdc, week_iso):
     assert week_cdc.enddate() == date(2015, 1, 10)
-    assert week_who.enddate() == date(2015, 1, 4)
+    assert week_iso.enddate() == date(2015, 1, 4)
 
 
-def test_week_dates(week_cdc, week_who):
+def test_week_dates(week_cdc, week_iso):
     dates_cdc = [
         date(2015, 1, 4),
         date(2015, 1, 5),
@@ -120,7 +120,7 @@ def test_week_dates(week_cdc, week_who):
         date(2015, 1, 9),
         date(2015, 1, 10),
     ]
-    dates_who = [
+    dates_iso = [
         date(2014, 12, 29),
         date(2014, 12, 30),
         date(2014, 12, 31),
@@ -130,7 +130,7 @@ def test_week_dates(week_cdc, week_who):
         date(2015, 1, 4),
     ]
     assert list(week_cdc.iterdates()) == dates_cdc
-    assert list(week_who.iterdates()) == dates_who
+    assert list(week_iso.iterdates()) == dates_iso
 
 
 @pytest.mark.parametrize(
@@ -162,13 +162,13 @@ def year_cdc():
 
 
 @pytest.fixture(scope="module")
-def year_who():
-    return epi.Year(2015, "who")
+def year_iso():
+    return epi.Year(2015, "iso")
 
 
-def test_representation_of_year(year_cdc, year_who):
+def test_representation_of_year(year_cdc, year_iso):
     assert year_cdc.__repr__() == "Year(2015, cdc)"
-    assert year_who.__repr__() == "Year(2015, who)"
+    assert year_iso.__repr__() == "Year(2015, iso)"
 
 
 def test_string_representation_of_year(year_cdc):
@@ -183,30 +183,30 @@ def test_year_method(year_cdc):
     assert year_cdc.method == "cdc"
 
 
-def test_year_totalweeks(year_cdc, year_who):
+def test_year_totalweeks(year_cdc, year_iso):
     assert year_cdc.totalweeks == 52
-    assert year_who.totalweeks == 53
+    assert year_iso.totalweeks == 53
 
 
-def test_year_startdate(year_cdc, year_who):
+def test_year_startdate(year_cdc, year_iso):
     assert year_cdc.startdate() == date(2015, 1, 4)
-    assert year_who.startdate() == date(2014, 12, 29)
+    assert year_iso.startdate() == date(2014, 12, 29)
 
 
-def test_year_enddate(year_cdc, year_who):
+def test_year_enddate(year_cdc, year_iso):
     assert year_cdc.enddate() == date(2016, 1, 2)
-    assert year_who.enddate() == date(2016, 1, 3)
+    assert year_iso.enddate() == date(2016, 1, 3)
 
 
-def test_year_weeks(year_cdc, year_who):
+def test_year_weeks(year_cdc, year_iso):
     cdc_weeks = []
     for w in range(1, 53):
         cdc_weeks.append(epi.Week(2015, w))
     assert list(year_cdc.iterweeks()) == cdc_weeks
-    who_weeks = []
+    iso_weeks = []
     for w in range(1, 54):
-        who_weeks.append(epi.Week(2015, w, "who"))
-    assert list(year_who.iterweeks()) == who_weeks
+        iso_weeks.append(epi.Week(2015, w, "iso"))
+    assert list(year_iso.iterweeks()) == iso_weeks
 
 
 def test_check_valid_week():
@@ -254,7 +254,7 @@ def test_check_invalid_year(test_input, expected):
 def test_check_valid_method():
     try:
         epi._check_method("cdc")
-        epi._check_method("who")
+        epi._check_method("iso")
     except (TypeError or ValueError):
         pytest.fail("method should be valid")
 
@@ -263,7 +263,7 @@ def test_check_valid_method():
     "test_input, expected",
     [
         (0, "method must be a string"),
-        ("mmwr", "method must be 'cdc' or 'who'"),
+        ("mmwr", "method must be 'cdc' or 'iso'"),
     ],
 )
 def test_check_invalid_method(test_input, expected):
@@ -272,20 +272,20 @@ def test_check_invalid_method(test_input, expected):
     assert str(e.value) == expected
 
 
-@pytest.mark.parametrize("test_input, expected", [("cdc", 1), ("who", 0)])
+@pytest.mark.parametrize("test_input, expected", [("cdc", 1), ("iso", 0)])
 def test_method_adjustment(test_input, expected):
     assert epi._method_adjustment(test_input) == expected
 
 
 @pytest.mark.parametrize(
-    "test_input, expected", [((2015, "cdc"), 735602), ((2015, "who"), 735596)]
+    "test_input, expected", [((2015, "cdc"), 735602), ((2015, "iso"), 735596)]
 )
 def test_year_start_ordinal(test_input, expected):
     assert epi._year_start(*test_input) == expected
 
 
 @pytest.mark.parametrize(
-    "test_input, expected", [((2015, "cdc"), 52), ((2015, "who"), 53)]
+    "test_input, expected", [((2015, "cdc"), 52), ((2015, "iso"), 53)]
 )
 def test_year_total_weeks(test_input, expected):
     assert epi._year_total_weeks(*test_input) == expected

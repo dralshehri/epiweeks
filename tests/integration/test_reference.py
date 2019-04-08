@@ -34,12 +34,12 @@ def test_cdc_week_from_startdate(test_input, expected):
 @pytest.mark.parametrize("test_input, expected", iso_weeks[0])
 def test_iso_week_to_startdate(test_input, expected):
     year, week = test_input
-    startdate = epiweeks.Week(year, week, "who").startdate()
+    startdate = epiweeks.Week(year, week, "iso").startdate()
     assert startdate.timetuple()[:3] == expected
 
 
 @pytest.mark.parametrize("test_input, expected", iso_weeks[1])
 def test_iso_week_from_startdate(test_input, expected):
     year, month, day = test_input
-    week = epiweeks.Week.fromdate(year, month, day, "who").weektuple()
+    week = epiweeks.Week.fromdate(year, month, day, "iso").weektuple()
     assert week == expected
