@@ -29,10 +29,7 @@ class Week:
         self._method = method
 
     def __repr__(self) -> str:
-        class_name = self.__class__.__name__
-        return "{}({}, {}, {})".format(
-            class_name, self._year, self._week, self._method.upper()
-        )
+        return "Week({}, {}, {})".format(self._year, self._week, self._method)
 
     def __str__(self) -> str:
         return self.isoformat()
@@ -185,10 +182,7 @@ class Year:
         self._method = method
 
     def __repr__(self) -> str:
-        class_name = self.__class__.__name__
-        return "{}({}, {})".format(
-                class_name, self._year, self._method.upper()
-        )
+        return "Year({}, {})".format(self._year, self._method)
 
     def __str__(self) -> str:
         return "{:04}".format(self._year)
