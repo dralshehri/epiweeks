@@ -156,6 +156,18 @@ def test_test_week_operator_exception(week_cdc, test_input, expected):
     assert str(e.value) == expected
 
 
+def test_thisyear_cdc():
+    year = epi.Year.thisyear("cdc")
+    today_year = date.today().year
+    assert year.startdate().toordinal() == epi._year_start(today_year, "cdc")
+
+
+def test_thisyear_iso():
+    year = epi.Year.thisyear("iso")
+    today_year = date.today().year
+    assert year.startdate().toordinal() == epi._year_start(today_year, "iso")
+
+
 @pytest.fixture(scope="module")
 def year_cdc():
     return epi.Year(2015, "cdc")
