@@ -193,6 +193,18 @@ class Year:
     def __str__(self) -> str:
         return "{:04}".format(self._year)
 
+    @classmethod
+    def thisyear(cls, method: str = "cdc") -> "Year":
+        """Construct Year object from current Gregorian date.
+
+        :param method: Calculation method, which may be ``cdc`` where the week
+            starts on Sunday or ``iso`` where the week starts on Monday
+            (default is ``cdc``)
+        :type method: str
+        """
+
+        return cls(date.today().year, method)
+
     @property
     def year(self) -> int:
         """Return year as an integer"""
