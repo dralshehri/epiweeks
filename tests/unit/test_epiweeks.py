@@ -46,8 +46,8 @@ def week_iso():
 
 
 def test_representation_of_week(week_cdc, week_iso):
-    assert week_cdc.__repr__() == "Week(2015, 1, CDC)"
-    assert week_iso.__repr__() == "Week(2015, 1, ISO)"
+    assert week_cdc.__repr__() == "Week(2015, 1, cdc)"
+    assert week_iso.__repr__() == "Week(2015, 1, iso)"
 
 
 def test_string_representation_of_week(week_cdc):
@@ -179,8 +179,8 @@ def year_iso():
 
 
 def test_representation_of_year(year_cdc, year_iso):
-    assert year_cdc.__repr__() == "Year(2015, CDC)"
-    assert year_iso.__repr__() == "Year(2015, ISO)"
+    assert year_cdc.__repr__() == "Year(2015, cdc)"
+    assert year_iso.__repr__() == "Year(2015, iso)"
 
 
 def test_string_representation_of_year(year_cdc):
