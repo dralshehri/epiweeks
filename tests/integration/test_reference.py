@@ -1,3 +1,4 @@
+from datetime import date
 import pytest
 import pathlib
 import json
@@ -26,8 +27,7 @@ def test_cdc_week_to_startdate(test_input, expected):
 
 @pytest.mark.parametrize("test_input, expected", cdc_weeks[1])
 def test_cdc_week_from_startdate(test_input, expected):
-    year, month, day = test_input
-    week = epiweeks.Week.fromdate(year, month, day, "cdc").weektuple()
+    week = epiweeks.Week.fromdate(date(*test_input), "cdc").weektuple()
     assert week == expected
 
 
@@ -40,6 +40,5 @@ def test_iso_week_to_startdate(test_input, expected):
 
 @pytest.mark.parametrize("test_input, expected", iso_weeks[1])
 def test_iso_week_from_startdate(test_input, expected):
-    year, month, day = test_input
-    week = epiweeks.Week.fromdate(year, month, day, "iso").weektuple()
+    week = epiweeks.Week.fromdate(date(*test_input), "iso").weektuple()
     assert week == expected

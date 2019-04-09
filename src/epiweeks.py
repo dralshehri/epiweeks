@@ -66,8 +66,7 @@ class Week:
         if not isinstance(other, int):
             raise TypeError("second operand must be 'int'")
         new_date = self.startdate() + timedelta(weeks=other)
-        year, month, day = new_date.timetuple()[:3]
-        return Week.fromdate(year, month, day, self._method)
+        return Week.fromdate(new_date, self._method)
 
     def __sub__(self, other: int) -> "Week":
         if not isinstance(other, int):
@@ -80,17 +79,11 @@ class Week:
         return other in self.iterdates()
 
     @classmethod
-    def fromdate(
-        cls, year: int, month: int, day: int, method: str = "cdc"
-    ) -> "Week":
-        """Construct Week object from a Gregorian date (year, month and day).
+    def fromdate(cls, date: date, method: str = "cdc") -> "Week":
+        """Construct Week object from a Gregorian date.
 
-        :param year: Gregorian year
-        :type year: int
-        :param month: Gregorian month
-        :type month: int
-        :param day: Gregorian day
-        :type day: int
+        :param date: Gregorian date object
+        :type date: datetime.date
         :param method: Calculation method, which may be ``cdc`` where the week
             starts on Sunday or ``iso`` where the week starts on Monday
             (default is ``cdc``)
@@ -98,7 +91,8 @@ class Week:
         """
 
         _check_method(method)
-        date_ordinal = date(year, month, day).toordinal()
+        year = date.year
+        date_ordinal = date.toordinal()
         year_start_ordinal = _year_start(year, method)
         week = (date_ordinal - year_start_ordinal) // 7
         if week < 0:
@@ -123,8 +117,7 @@ class Week:
         :type method: str
         """
 
-        year, month, day = date.today().timetuple()[:3]
-        return cls.fromdate(year, month, day, method)
+        return cls.fromdate(date.today(), method)
 
     @property
     def year(self) -> int:
