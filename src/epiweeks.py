@@ -7,9 +7,8 @@ class Week:
     using CDC or WHO calculation method.
     """
 
-    def __init__(
-        self, year: int, week: int, method: str = "cdc", validate: bool = True
-    ) -> None:
+    def __init__(self, year, week, method="cdc", validate=True):
+        # type: (int, int, str, bool) -> None
         """
         :param year: epidemiological year
         :type year: int
@@ -33,61 +32,68 @@ class Week:
             self._week = week
             self._method = method
 
-    def __repr__(self) -> str:
+    def __repr__(self):
+        # type: () -> str
         class_name = self.__class__.__name__
-        return "{}({}, {}, {})".format(
-            class_name, self._year, self._week, self._method
-        )
+        return "{}({}, {}, {})".format(class_name, self._year, self._week, self._method)
 
-    def __str__(self) -> str:
+    def __str__(self):
+        # type: () -> str
         return self.isoformat()
 
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other):
+        # type: (object) -> bool
         if not isinstance(other, Week):
             raise TypeError("second operand must be 'Week' object")
         return self.weektuple() == other.weektuple()
 
-    def __gt__(self, other: object) -> bool:
+    def __gt__(self, other):
+        # type: (object) -> bool
         if not isinstance(other, Week):
             raise TypeError("second operand must be 'Week' object")
         return self.weektuple() > other.weektuple()
 
-    def __ge__(self, other: object) -> bool:
+    def __ge__(self, other):
+        # type: (object) -> bool
         if not isinstance(other, Week):
             raise TypeError("second operand must be 'Week' object")
         return self.weektuple() >= other.weektuple()
 
-    def __lt__(self, other: object) -> bool:
+    def __lt__(self, other):
+        # type: (object) -> bool
         if not isinstance(other, Week):
             raise TypeError("second operand must be 'Week' object")
         return self.weektuple() < other.weektuple()
 
-    def __le__(self, other: object) -> bool:
+    def __le__(self, other):
+        # type: (object) -> bool
         if not isinstance(other, Week):
             raise TypeError("second operand must be 'Week' object")
         return self.weektuple() <= other.weektuple()
 
-    def __add__(self, other: int) -> "Week":
+    def __add__(self, other):
+        # type: (int) -> "Week"
         if not isinstance(other, int):
             raise TypeError("second operand must be 'int'")
         new_date = self.startdate() + timedelta(weeks=other)
         year, month, day = new_date.timetuple()[:3]
         return Week.fromdate(year, month, day, self._method)
 
-    def __sub__(self, other: int) -> "Week":
+    def __sub__(self, other):
+        # type: (int) -> "Week"
         if not isinstance(other, int):
             raise TypeError("second operand must be 'int'")
         return self + (-other)
 
-    def __contains__(self, other: date) -> bool:
+    def __contains__(self, other):
+        # type (date) -> bool
         if not isinstance(other, date):
             raise TypeError("tested operand must be 'date' object")
         return other in self.iterdates()
 
     @classmethod
-    def fromdate(
-        cls, year: int, month: int, day: int, method: str = "cdc"
-    ) -> "Week":
+    def fromdate(cls, year, month, day, method="cdc"):
+        # type : (int, int, int, str) -> Week
         """Construct Week object from a Gregorian date (year, month and day).
 
         :param year: Gregorian year
@@ -118,7 +124,8 @@ class Week:
         return cls(year, week, method, validate=False)
 
     @classmethod
-    def thisweek(cls, method: str = "cdc") -> "Week":
+    def thisweek(cls, method="cdc"):
+        # type: (str) -> "Week"
         """Construct Week object from current Gregorian date.
 
         :param method: calculation method, which may be ``cdc`` for MMWR weeks
@@ -130,44 +137,51 @@ class Week:
         return cls.fromdate(year, month, day, method)
 
     @property
-    def year(self) -> int:
+    def year(self):
+        # type: () -> int
         """Return year as an integer"""
         return self._year
 
     @property
-    def week(self) -> int:
+    def week(self):
+        # type: () -> int
         """Return week number as an integer"""
         return self._week
 
     @property
-    def method(self) -> str:
+    def method(self):
+        # type: () -> str
         """Return calculation method as a string"""
         return self._method
 
-    def weektuple(self) -> Tuple[int, int]:
+    def weektuple(self):
+        # type: () ->  Tuple[int, int]
         """Return week as a tuple of (year, week)."""
         return self._year, self._week
 
-    def isoformat(self) -> str:
+    def isoformat(self):
+        # type: () -> str
         """Return a string representing the week in compact form of ISO format
         ‘YYYYWww’.
         """
-
         return "{:04}W{:02}".format(self._year, self._week)
 
-    def startdate(self) -> date:
+    def startdate(self):
+        # type: () -> date
         """Return date for first day of week."""
         year_start_ordinal = _year_start(self._year, self._method)
         week_start_ordinal = year_start_ordinal + ((self._week - 1) * 7)
         startdate = date.fromordinal(week_start_ordinal)
         return startdate
 
-    def enddate(self) -> date:
+    def enddate(self):
+        # type: () -> date
         """Return date for last day of week."""
         enddate = self.startdate() + timedelta(days=6)
         return enddate
 
-    def iterdates(self) -> Iterator[date]:
+    def iterdates(self):
+        # type: () -> Iterator[date]
         """Return an iterator that yield datetime.date objects for all days of
         week."""
 
@@ -181,7 +195,8 @@ class Year:
     using US CDC or WHO calculation method.
     """
 
-    def __init__(self, year: int, method: str = "cdc") -> None:
+    def __init__(self, year, method="cdc"):
+        # type: (int, str) -> None
         """
         :param year: epidemiological year
         :type year: int
@@ -193,45 +208,54 @@ class Year:
         self._year = _check_year(year)
         self._method = _check_method(method)
 
-    def __repr__(self) -> str:
+    def __repr__(self):
+        # type: () -> str
         class_name = self.__class__.__name__
         return "{}({}, {})".format(class_name, self._year, self._method)
 
-    def __str__(self) -> str:
+    def __str__(self):
+        # type: () -> str
         return "{:04}".format(self._year)
 
     @property
-    def year(self) -> int:
+    def year(self):
+        # type: () -> int
         """Return year as an integer"""
         return self._year
 
     @property
-    def method(self) -> str:
+    def method(self):
+        # type: () -> str
         """Return calculation method as a string"""
         return self._method
 
     @property
-    def totalweeks(self) -> int:
+    def totalweeks(self):
+        # type: () -> int
         """Return number of weeks in year as an integer"""
         return _year_total_weeks(self._year, self._method)
 
-    def startdate(self) -> date:
+    def startdate(self):
+        # type: () -> date
         """Return date for first day of first week of year."""
         year_start_ordinal = _year_start(self._year, self._method)
         return date.fromordinal(year_start_ordinal)
 
-    def enddate(self) -> date:
+    def enddate(self):
+        # type: () -> date
         """Return date for last day of last week of year."""
         year_end_ordinal = _year_start(self._year + 1, self._method) - 1
         return date.fromordinal(year_end_ordinal)
 
-    def iterweeks(self) -> Iterator[Week]:
+    def iterweeks(self):
+        # type: ()  -> Iterator[Week]
         """Return an iterator that yield Week objects for all weeks of year."""
         for week in range(1, self.totalweeks + 1):
             yield Week(self._year, week, self._method, validate=False)
 
 
-def _check_year(year: int) -> int:
+def _check_year(year):
+    # type: (int) -> int
     """Check type and value of year."""
     if not isinstance(year, int):
         raise TypeError("year must be an integer")
@@ -240,7 +264,8 @@ def _check_year(year: int) -> int:
     return year
 
 
-def _check_week(year: int, week: int, method: str) -> int:
+def _check_week(year, week, method):
+    # type: (int, int, str) -> int
     """Check type and value of week."""
     if not isinstance(week, int):
         raise TypeError("week must be an integer")
@@ -250,7 +275,8 @@ def _check_week(year: int, week: int, method: str) -> int:
     return week
 
 
-def _check_method(method: str) -> str:
+def _check_method(method):
+    # type: (str) -> str
     """Check type and value of calculation method."""
     if not isinstance(method, str):
         raise TypeError("method must be a string")
@@ -261,18 +287,19 @@ def _check_method(method: str) -> str:
     return method
 
 
-def _method_adjustment(method: str) -> int:
+def _method_adjustment(method):
+    # type: (str) -> int
     """Return needed adjustment based on first day of week using given
     calculation method.
     """
-
     first_day = ("Mon", "Sun")
     if method.lower() == "cdc":
         return first_day.index("Sun")
     return first_day.index("Mon")
 
 
-def _year_start(year: int, method: str) -> int:
+def _year_start(year, method):
+    # type: (int, str) -> int
     """Return proleptic Gregorian ordinal for first day of first week for
     given year using given calculation method.
     """
@@ -288,11 +315,11 @@ def _year_start(year: int, method: str) -> int:
     return week1_start_ordinal
 
 
-def _year_total_weeks(year: int, method: str) -> int:
+def _year_total_weeks(year, method):
+    # type: (int, str) -> int
     """Return number of weeks in year for given year using given calculation
     method.
     """
-
     year_start_ordinal = _year_start(year, method)
     next_year_start_ordinal = _year_start(year + 1, method)
     weeks = (next_year_start_ordinal - year_start_ordinal) // 7
