@@ -16,7 +16,7 @@ import epiweeks as epi
         ((date(2017, 12, 31), "iso"), (2017, 52)),
     ],
 )
-def test_week_from_date(test_input, expected):
+def test_week_fromdate(test_input, expected):
     week = epi.Week.fromdate(*test_input)
     assert week.weektuple() == expected
 
