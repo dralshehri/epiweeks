@@ -77,9 +77,9 @@ class Week:
 
     @classmethod
     def fromdate(cls, date: date, method: str = "cdc") -> "Week":
-        """Construct Week object from a Gregorian date.
+        """Construct Week object from a date.
 
-        :param date: Gregorian date object
+        :param date: Date object
         :type date: datetime.date
         :param method: Calculation method, which may be ``cdc`` where the week
             starts on Sunday or ``iso`` where the week starts on Monday
@@ -106,7 +106,7 @@ class Week:
 
     @classmethod
     def thisweek(cls, method: str = "cdc") -> "Week":
-        """Construct Week object from current Gregorian date.
+        """Construct Week object from current date.
 
         :param method: Calculation method, which may be ``cdc`` where the week
             starts on Sunday or ``iso`` where the week starts on Monday
@@ -189,7 +189,7 @@ class Year:
 
     @classmethod
     def thisyear(cls, method: str = "cdc") -> "Year":
-        """Construct Year object from current Gregorian date.
+        """Construct Year object from current date.
 
         :param method: Calculation method, which may be ``cdc`` where the week
             starts on Sunday or ``iso`` where the week starts on Monday
@@ -273,7 +273,7 @@ def _method_adjustment(method: str) -> int:
 
 
 def _year_start(year: int, method: str) -> int:
-    """Return Gregorian ordinal for first day of first week for year."""
+    """Return ordinal for first day of first week for year."""
     adjustment = _method_adjustment(method)
     mid_weekday = 3 - adjustment  # Sun is 6 .. Mon is 0
     jan1 = date(year, 1, 1)
