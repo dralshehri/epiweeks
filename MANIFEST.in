@@ -5,6 +5,6 @@ graft docs
 include pytest.ini
 include .coveragerc
 
+include LICENSE
 include README.rst
 include CHANGELOG.rst
-include LICENSE.txt
