@@ -9,17 +9,17 @@ WHO (ISO) calculation methods.
 |travis| |codecov| |docs| |supported| |version|
 
 .. |travis|
-   image:: https://travis-ci.org/dralshehri/epi-weeks.svg?branch=master
-   :alt: Travis-CI Build Status
-   :target: https://travis-ci.org/dralshehri/epi-weeks
+   image:: https://img.shields.io/travis/com/dralshehri/epi-weeks.svg
+   :alt: Build Status
+   :target: https://travis-ci.com/dralshehri/epi-weeks
 
 .. |codecov|
-   image:: https://codecov.io/github/dralshehri/epi-weeks/coverage.svg?branch=master
+   image:: https://img.shields.io/codecov/c/github/dralshehri/epi-weeks.svg
    :alt: Coverage Status
    :target: https://codecov.io/github/dralshehri/epi-weeks
 
 .. |docs|
-   image:: https://readthedocs.org/projects/epiweeks/badge/?version=latest
+   image:: https://img.shields.io/readthedocs/epiweeks/latest.svg
    :alt: Docs Status
    :target: https://epiweeks.readthedocs.io/en/latest
 
