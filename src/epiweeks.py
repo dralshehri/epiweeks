@@ -249,26 +249,20 @@ class Year:
 
 
 def _check_year(year: int) -> None:
-    """Check type and value of year."""
-    if not isinstance(year, int):
-        raise TypeError("year must be an integer")
+    """Check value of year."""
     if not 1 <= year <= 9999:
         raise ValueError("year must be in 1..9999")
 
 
 def _check_week(year: int, week: int, method: str) -> None:
-    """Check type and value of week."""
-    if not isinstance(week, int):
-        raise TypeError("week must be an integer")
+    """Check value of week."""
     weeks = _year_total_weeks(year, method)
     if not 1 <= week <= weeks:
         raise ValueError("week must be in 1..{} for year".format(weeks))
 
 
 def _check_method(method: str) -> None:
-    """Check type and value of calculation method."""
-    if not isinstance(method, str):
-        raise TypeError("method must be a string")
+    """Check value of calculation method."""
     methods = ["CDC", "ISO"]
     if method.upper() not in methods:
         raise ValueError(f"method must be '{methods[0]}' or '{methods[1]}'")
