@@ -90,11 +90,11 @@ class Week:
         return other in self.iterdates()
 
     @classmethod
-    def fromdate(cls, date: date, method: str = "CDC") -> "Week":
+    def fromdate(cls, date_object: date, method: str = "CDC") -> "Week":
         """Construct Week object from a date.
 
-        :param date: Date object
-        :type date: datetime.date
+        :param date_object: Gregorian date object
+        :type date_object: datetime.date
         :param method: Calculation method, which may be ``CDC`` where the week
             starts on Sunday or ``ISO`` where the week starts on Monday
             (default is ``CDC``)
@@ -102,8 +102,8 @@ class Week:
         """
 
         _check_method(method)
-        year = date.year
-        date_ordinal = date.toordinal()
+        year = date_object.year
+        date_ordinal = date_object.toordinal()
         year_start_ordinal = _year_start(year, method)
         week = (date_ordinal - year_start_ordinal) // 7
         if week < 0:
