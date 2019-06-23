@@ -175,6 +175,17 @@ class Week:
         for day in range(0, 7):
             yield startdate + timedelta(days=day)
 
+    def daydate(self, weekday: int = 6) -> date:
+        """Return date for specific weekday of week.
+
+        :param weekday: Week day, which may be ``0..6`` where Monday is 0 and
+            Sunday is 6 (default is ``6``)
+        :type weekday: int
+        """
+
+        days = (_method_adjustment(self.method) + weekday) % 7
+        return self.startdate() + timedelta(days=days)
+
 
 class Year:
     """A Year object represents a year in epidemiological week calendar."""
