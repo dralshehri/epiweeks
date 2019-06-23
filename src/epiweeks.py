@@ -5,6 +5,8 @@ from typing import Tuple, Iterator
 class Week:
     """A Week object represents a week in epidemiological week calendar."""
 
+    __slots__ = "_year", "_week", "_method"
+
     def __init__(
         self, year: int, week: int, method: str = "CDC", validate: bool = True
     ) -> None:
@@ -168,6 +170,8 @@ class Week:
 
 class Year:
     """A Year object represents a year in epidemiological week calendar."""
+
+    __slots__ = "_year", "_method"
 
     def __init__(self, year: int, method: str = "cdc") -> None:
         """
