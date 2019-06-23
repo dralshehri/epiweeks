@@ -1,58 +1,56 @@
 Epi Weeks
 =========
 
-A Python package to calculate epidemiological weeks using US CDC (MMWR) and
-WHO (ISO) calculation methods.
+A Python package to calculate epidemiological weeks using the CDC (MMWR) and
+ISO (WHO) calculation methods.
 
-`Source Code <https://github.com/dralshehri/epi-weeks>`__
-
-|travis| |codecov| |docs| |supported| |version|
+|travis| |codecov| |docs| |supported| |version| |license|
 
 .. |travis|
-   image:: https://img.shields.io/travis/com/dralshehri/epi-weeks.svg
+   image:: https://img.shields.io/travis/com/dralshehri/epiweeks.svg
    :alt: Build Status
-   :target: https://travis-ci.com/dralshehri/epi-weeks
-
+   :target: https://travis-ci.com/dralshehri/epiweeks
 .. |codecov|
-   image:: https://img.shields.io/codecov/c/github/dralshehri/epi-weeks.svg
+   image:: https://img.shields.io/codecov/c/github/dralshehri/epiweeks.svg
    :alt: Coverage Status
-   :target: https://codecov.io/github/dralshehri/epi-weeks
-
+   :target: https://codecov.io/github/dralshehri/epiweeks
 .. |docs|
-   image:: https://img.shields.io/readthedocs/epiweeks/latest.svg
+   image:: https://img.shields.io/readthedocs/epiweeks/stable.svg
    :alt: Docs Status
-   :target: https://epiweeks.readthedocs.io/en/latest
-
+   :target: https://epiweeks.readthedocs.io/
 .. |supported|
    image:: https://img.shields.io/pypi/pyversions/epiweeks.svg
-   :alt: Supported versions
+   :alt: Python version support
    :target: https://pypi.python.org/pypi/epiweeks
-
 .. |version|
    image:: https://img.shields.io/pypi/v/epiweeks.svg
-   :alt: PyPI Package latest release
+   :alt: PyPI Package version
    :target: https://pypi.python.org/pypi/epiweeks
+.. |license|
+   image:: https://img.shields.io/github/license/dralshehri/epiweeks.svg
+   :alt: License
+   :target: https://github.com/dralshehri/epiweeks/blob/master/LICENSE
 
 .. contents::
    :local:
    :backlinks: none
 
-Background
-----------
+.. module:: epiweeks
+
+Overview
+--------
 
 Epidemiological weeks, commonly referred to as "epi weeks", are simply
 a standardized method of counting weeks to allow for the comparison of
-reported public health data.
-Epidemiological weeks are used by the US CDC, WHO, and many other health
-organizations.
+reported public health data. Epidemiological weeks are used by the CDC, WHO,
+and many other health organizations.
 
-The US CDC defines epidemiological week (known as `MMWR week`_) as seven days
-beginning with Sunday and ending with Saturday.
-The WHO defines epidemiological week, based on `ISO week`_, as seven days
-beginning with Monday and ending with Sunday.
-In either case, the end of the first epidemiological
-week of the year by definition must fall at least four days into the year.
-Most years have 52 epidemiological weeks, but some have 53.
+The CDC defines epidemiological week (known as `MMWR week`_) as seven days
+beginning with Sunday and ending with Saturday. The ISO defines epidemiological
+week (known as `ISO week`_) as seven days beginning with Monday and ending with
+Sunday. In either case, the end of the first epidemiological week of the year
+by definition must fall at least four days into the year. Most years have 52
+epidemiological weeks, but some have 53.
 
 .. _`MMWR week`: https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf
 .. _`ISO week`: https://en.wikipedia.org/wiki/ISO_week_date
@@ -60,28 +58,23 @@ Most years have 52 epidemiological weeks, but some have 53.
 Features
 --------
 
-- Support for both US CDC (MMWR) and WHO (ISO) calculation methods.
-- Accurate and reliable calculation.
-- Fully tested against multiple original references.
+- Accurate and tested calculation.
+- Intuitive, clean, and easy-to-use interface.
+- Support for both CDC (MMWR) and ISO (WHO) calculation methods.
 - Calculation of start and end dates of week.
 - Iteration of year's weeks or week's dates.
 - Rich comparison between weeks.
 - Logical operations for weeks (addition, subtraction and containment).
 - Validation of input data.
-- ...and more.
-
-Demo
-----
-
-Please visit https://www.dralshehri.com/epi-weeks to try the
-calculation function of this package as a simple usage example.
+- Works on Python 3.6+ with zero dependencies.
+- Thoroughly tested on all supported python versions.
 
 Installation
 ------------
 
 .. code-block:: bash
 
-   $ pip install epiweeks
+   $ pip install -U epiweeks
 
 Usage Examples
 --------------
@@ -90,69 +83,143 @@ To import the package:
 
 .. code-block:: pycon
 
-   >>> import epiweeks as epi
+   >>> from epiweeks import Week, Year
 
-To calculate epidemiological week from a Gregorian date or today date:
+Week Instance and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: pycon
-
-   >>> epi.Week(2019, 1)
-   Week(2019, 1, cdc)
-
-   >>> epi.Week.fromdate(2018, 12, 30)
-   Week(2019, 1, cdc)
-
-   >>> epi.Week.thisweek()
-   Week(2018, 48, cdc)
-
-By default, US CDC calculation method is assumed. To use WHO method instead:
+You can create an instance of :obj:`Week` object by only providing the year
+and week number:
 
 .. code-block:: pycon
 
-   >>> epi.Week(2019, 1, 'who')
-   Week(2019, 1, who)
+   >>> Week(2019, 1)
+   Week(2019, 1, CDC)
 
-   >>> epi.Week.fromdate(2018, 12, 30, 'who')
-   Week(2018, 52, who)
-
-   >>> epi.Week.thisweek('who')
-   Week(2018, 48, who)
-
-To get an iterator of :obj:`epiweeks.Week` objects for an epidemiological year:
+It is also possible to create an instance of :obj:`Week` object from a date,
+formatted string, or current date:
 
 .. code-block:: pycon
 
-   >>> list(epi.Year(2018).iterweeks())
-   [(Week(2018, 1, cdc), ..., Week(2018, 52, cdc))]
+   >>> from datetime import date
+   >>> my_date = date(2018, 12, 30)
+   >>> Week.fromdate(my_date)
+   Week(2019, 1, CDC)
 
-The instance of :obj:`epiweeks.Week` object has some other useful methods:
+   >>> Week.fromstring("2019W01")
+   Week(2019, 1, CDC)
+
+   >>> Week.thisweek()
+   Week(2019, 26, CDC)
+
+By default, the CDC calculation method is assumed when creating the :obj:`Week`
+object instance. To use the ISO method instead:
 
 .. code-block:: pycon
 
-   >>> week = epi.Week(2019, 1)
+   >>> Week(2019, 1, "ISO")
+   Week(2019, 1, ISO)
+
+   >>> from datetime import date
+   >>> my_date = date(2018, 12, 30)
+   >>> Week.fromdate(my_date, "ISO")
+   Week(2018, 52, ISO)
+
+   >>> Week.fromstring("2019W01", "ISO")
+   Week(2019, 1, ISO)
+
+   >>> Week.thisweek("ISO")
+   Week(2019, 26, ISO)
+
+The instance of :obj:`Week` object has some other useful methods:
+
+.. code-block:: pycon
+
+   >>> week = Week(2019, 2)
 
    >>> week.weektuple()
-   (2019, 1)
+   (2019, 2)
+
+   >>> week.cdcformat()
+   '201902'
 
    >>> week.isoformat()
-   '2019W01'
+   '2019W02'
 
    >>> week.startdate()
-   datetime.date(2018, 12, 30)
+   datetime.date(2019, 1, 6)
 
    >>> week.enddate()
-   datetime.date(2019, 1, 5)
+   datetime.date(2019, 1, 12)
 
    >>> list(week.iterdates())
-   [(datetime.date(2018, 12, 30), ..., datetime.date(2019, 1, 5))]
+   [(datetime.date(2019, 1, 6), ..., datetime.date(2019, 1, 12))]
 
-Rich comparison, addition, subtracting and containment operators for
-:obj:`epiweeks.Week` object are supported:
+   >>> week.daydate(3)  # Thursday
+   datetime.date(2019, 1, 10)
+
+Year Instance and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can create an instance of :obj:`Year` object by only providing the year,
+or from current date:
 
 .. code-block:: pycon
 
-   >>> week1 = epi.Week(2019, 1)
-   >>> week2 = epi.Week(2018, 52)
+   >>> Year(2018)
+   Year(2018, CDC)
+
+   >>> Year.thisyear()
+   Year(2019, CDC)
+
+By default, the CDC calculation method is assumed when creating the :obj:`Year`
+object instance. To use the ISO method instead:
+
+.. code-block:: pycon
+
+   >>> Year(2018, "ISO")
+   Year(2018, ISO)
+
+   >>> Year.thisyear("ISO")
+   Year(2019, ISO)
+
+To get a list of :obj:`Week` objects for all weeks of a year:
+
+.. code-block:: pycon
+
+   >>> list(Year(2019).iterweeks())
+   [(Week(2019, 1, CDC), ..., Week(2019, 52, CDC))]
+
+The instance of :obj:`Year` object has some other useful methods:
+
+.. code-block:: pycon
+
+   >>> year = Year(2019)
+
+   >>> year.totalweeks()
+   52
+
+   >>> year.startdate()
+   datetime.date(2018, 12, 30)
+
+   >>> year.enddate()
+   datetime.date(2019, 12, 28)
+
+Rich Comparison and Logical Operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Rich comparison (==, !=, >, >=, <, <=) between :obj:`Week` objects is
+supported. Adding or subtracting (+, -) an integer to/from a :obj:`Week` object
+is also supported and results in a new :obj:`Week` with that number of weeks
+added or subtracted. Containment operator (in) allows testing membership of a
+:obj:`datetime.date` to the :obj:`Week` object. Using these operators with
+an unexpected type of object raises a ``TypeError`` exception that can be
+caught and handled in ``try`` and ``except`` blocks:
+
+.. code-block:: pycon
+
+   >>> week1 = Week(2019, 1)
+   >>> week2 = Week(2018, 52)
 
    >>> week1 > week2
    True
@@ -161,39 +228,69 @@ Rich comparison, addition, subtracting and containment operators for
    True
 
    >>> week1 + 3
-   Week(2019, 4, cdc)
+   Week(2019, 4, CDC)
 
    >>> from datetime import date
    >>> date(2019, 1, 2) in week1
    True
 
-Input values are by default checked if valid. Invalid input will raise
-``TypeError`` or ``ValueError`` exception that can be caught and handled
-in try and except blocks:
+   >>> week1 == "2019W01"
+   Traceback...
+   TypeError: can't compare 'Week' to 'str'
+
+Validation of Input data
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Input values are by default checked if valid. Invalid input raises
+``ValueError`` exception. That can be caught and handled in ``try`` and
+``except`` blocks:
 
 .. code-block:: pycon
 
-   >>> epi.Week(2018, 53)
+   >>> Week(2018, 53)
    Traceback...
    ValueError: week must be in 1..52 for year
 
-   >>> epi.Year(2019, 'mmwr')
+   >>> Year(2019, 'mmwr')
    Traceback...
-   ValueError: method must be 'who' or 'cdc'
+   ValueError: method must be 'CDC' or 'ISO'
 
-Licence
+Online Tool
+-----------
+
+The following is a simple online calculation tool that was developed to
+calculate epidemiological weeks by the CDC method using the latest version of
+this package:
+
+https://www.dralshehri.com/epiweeks/
+
+Source Code
+-----------
+
+The source code of this package is available on
+`GitHub <https://github.com/dralshehri/epiweeks>`__ where you can
+contribute and report issues.
+
+Authors
 -------
 
-This package is distributed under an MIT licence.
-The licence is as follows (from ``LICENSE.txt`` file):
+The main author is Mohammed Alshehri —
+`@dralshehri <https://github.com/dralshehri>`__.
 
-.. literalinclude:: ../LICENSE.txt
+License
+-------
+
+This package is distributed under an MIT license.
+The license is as follows:
+
+.. literalinclude:: ../LICENSE
    :language: text
 
 API Reference
 -------------
 
 This section documents the API of `epiweeks` module, which is the main module
-of Epi Weeks package.
+of this package.
 
-.. automodule:: epiweeks
+.. autoclass:: Week
+.. autoclass:: Year
