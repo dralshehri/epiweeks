@@ -15,9 +15,9 @@ class Week:
         :type year: int
         :param week: Epidemiological week
         :type week: int
-        :param method: Calculation method, which may be ``cdc`` where the week
-            starts on Sunday or ``iso`` where the week starts on Monday
-            (default is ``cdc``)
+        :param method: Calculation method, which may be ``CDC`` where the week
+            starts on Sunday or ``ISO`` where the week starts on Monday
+            (default is ``CDC``)
         :type method: str
         :param validate: Whether to validate year, week and method or not
             (default is ``True``)
@@ -89,14 +89,14 @@ class Week:
         return other in self.iterdates()
 
     @classmethod
-    def fromdate(cls, date: date, method: str = "cdc") -> "Week":
+    def fromdate(cls, date: date, method: str = "CDC") -> "Week":
         """Construct Week object from a date.
 
         :param date: Date object
         :type date: datetime.date
-        :param method: Calculation method, which may be ``cdc`` where the week
-            starts on Sunday or ``iso`` where the week starts on Monday
-            (default is ``cdc``)
+        :param method: Calculation method, which may be ``CDC`` where the week
+            starts on Sunday or ``ISO`` where the week starts on Monday
+            (default is ``CDC``)
         :type method: str
         """
 
@@ -118,12 +118,12 @@ class Week:
         return cls(year, week, method, validate=False)
 
     @classmethod
-    def thisweek(cls, method: str = "cdc") -> "Week":
+    def thisweek(cls, method: str = "CDC") -> "Week":
         """Construct Week object from current date.
 
-        :param method: Calculation method, which may be ``cdc`` where the week
-            starts on Sunday or ``iso`` where the week starts on Monday
-            (default is ``cdc``)
+        :param method: Calculation method, which may be ``CDC`` where the week
+            starts on Sunday or ``ISO`` where the week starts on Monday
+            (default is ``CDC``)
         :type method: str
         """
 
@@ -181,13 +181,13 @@ class Year:
 
     __slots__ = "_year", "_method"
 
-    def __init__(self, year: int, method: str = "cdc") -> None:
+    def __init__(self, year: int, method: str = "CDC") -> None:
         """
         :param year: Epidemiological year
         :type year: int
-        :param method: Calculation method, which may be ``cdc`` where the week
-            starts on Sunday or ``iso`` where the week starts on Monday
-            (default is ``cdc``)
+        :param method: Calculation method, which may be ``CDC`` where the week
+            starts on Sunday or ``ISO`` where the week starts on Monday
+            (default is ``CDC``)
         :type method: str
         """
 
@@ -206,12 +206,12 @@ class Year:
         return hash((self.year, self.method))
 
     @classmethod
-    def thisyear(cls, method: str = "cdc") -> "Year":
+    def thisyear(cls, method: str = "CDC") -> "Year":
         """Construct Year object from current date.
 
-        :param method: Calculation method, which may be ``cdc`` where the week
-            starts on Sunday or ``iso`` where the week starts on Monday
-            (default is ``cdc``)
+        :param method: Calculation method, which may be ``CDC`` where the week
+            starts on Sunday or ``ISO`` where the week starts on Monday
+            (default is ``CDC``)
         :type method: str
         """
 
@@ -269,7 +269,7 @@ def _check_method(method: str) -> None:
     """Check type and value of calculation method."""
     if not isinstance(method, str):
         raise TypeError("method must be a string")
-    methods = ["cdc", "iso"]
+    methods = ["CDC", "ISO"]
     if method.lower() not in methods:
         raise ValueError("method must be '{}' or '{}'".format(*methods))
 
@@ -277,7 +277,7 @@ def _check_method(method: str) -> None:
 def _method_adjustment(method: str) -> int:
     """Return needed adjustment based on first day of week."""
     first_day = ("Mon", "Sun")
-    if method.lower() == "cdc":
+    if method.upper() == "CDC":
         return first_day.index("Sun")
     return first_day.index("Mon")
 
