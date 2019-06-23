@@ -39,30 +39,35 @@ class Week:
     def __str__(self) -> str:
         return self.isoformat()
 
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Week):
-            raise TypeError("second operand must be 'Week' object")
-        return self.weektuple() == other.weektuple()
+    def __eq__(self, other: "Week") -> bool:
+        return self._compare(other) == 0
 
-    def __gt__(self, other: object) -> bool:
-        if not isinstance(other, Week):
-            raise TypeError("second operand must be 'Week' object")
-        return self.weektuple() > other.weektuple()
+    def __gt__(self, other: "Week") -> bool:
+        return self._compare(other) > 0
 
-    def __ge__(self, other: object) -> bool:
-        if not isinstance(other, Week):
-            raise TypeError("second operand must be 'Week' object")
-        return self.weektuple() >= other.weektuple()
+    def __ge__(self, other: "Week") -> bool:
+        return self._compare(other) >= 0
 
-    def __lt__(self, other: object) -> bool:
-        if not isinstance(other, Week):
-            raise TypeError("second operand must be 'Week' object")
-        return self.weektuple() < other.weektuple()
+    def __lt__(self, other: "Week") -> bool:
+        return self._compare(other) < 0
 
-    def __le__(self, other: object) -> bool:
-        if not isinstance(other, Week):
-            raise TypeError("second operand must be 'Week' object")
-        return self.weektuple() <= other.weektuple()
+    def __le__(self, other: "Week") -> bool:
+        return self._compare(other) <= 0
+
+    def _compare(self, other: "Week") -> int:
+        """Compare two Week objects after checking if they are comparable."""
+        class_name = self.__class__.__name__
+        other_name = type(other).__name__
+        if not isinstance(other, self.__class__):
+            raise TypeError(f"can't compare '{class_name}' to '{other_name}'")
+        if self.method != other.method:
+            raise TypeError(
+                f"can't compare '{class_name}' objects with different "
+                f"calculation methods"
+            )
+        x = self.weektuple()
+        y = other.weektuple()
+        return 0 if x == y else 1 if x > y else -1
 
     def __add__(self, other: int) -> "Week":
         if not isinstance(other, int):
