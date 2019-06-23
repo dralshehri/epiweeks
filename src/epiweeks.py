@@ -37,7 +37,7 @@ class Week:
         return "Week({}, {}, {})".format(self._year, self._week, self._method)
 
     def __str__(self) -> str:
-        return self.isoformat()
+        return self.cdcformat() if self.method == "CDC" else self.isoformat()
 
     def __hash__(self) -> int:
         return hash((self.year, self.week, self.method))
