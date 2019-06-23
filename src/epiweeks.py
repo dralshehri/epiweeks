@@ -31,17 +31,17 @@ class Week:
 
         self._year = year
         self._week = week
-        self._method = method
+        self._method = method.upper()
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
-        return f"{class_name}({self.year}, {self.week}, {self.method})"
+        return f"{class_name}({self._year}, {self._week}, {self._method})"
 
     def __str__(self) -> str:
-        return self.cdcformat() if self.method == "CDC" else self.isoformat()
+        return self.cdcformat() if self._method == "CDC" else self.isoformat()
 
     def __hash__(self) -> int:
-        return hash((self.year, self.week, self.method))
+        return hash((self._year, self._week, self._method))
 
     def __eq__(self, other: "Week") -> bool:
         return self._compare(other) == 0
@@ -64,7 +64,7 @@ class Week:
         other_name = type(other).__name__
         if not isinstance(other, self.__class__):
             raise TypeError(f"can't compare '{class_name}' to '{other_name}'")
-        if self.method != other.method:
+        if self._method != other._method:
             raise TypeError(
                 f"can't compare '{class_name}' objects with different "
                 f"calculation methods"
@@ -77,7 +77,7 @@ class Week:
         if not isinstance(other, int):
             raise TypeError("second operand must be 'int'")
         new_date = self.startdate() + timedelta(weeks=other)
-        return self.__class__.fromdate(new_date, self.method)
+        return self.__class__.fromdate(new_date, self._method)
 
     def __sub__(self, other: int) -> "Week":
         if not isinstance(other, int):
@@ -163,7 +163,7 @@ class Week:
     @property
     def method(self) -> str:
         """Return calculation method as a string"""
-        return self._method.upper()
+        return self._method
 
     def weektuple(self) -> Tuple[int, int]:
         """Return week as a tuple of (year, week)."""
@@ -174,14 +174,14 @@ class Week:
         example ‘201908’.
         """
 
-        return f"{self.year:04}{self.week:02}"
+        return f"{self._year:04}{self._week:02}"
 
     def isoformat(self) -> str:
         """Return a string representing the week in ISO compact format
         ‘YYYYWWW’ for example ‘2019W08’.
         """
 
-        return f"{self.year:04}W{self.week:02}"
+        return f"{self._year:04}W{self._week:02}"
 
     def startdate(self) -> date:
         """Return date for first day of week."""
@@ -209,7 +209,7 @@ class Week:
         :type weekday: int
         """
 
-        days = (_method_adjustment(self.method) + weekday) % 7
+        days = (_method_adjustment(self._method) + weekday) % 7
         return self.startdate() + timedelta(days=days)
 
 
@@ -231,17 +231,17 @@ class Year:
         _check_year(year)
         _check_method(method)
         self._year = year
-        self._method = method
+        self._method = method.upper()
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
-        return f"{class_name}({self.year}, {self.method})"
+        return f"{class_name}({self._year}, {self._method})"
 
     def __str__(self) -> str:
-        return f"{self.year:04}"
+        return f"{self._year:04}"
 
     def __hash__(self) -> int:
-        return hash((self.year, self.method))
+        return hash((self._year, self._method))
 
     @classmethod
     def thisyear(cls, method: str = "CDC") -> "Year":
@@ -263,7 +263,7 @@ class Year:
     @property
     def method(self) -> str:
         """Return calculation method as a string"""
-        return self._method.upper()
+        return self._method
 
     def totalweeks(self) -> int:
         """Return number of weeks in year."""
@@ -282,7 +282,7 @@ class Year:
     def iterweeks(self) -> Iterator[Week]:
         """Return an iterator that yield Week objects for all weeks of year."""
         for week in range(1, self.totalweeks() + 1):
-            yield Week(self.year, week, self.method, validate=False)
+            yield Week(self._year, week, self._method, validate=False)
 
 
 def _check_year(year: int) -> None:
