@@ -227,9 +227,8 @@ class Year:
         """Return calculation method as a string"""
         return self._method.upper()
 
-    @property
     def totalweeks(self) -> int:
-        """Return number of weeks in year as an integer"""
+        """Return number of weeks in year."""
         return _year_total_weeks(self._year, self._method)
 
     def startdate(self) -> date:
