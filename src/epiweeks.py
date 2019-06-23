@@ -86,7 +86,7 @@ class Week:
 
     def __contains__(self, other: date) -> bool:
         if not isinstance(other, date):
-            raise TypeError("tested operand must be 'date' object")
+            raise TypeError("tested operand must be 'datetime.date' object")
         return other in self.iterdates()
 
     @classmethod
@@ -177,8 +177,8 @@ class Week:
         return f"{self.year:04}{self.week:02}"
 
     def isoformat(self) -> str:
-        """Return a string representing the week in compact form of ISO format
-        ‘YYYYWww’.
+        """Return a string representing the week in ISO compact format
+        ‘YYYYWWW’ for example ‘2019W08’.
         """
 
         return f"{self.year:04}W{self.week:02}"
@@ -196,9 +196,7 @@ class Week:
         return enddate
 
     def iterdates(self) -> Iterator[date]:
-        """Return an iterator that yield datetime.date objects for all days of
-        week."""
-
+        """Return an iterator that yield date objects for all days of week."""
         startdate = self.startdate()
         for day in range(0, 7):
             yield startdate + timedelta(days=day)
