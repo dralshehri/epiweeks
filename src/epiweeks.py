@@ -34,7 +34,8 @@ class Week:
         self._method = method
 
     def __repr__(self) -> str:
-        return "Week({}, {}, {})".format(self._year, self._week, self._method)
+        class_name = self.__class__.__name__
+        return f"{class_name}({self.year}, {self.week}, {self.method})"
 
     def __str__(self) -> str:
         return self.cdcformat() if self.method == "CDC" else self.isoformat()
@@ -180,7 +181,7 @@ class Week:
         ‘YYYYWww’.
         """
 
-        return "{:04}W{:02}".format(self._year, self._week)
+        return f"{self.year:04}W{self.week:02}"
 
     def startdate(self) -> date:
         """Return date for first day of week."""
@@ -235,10 +236,11 @@ class Year:
         self._method = method
 
     def __repr__(self) -> str:
-        return "Year({}, {})".format(self._year, self._method)
+        class_name = self.__class__.__name__
+        return f"{class_name}({self.year}, {self.method})"
 
     def __str__(self) -> str:
-        return "{:04}".format(self._year)
+        return f"{self.year:04}"
 
     def __hash__(self) -> int:
         return hash((self.year, self.method))
@@ -295,7 +297,7 @@ def _check_week(year: int, week: int, method: str) -> None:
     """Check value of week."""
     weeks = _year_total_weeks(year, method)
     if not 1 <= week <= weeks:
-        raise ValueError("week must be in 1..{} for year".format(weeks))
+        raise ValueError(f"week must be in 1..{weeks} for year")
 
 
 def _check_method(method: str) -> None:
