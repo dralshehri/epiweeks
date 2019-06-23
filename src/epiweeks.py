@@ -77,12 +77,12 @@ class Week:
         if not isinstance(other, int):
             raise TypeError("second operand must be 'int'")
         new_date = self.startdate() + timedelta(weeks=other)
-        return Week.fromdate(new_date, self._method)
+        return self.__class__.fromdate(new_date, self.method)
 
     def __sub__(self, other: int) -> "Week":
         if not isinstance(other, int):
             raise TypeError("second operand must be 'int'")
-        return self + (-other)
+        return self.__add__(-other)
 
     def __contains__(self, other: date) -> bool:
         if not isinstance(other, date):
