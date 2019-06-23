@@ -5,14 +5,9 @@ from typing import Tuple, Iterator
 class Week:
     """A Week object represents a week in epidemiological week calendar."""
 
-    def __new__(cls, year: int, week: int, method: str = "cdc") -> "Week":
-        """Construct Week object after validation"""
-        _check_year(year)
-        _check_method(method)
-        _check_week(year, week, method)
-        return super().__new__(cls)
-
-    def __init__(self, year: int, week: int, method: str = "cdc") -> None:
+    def __init__(
+        self, year: int, week: int, method: str = "CDC", validate: bool = True
+    ) -> None:
         """
         :param year: Epidemiological year
         :type year: int
@@ -22,7 +17,15 @@ class Week:
             starts on Sunday or ``iso`` where the week starts on Monday
             (default is ``cdc``)
         :type method: str
+        :param validate: Whether to validate year, week and method or not
+            (default is ``True``)
+        :type validate: bool
         """
+
+        if validate:
+            _check_year(year)
+            _check_method(method)
+            _check_week(year, week, method)
 
         self._year = year
         self._week = week
@@ -102,7 +105,7 @@ class Week:
                 year += 1
                 week = 0
         week += 1
-        return _ValidatedWeek(year, week, method)
+        return cls(year, week, method, validate=False)
 
     @classmethod
     def thisweek(cls, method: str = "cdc") -> "Week":
@@ -226,16 +229,8 @@ class Year:
 
     def iterweeks(self) -> Iterator[Week]:
         """Return an iterator that yield Week objects for all weeks of year."""
-        for week in range(1, self.totalweeks + 1):
-            yield _ValidatedWeek(self._year, week, self._method)
-
-
-class _ValidatedWeek(Week):
-    """A Week object. An implementation to avoid unnecessary validation."""
-
-    def __new__(cls, *args, **kwargs) -> "Week":
-        """Construct Week object without validation"""
-        return super(Week, cls).__new__(cls)
+        for week in range(1, self.totalweeks() + 1):
+            yield Week(self.year, week, self.method, validate=False)
 
 
 def _check_year(year: int) -> None:
