@@ -118,6 +118,26 @@ class Week:
         return cls(year, week, method, validate=False)
 
     @classmethod
+    def fromstring(cls, week_string: str, method: str = "CDC") -> "Week":
+        """Construct Week object from a formatted string.
+
+        :param week_string: Week string formatted as ‘YYYYWW’, ‘YYYYWWW’,
+            or ‘YYYY-WWW’ for example ‘201908’, ‘2019W08’, or ‘2019-W08’.
+            If the string ends with weekday as in ISO formats, weekday will
+            be ignored.
+        :type week_string: str
+        :param method: Calculation method, which may be ``CDC`` where the week
+            starts on Sunday or ``ISO`` where the week starts on Monday
+            (default is ``CDC``)
+        :type method: str
+        """
+
+        week_string = week_string.replace("-", "").replace("W", "")
+        year = int(week_string[:4])
+        week = int(week_string[4:6])
+        return cls(year, week, method)
+
+    @classmethod
     def thisweek(cls, method: str = "CDC") -> "Week":
         """Construct Week object from current date.
 
