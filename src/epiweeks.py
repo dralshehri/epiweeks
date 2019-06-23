@@ -270,8 +270,8 @@ def _check_method(method: str) -> None:
     if not isinstance(method, str):
         raise TypeError("method must be a string")
     methods = ["CDC", "ISO"]
-    if method.lower() not in methods:
-        raise ValueError("method must be '{}' or '{}'".format(*methods))
+    if method.upper() not in methods:
+        raise ValueError(f"method must be '{methods[0]}' or '{methods[1]}'")
 
 
 def _method_adjustment(method: str) -> int:
