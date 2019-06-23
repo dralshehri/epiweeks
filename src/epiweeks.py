@@ -168,6 +168,13 @@ class Week:
         """Return week as a tuple of (year, week)."""
         return self._year, self._week
 
+    def cdcformat(self) -> str:
+        """Return a string representing the week in CDC format ‘YYYYWW’ for
+        example ‘201908’.
+        """
+
+        return f"{self.year:04}{self.week:02}"
+
     def isoformat(self) -> str:
         """Return a string representing the week in compact form of ISO format
         ‘YYYYWww’.
