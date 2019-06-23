@@ -39,6 +39,9 @@ class Week:
     def __str__(self) -> str:
         return self.isoformat()
 
+    def __hash__(self) -> int:
+        return hash((self.year, self.week, self.method))
+
     def __eq__(self, other: "Week") -> bool:
         return self._compare(other) == 0
 
@@ -198,6 +201,9 @@ class Year:
 
     def __str__(self) -> str:
         return "{:04}".format(self._year)
+
+    def __hash__(self) -> int:
+        return hash((self.year, self.method))
 
     @classmethod
     def thisyear(cls, method: str = "cdc") -> "Year":
