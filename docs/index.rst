@@ -241,9 +241,9 @@ caught and handled in ``try`` and ``except`` blocks:
 Validation of Input data
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Input values are by default checked if valid. Invalid input raises
-``ValueError`` exception. That can be caught and handled in ``try`` and
-``except`` blocks:
+Input values validation is enabled by default (:obj:`Week` validation can be
+disabled to improve performance). Invalid values raises ``ValueError``
+exception that can be caught and handled in ``try`` and ``except`` blocks:
 
 .. code-block:: pycon
 
@@ -251,9 +251,13 @@ Input values are by default checked if valid. Invalid input raises
    Traceback...
    ValueError: week must be in 1..52 for year
 
-   >>> Year(2019, 'mmwr')
+   >>> Week.fromstring("2019W01", "mmwr")
    Traceback...
    ValueError: method must be 'CDC' or 'ISO'
+
+   >>> Year(22019)
+   Traceback...
+   ValueError: year must be in 1..9999
 
 Online Tool
 -----------
