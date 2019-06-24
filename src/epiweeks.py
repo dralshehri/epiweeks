@@ -119,7 +119,7 @@ class Week:
         return cls(year, week, method, validate=False)
 
     @classmethod
-    def fromstring(cls, week_string: str, method: str = "CDC") -> "Week":
+    def fromstring(cls, week_string: str, method: str = "CDC", validate: bool = True) -> "Week":
         """Construct Week object from a formatted string.
 
         :param week_string: Week string formatted as ‘YYYYWW’, ‘YYYYWWW’,
@@ -131,12 +131,15 @@ class Week:
             starts on Sunday or ``ISO`` where the week starts on Monday
             (default is ``CDC``)
         :type method: str
+        :param validate: Whether to validate year, week and method or not
+            (default is ``True``)
+        :type validate: bool
         """
 
         week_string = week_string.replace("-", "").replace("W", "")
         year = int(week_string[:4])
         week = int(week_string[4:6])
-        return cls(year, week, method)
+        return cls(year, week, method, validate)
 
     @classmethod
     def thisweek(cls, method: str = "CDC") -> "Week":
