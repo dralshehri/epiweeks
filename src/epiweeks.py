@@ -119,11 +119,13 @@ class Week:
         return cls(year, week, method, validate=False)
 
     @classmethod
-    def fromstring(cls, week_string: str, method: str = "CDC", validate: bool = True) -> "Week":
+    def fromstring(
+        cls, week_string: str, method: str = "CDC", validate: bool = True
+    ) -> "Week":
         """Construct Week object from a formatted string.
 
-        :param week_string: Week string formatted as ‘YYYYWW’, ‘YYYYWWW’,
-            or ‘YYYY-WWW’ for example ‘201908’, ‘2019W08’, or ‘2019-W08’.
+        :param week_string: Week string formatted as ‘YYYYww’, ‘YYYYWww’,
+            or ‘YYYY-Www’ for example ‘201908’, ‘2019W08’, or ‘2019-W08’.
             If the string ends with weekday as in ISO formats, weekday will
             be ignored.
         :type week_string: str
@@ -173,7 +175,7 @@ class Week:
         return self._year, self._week
 
     def cdcformat(self) -> str:
-        """Return a string representing the week in CDC format ‘YYYYWW’ for
+        """Return a string representing the week in CDC format ‘YYYYww’ for
         example ‘201908’.
         """
 
@@ -181,7 +183,7 @@ class Week:
 
     def isoformat(self) -> str:
         """Return a string representing the week in ISO compact format
-        ‘YYYYWWW’ for example ‘2019W08’.
+        ‘YYYYWww’ for example ‘2019W08’.
         """
 
         return f"{self._year:04}W{self._week:02}"
@@ -212,8 +214,8 @@ class Week:
         :type weekday: int
         """
 
-        days = (_method_adjustment(self._method) + weekday) % 7
-        return self.startdate() + timedelta(days=days)
+        diff = (_method_adjustment(self._method) + weekday) % 7
+        return self.startdate() + timedelta(days=diff)
 
 
 class Year:
