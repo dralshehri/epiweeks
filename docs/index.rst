@@ -132,7 +132,7 @@ object instance. To use the ISO method instead:
    >>> Week.thisweek("ISO")
    Week(2019, 26, ISO)
 
-The instance of :obj:`Week` object has some other useful methods:
+The instance of :obj:`Week` object has also some other useful methods:
 
 .. code-block:: pycon
 
@@ -191,7 +191,7 @@ To get a list of :obj:`Week` objects for all weeks of a year:
    >>> list(Year(2019).iterweeks())
    [(Week(2019, 1, CDC), ..., Week(2019, 52, CDC))]
 
-The instance of :obj:`Year` object has some other useful methods:
+The instance of :obj:`Year` object has also some other useful methods:
 
 .. code-block:: pycon
 
@@ -209,9 +209,9 @@ The instance of :obj:`Year` object has some other useful methods:
 Generating Epidemiological Calendars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The epidemiological calendar is defined as dividing the 365 days of the year
-in 52 or 53 epidemiological weeks. This calendar can be easily generated using
-this package as demonstrated in the following two examples:
+The epidemiological calendar is defined as the division of the 365 days of the
+year into 52 or 53 epidemiological weeks. This calendar can be easily generated
+using this package as demonstrated in the following two examples.
 
 To generate a week endings calendar for a year as in
 `this document <https://wwwn.cdc.gov/nndss/document/W2018-19.pdf>`__ by CDC:
