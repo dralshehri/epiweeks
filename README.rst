@@ -57,10 +57,9 @@ Basic Usage
 
 .. code-block:: python
 
-   from datetime import date
    from epiweeks import Week, Year
 
-   week = Week.fromdate(date(2019, 1, 3))
+   week = Week(2019, 1)
    print(week.enddate())
    # 2019-01-05
 
