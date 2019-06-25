@@ -7,7 +7,7 @@ changelog = (here / "CHANGELOG.rst").read_text(encoding="utf-8")
 
 setup(
     name="epiweeks",
-    version="2.0.0rc1",
+    version="2.0.0",
     description="Epidemiological weeks based on the CDC (MMWR) and ISO (WHO) "
     "calculation methods.",
     long_description="\n".join([readme, changelog]),
@@ -30,7 +30,8 @@ setup(
         "Topic :: Scientific/Engineering",
         "Topic :: Utilities",
     ],
-    keywords="epidemiology epi weeks date calendar cdc iso",
+    keywords="epidemiology weeks cdc mmwr iso who calendar surveillance "
+    "public-health",
     py_modules=[module.stem for module in here.glob("src/*.py")],
     package_dir={"": "src"},
     include_package_data=True,
