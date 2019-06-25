@@ -41,9 +41,10 @@ Overview
 --------
 
 Epidemiological weeks, commonly referred to as "epi weeks", are simply
-a standardized method of counting weeks to allow for the comparison of
-reported public health data. Epidemiological weeks are used by the CDC, WHO,
-and many other health organizations.
+a standardized method of counting weeks as a period of time to group
+epidemiological events. That allows the comparison of reported events for
+a given year or period of a year, with that of previous years. It also
+facilitates the comparison between countries.
 
 The CDC defines epidemiological week (known as `MMWR week`_) as seven days
 beginning with Sunday and ending with Saturday. The ISO defines epidemiological
@@ -204,6 +205,70 @@ The instance of :obj:`Year` object has some other useful methods:
 
    >>> year.enddate()
    datetime.date(2019, 12, 28)
+
+Generating Epidemiological Calendars
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The epidemiological calendar is defined as dividing the 365 days of the year
+in 52 or 53 epidemiological weeks. This calendar can be easily generated using
+this package as demonstrated in the following two examples:
+
+To generate a week endings calendar for a year as in
+`this document <https://wwwn.cdc.gov/nndss/document/W2018-19.pdf>`__ by CDC:
+
+.. code-block:: python
+
+   for week in Year(2018).iterweeks():
+          day = week.enddate().day
+          month_name = week.enddate().strftime("%b")
+          row = [
+              week.week,
+              day if day // 8 else " ".join([month_name, str(day)])
+          ]
+          print(row)
+
+    # [1, 'Jan 6']
+    # [2, 13]
+    # [3, 20]
+    # [4, 27]
+    # [5, 'Feb 3']
+    # [6, 10]
+    # ...
+    # [47, 24]
+    # [48, 'Dec 1']
+    # [49, 8]
+    # [50, 15]
+    # [51, 22]
+    # [52, 29]
+
+To generate a full epidemiological calendar for a year as in
+`this document <https://www.paho.org/hq/dmdocuments/2016/2016-cha-epidemiological-calendar.pdf>`__
+by PAHO:
+
+.. code-block:: python
+
+   for week in Year(2016).iterweeks():
+       row = [
+           week.week,
+           week.startdate().strftime("%b"),
+           *[d.day for d in week.iterdates()],
+           week.enddate().strftime("%b")
+       ]
+       print(row)
+
+   # [1, 'Jan', 3, 4, 5, 6, 7, 8, 9, 'Jan']
+   # [2, 'Jan', 10, 11, 12, 13, 14, 15, 16, 'Jan']
+   # [3, 'Jan', 17, 18, 19, 20, 21, 22, 23, 'Jan']
+   # [4, 'Jan', 24, 25, 26, 27, 28, 29, 30, 'Jan']
+   # [5, 'Jan', 31, 1, 2, 3, 4, 5, 6, 'Feb']
+   # [6, 'Feb', 7, 8, 9, 10, 11, 12, 13, 'Feb']
+   # ...
+   # [47, 'Nov', 20, 21, 22, 23, 24, 25, 26, 'Nov']
+   # [48, 'Nov', 27, 28, 29, 30, 1, 2, 3, 'Dec']
+   # [49, 'Dec', 4, 5, 6, 7, 8, 9, 10, 'Dec']
+   # [50, 'Dec', 11, 12, 13, 14, 15, 16, 17, 'Dec']
+   # [51, 'Dec', 18, 19, 20, 21, 22, 23, 24, 'Dec']
+   # [52, 'Dec', 25, 26, 27, 28, 29, 30, 31, 'Dec']
 
 Rich Comparison and Logical Operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
