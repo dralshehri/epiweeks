@@ -1,5 +1,5 @@
-from setuptools import setup, find_packages
 import pathlib
+from setuptools import setup
 
 here = pathlib.Path(__file__).parent
 readme = (here / "README.rst").read_text(encoding="utf-8")
@@ -7,14 +7,13 @@ changelog = (here / "CHANGELOG.rst").read_text(encoding="utf-8")
 
 setup(
     name="epiweeks",
-    version="1.0.0",
-    description="Epidemiological weeks by US CDC and WHO calculation methods.",
-    long_description=readme + "\n" + changelog,
-    url="",
-    project_urls={
-        "Source Code": "https://github.com/dralshehri/epi-weeks",
-        "Documentation": "https://epiweeks.readthedocs.io/en/latest",
-    },
+    version="2.0.0rc1",
+    description="Epidemiological weeks based on the CDC (MMWR) and ISO (WHO) "
+    "calculation methods.",
+    long_description="\n".join([readme, changelog]),
+    long_description_content_type="text/x-rst",
+    url="https://github.com/dralshehri/epiweeks",
+    project_urls={"Documentation": "https://epiweeks.readthedocs.io/"},
     author="Mohammed Alshehri",
     author_email="",
     license="MIT",
@@ -26,15 +25,14 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Topic :: Scientific/Engineering",
         "Topic :: Utilities",
     ],
-    keywords="epidemiology epi weeks date calendar cdc who",
+    keywords="epidemiology epi weeks date calendar cdc iso",
     py_modules=[module.stem for module in here.glob("src/*.py")],
     package_dir={"": "src"},
     include_package_data=True,
-    python_requires=">=3.5",
+    python_requires=">=3.6",
 )
