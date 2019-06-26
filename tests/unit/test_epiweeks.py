@@ -5,12 +5,12 @@ from datetime import date, timedelta
 
 @pytest.fixture(scope="module")
 def week_cdc():
-    return epiweeks.Week(2015, 1, "CDC")
+    return epiweeks.Week(2015, 1, system="cdc")
 
 
 @pytest.fixture(scope="module")
 def week_iso():
-    return epiweeks.Week(2015, 1, "ISO")
+    return epiweeks.Week(2015, 1, system="iso")
 
 
 def test_week_representation(week_cdc, week_iso):
@@ -29,31 +29,31 @@ def test_week_hash(week_cdc, week_iso):
 
 
 def test_week_equality(week_cdc, week_iso):
-    assert week_cdc == epiweeks.Week(2015, 1, "CDC")
-    assert week_cdc != epiweeks.Week(2014, 1, "CDC")
-    assert week_iso == epiweeks.Week(2015, 1, "ISO")
-    assert week_iso != epiweeks.Week(2014, 1, "ISO")
+    assert week_cdc == epiweeks.Week(2015, 1, system="cdc")
+    assert week_cdc != epiweeks.Week(2014, 1, system="cdc")
+    assert week_iso == epiweeks.Week(2015, 1, system="iso")
+    assert week_iso != epiweeks.Week(2014, 1, system="iso")
 
 
 def test_week_ordering(week_cdc, week_iso):
-    assert week_cdc > epiweeks.Week(2014, 53, "CDC")
-    assert week_cdc >= epiweeks.Week(2015, 1, "CDC")
-    assert week_cdc < epiweeks.Week(2015, 2, "CDC")
-    assert week_cdc <= epiweeks.Week(2015, 1, "CDC")
-    assert week_iso > epiweeks.Week(2014, 52, "ISO")
-    assert week_iso >= epiweeks.Week(2015, 1, "ISO")
-    assert week_iso < epiweeks.Week(2015, 2, "ISO")
-    assert week_iso <= epiweeks.Week(2015, 1, "ISO")
+    assert week_cdc > epiweeks.Week(2014, 53, system="cdc")
+    assert week_cdc >= epiweeks.Week(2015, 1, system="cdc")
+    assert week_cdc < epiweeks.Week(2015, 2, system="cdc")
+    assert week_cdc <= epiweeks.Week(2015, 1, system="cdc")
+    assert week_iso > epiweeks.Week(2014, 52, system="iso")
+    assert week_iso >= epiweeks.Week(2015, 1, system="iso")
+    assert week_iso < epiweeks.Week(2015, 2, system="iso")
+    assert week_iso <= epiweeks.Week(2015, 1, system="iso")
 
 
 def test_week_addition(week_cdc, week_iso):
-    assert (week_cdc + 1) == epiweeks.Week(2015, 2, "CDC")
-    assert (week_iso + 1) == epiweeks.Week(2015, 2, "ISO")
+    assert (week_cdc + 1) == epiweeks.Week(2015, 2, system="cdc")
+    assert (week_iso + 1) == epiweeks.Week(2015, 2, system="iso")
 
 
 def test_week_subtracting(week_cdc, week_iso):
-    assert (week_cdc - 1) == epiweeks.Week(2014, 53, "CDC")
-    assert (week_iso - 1) == epiweeks.Week(2014, 52, "ISO")
+    assert (week_cdc - 1) == epiweeks.Week(2014, 53, system="cdc")
+    assert (week_iso - 1) == epiweeks.Week(2014, 52, system="iso")
 
 
 def test_week_containment(week_cdc, week_iso):
@@ -73,7 +73,7 @@ def test_week_comparison_exception(week_cdc, week_iso, test_input):
         getattr(week_cdc, test_input)(week_iso)
     assert (
         str(e.value) == "can't compare 'Week' objects with different "
-        "calculation methods"
+        "numbering systems"
     )
 
 
@@ -95,14 +95,14 @@ def test_week_operator_exception(week_cdc, week_iso, test_input, expected):
 @pytest.mark.parametrize(
     "test_input, expected",
     [
-        ((date(2014, 12, 28), "CDC"), (2014, 53)),
-        ((date(2014, 12, 28), "ISO"), (2014, 52)),
-        ((date(2015, 1, 2), "CDC"), (2014, 53)),
-        ((date(2015, 1, 2), "ISO"), (2015, 1)),
-        ((date(2016, 2, 14), "CDC"), (2016, 7)),
-        ((date(2016, 2, 14), "ISO"), (2016, 6)),
-        ((date(2017, 12, 31), "CDC"), (2018, 1)),
-        ((date(2017, 12, 31), "ISO"), (2017, 52)),
+        ((date(2014, 12, 28), "cdc"), (2014, 53)),
+        ((date(2014, 12, 28), "iso"), (2014, 52)),
+        ((date(2015, 1, 2), "cdc"), (2014, 53)),
+        ((date(2015, 1, 2), "iso"), (2015, 1)),
+        ((date(2016, 2, 14), "cdc"), (2016, 7)),
+        ((date(2016, 2, 14), "iso"), (2016, 6)),
+        ((date(2017, 12, 31), "cdc"), (2018, 1)),
+        ((date(2017, 12, 31), "iso"), (2017, 52)),
     ],
 )
 def test_week_fromdate(test_input, expected):
@@ -113,13 +113,13 @@ def test_week_fromdate(test_input, expected):
 @pytest.mark.parametrize(
     "test_input, expected",
     [
-        (("201453", "CDC"), (2014, 53)),
-        (("201607", "CDC"), (2016, 7)),
-        (("2014W52", "ISO"), (2014, 52)),
-        (("2015W01", "ISO"), (2015, 1)),
-        (("2016-W06", "ISO"), (2016, 6)),
-        (("2018-W01-2", "ISO"), (2018, 1)),
-        (("2017W527", "ISO"), (2017, 52)),
+        (("201453", "cdc"), (2014, 53)),
+        (("201607", "cdc"), (2016, 7)),
+        (("2014W52", "iso"), (2014, 52)),
+        (("2015W01", "iso"), (2015, 1)),
+        (("2016-W06", "iso"), (2016, 6)),
+        (("2018-W01-2", "iso"), (2018, 1)),
+        (("2017W527", "iso"), (2017, 52)),
     ],
 )
 def test_week_fromstring(test_input, expected):
@@ -128,11 +128,11 @@ def test_week_fromstring(test_input, expected):
 
 
 def test_week_thisweek():
-    cdc_week = epiweeks.Week.thisweek("CDC")
+    cdc_week = epiweeks.Week.thisweek(system="cdc")
     cdc_diff = (date.today().weekday() + 1) % 7
     cdc_startdate = date.today() - timedelta(days=cdc_diff)
     assert cdc_week.startdate() == cdc_startdate
-    iso_week = epiweeks.Week.thisweek("ISO")
+    iso_week = epiweeks.Week.thisweek(system="iso")
     iso_diff = date.today().isoweekday() - 1
     iso_startdate = date.today() - timedelta(days=iso_diff)
     assert iso_week.startdate() == iso_startdate
@@ -148,9 +148,9 @@ def test_week_number(week_cdc, week_iso):
     assert week_iso.week == 1
 
 
-def test_week_method(week_cdc, week_iso):
-    assert week_cdc.method == "CDC"
-    assert week_iso.method == "ISO"
+def test_week_system(week_cdc, week_iso):
+    assert week_cdc.system == "CDC"
+    assert week_iso.system == "ISO"
 
 
 def test_weektuple(week_cdc, week_iso):
@@ -226,12 +226,12 @@ def test_week_daydate(week_cdc, week_iso):
 
 @pytest.fixture(scope="module")
 def year_cdc():
-    return epiweeks.Year(2015, "CDC")
+    return epiweeks.Year(2015, system="cdc")
 
 
 @pytest.fixture(scope="module")
 def year_iso():
-    return epiweeks.Year(2015, "ISO")
+    return epiweeks.Year(2015, system="iso")
 
 
 def test_year_repr(year_cdc, year_iso):
@@ -250,10 +250,10 @@ def test_year_hash(year_cdc, year_iso):
 
 def test_year_thisyear():
     today_year = date.today().year
-    cdc_year = epiweeks.Year.thisyear("CDC")
-    cdc_year_start = epiweeks._year_start(today_year, "CDC")
-    iso_year = epiweeks.Year.thisyear("ISO")
-    iso_year_start = epiweeks._year_start(today_year, "ISO")
+    cdc_year = epiweeks.Year.thisyear(system="cdc")
+    cdc_year_start = epiweeks._year_start(today_year, system="cdc")
+    iso_year = epiweeks.Year.thisyear(system="iso")
+    iso_year_start = epiweeks._year_start(today_year, system="iso")
     assert cdc_year.startdate().toordinal() == cdc_year_start
     assert iso_year.startdate().toordinal() == iso_year_start
 
@@ -263,9 +263,9 @@ def test_year_number(year_cdc, year_iso):
     assert year_iso.year == 2015
 
 
-def test_year_method(year_cdc, year_iso):
-    assert year_cdc.method == "CDC"
-    assert year_iso.method == "ISO"
+def test_year_system(year_cdc, year_iso):
+    assert year_cdc.system == "CDC"
+    assert year_iso.system == "ISO"
 
 
 def test_year_totalweeks(year_cdc, year_iso):
@@ -290,21 +290,21 @@ def test_year_weeks(year_cdc, year_iso):
     assert list(year_cdc.iterweeks()) == cdc_weeks
     iso_weeks = []
     for w in range(1, 54):
-        iso_weeks.append(epiweeks.Week(2015, w, "ISO"))
+        iso_weeks.append(epiweeks.Week(2015, w, system="iso"))
     assert list(year_iso.iterweeks()) == iso_weeks
 
 
 def test_check_valid_week():
     try:
-        epiweeks._check_week(2015, 53, "ISO")
+        epiweeks._check_week(2015, 53, system="iso")
     except ValueError:
         pytest.fail("week should be valid")
 
 
 def test_check_invalid_week():
     with pytest.raises(ValueError) as e:
-        epiweeks._check_week(2015, 0, "CDC")
-        epiweeks._check_week(2015, 53, "CDC")
+        epiweeks._check_week(2015, 0, system="cdc")
+        epiweeks._check_week(2015, 53, system="cdc")
     assert str(e.value) == "week must be in 1..52 for year"
 
 
@@ -322,36 +322,36 @@ def test_check_invalid_year():
     assert str(e.value) == "year must be in 1..9999"
 
 
-def test_check_valid_method():
+def test_check_valid_system():
     try:
-        epiweeks._check_method("CDC")
-        epiweeks._check_method("cdc")
-        epiweeks._check_method("ISO")
-        epiweeks._check_method("iso")
+        epiweeks._check_system("CDC")
+        epiweeks._check_system("cdc")
+        epiweeks._check_system("ISO")
+        epiweeks._check_system("iso")
     except ValueError:
         pytest.fail("method should be valid")
 
 
-def test_check_invalid_method():
+def test_check_invalid_system():
     with pytest.raises(ValueError) as e:
-        epiweeks._check_method("mmwr")
-    assert str(e.value) == "method must be 'CDC' or 'ISO'"
+        epiweeks._check_system("mmwr")
+    assert str(e.value) == "system must be 'cdc' or 'iso'"
 
 
-@pytest.mark.parametrize("test_input, expected", [("CDC", 1), ("ISO", 0)])
-def test_method_adjustment(test_input, expected):
-    assert epiweeks._method_adjustment(test_input) == expected
+@pytest.mark.parametrize("test_input, expected", [("cdc", 1), ("iso", 0)])
+def test_system_adjustment(test_input, expected):
+    assert epiweeks._system_adjustment(test_input) == expected
 
 
 @pytest.mark.parametrize(
-    "test_input, expected", [((2015, "CDC"), 735602), ((2015, "ISO"), 735596)]
+    "test_input, expected", [((2015, "cdc"), 735602), ((2015, "iso"), 735596)]
 )
 def test_year_start_ordinal(test_input, expected):
     assert epiweeks._year_start(*test_input) == expected
 
 
 @pytest.mark.parametrize(
-    "test_input, expected", [((2015, "CDC"), 52), ((2015, "ISO"), 53)]
+    "test_input, expected", [((2015, "cdc"), 52), ((2015, "iso"), 53)]
 )
 def test_year_total_weeks(test_input, expected):
     assert epiweeks._year_total_weeks(*test_input) == expected
