@@ -2,7 +2,7 @@ Epi Weeks
 =========
 
 A Python package to calculate epidemiological weeks using the CDC (MMWR) and
-ISO (WHO) calculation methods.
+ISO week numbering systems.
 
 |travis| |codecov| |docs| |supported| |version| |license|
 
@@ -41,17 +41,23 @@ Overview
 --------
 
 Epidemiological weeks, commonly referred to as "epi weeks", are simply
-a standardized method of counting weeks as a period of time to group
+a standardized method for numbering weeks as a period of time to group
 epidemiological events. That allows the comparison of reported events for
 a given year or period of a year, with that of previous years. It also
 facilitates the comparison between countries.
 
-The CDC defines epidemiological week (known as `MMWR week`_) as seven days
-beginning with Sunday and ending with Saturday. The ISO defines epidemiological
-week (known as `ISO week`_) as seven days beginning with Monday and ending with
-Sunday. In either case, the end of the first epidemiological week of the year
-by definition must fall at least four days into the year. Most years have 52
-epidemiological weeks, but some have 53.
+There are several systems for numbering weeks. The most common systems when it
+comes to epidemiological weeks are the CDC and ISO systems. The CDC system is
+used in countries including United States, Canada, Australia, India, Egypt,
+and Saudi Arabia. The ISO system is used in all European and most of Asian
+countries.
+
+The CDC defines the week (`MMWR week`_) as seven days beginning with Sunday
+and ending with Saturday. The ISO defines the week (`ISO week`_) as seven days
+beginning with Monday and ending with Sunday. In either case, the end of the
+first week of the year by definition must fall at least four days into the
+year. Week numbers range from 1 to 53 for year, although most years consist of
+52 weeks.
 
 .. _`MMWR week`: https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf
 .. _`ISO week`: https://en.wikipedia.org/wiki/ISO_week_date
@@ -59,9 +65,9 @@ epidemiological weeks, but some have 53.
 Features
 --------
 
-- Accurate and tested calculation.
+- Support for both the CDC (MMWR) and ISO week numbering systems.
+- Accurate and tested calculations.
 - Intuitive, clean, and easy-to-use interface.
-- Support for both CDC (MMWR) and ISO (WHO) calculation methods.
 - Calculation of start and end dates of week.
 - Iteration of year's weeks or week's dates.
 - Rich comparison between weeks.
@@ -79,6 +85,9 @@ Installation
 
 Usage Examples
 --------------
+
+Importing the Package
+~~~~~~~~~~~~~~~~~~~~~
 
 To import the package:
 
@@ -113,23 +122,23 @@ formatted string, or current date:
    >>> Week.thisweek()
    Week(2019, 26, CDC)
 
-By default, the CDC calculation method is assumed when creating the :obj:`Week`
-object instance. To use the ISO method instead:
+By default, the CDC system is assumed when creating the :obj:`Week` object
+instance. To use the ISO system instead:
 
 .. code-block:: pycon
 
-   >>> Week(2019, 1, "ISO")
+   >>> Week(2019, 1, system="iso")
    Week(2019, 1, ISO)
 
    >>> from datetime import date
    >>> my_date = date(2018, 12, 30)
-   >>> Week.fromdate(my_date, "ISO")
+   >>> Week.fromdate(my_date, system="iso")
    Week(2018, 52, ISO)
 
-   >>> Week.fromstring("2019W01", "ISO")
+   >>> Week.fromstring("2019W01", system="iso")
    Week(2019, 1, ISO)
 
-   >>> Week.thisweek("ISO")
+   >>> Week.thisweek(system="iso")
    Week(2019, 26, ISO)
 
 The instance of :obj:`Week` object has also some other useful methods:
@@ -173,15 +182,15 @@ or from current date:
    >>> Year.thisyear()
    Year(2019, CDC)
 
-By default, the CDC calculation method is assumed when creating the :obj:`Year`
-object instance. To use the ISO method instead:
+By default, the CDC system is assumed when creating the :obj:`Year` object
+instance. To use the ISO system instead:
 
 .. code-block:: pycon
 
-   >>> Year(2018, "ISO")
+   >>> Year(2018, system="iso")
    Year(2018, ISO)
 
-   >>> Year.thisyear("ISO")
+   >>> Year.thisyear(system="iso")
    Year(2019, ISO)
 
 To get a list of :obj:`Week` objects for all weeks of a year:
@@ -209,9 +218,8 @@ The instance of :obj:`Year` object has also some other useful methods:
 Generating Epidemiological Calendars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The epidemiological calendar is defined as the division of the 365 days of the
-year into 52 or 53 epidemiological weeks. This calendar can be easily generated
-using this package as demonstrated in the following two examples.
+The epidemiological calendar can be easily generated using this package as
+demonstrated in the following two examples.
 
 To generate a week endings calendar for a year as in
 `this document <https://wwwn.cdc.gov/nndss/document/W2018-19.pdf>`__ by CDC:
@@ -219,27 +227,27 @@ To generate a week endings calendar for a year as in
 .. code-block:: python
 
    for week in Year(2018).iterweeks():
-          day = week.enddate().day
-          month_name = week.enddate().strftime("%b")
-          row = [
-              week.week,
-              day if day // 8 else " ".join([month_name, str(day)])
-          ]
-          print(row)
+       day = week.enddate().day
+       month_name = week.enddate().strftime("%b")
+       row = [
+           week.week,
+           day if day // 8 else " ".join([month_name, str(day)])
+       ]
+       print(row)
 
-    # [1, 'Jan 6']
-    # [2, 13]
-    # [3, 20]
-    # [4, 27]
-    # [5, 'Feb 3']
-    # [6, 10]
-    # ...
-    # [47, 24]
-    # [48, 'Dec 1']
-    # [49, 8]
-    # [50, 15]
-    # [51, 22]
-    # [52, 29]
+   # [1, 'Jan 6']
+   # [2, 13]
+   # [3, 20]
+   # [4, 27]
+   # [5, 'Feb 3']
+   # [6, 10]
+   # ...
+   # [47, 24]
+   # [48, 'Dec 1']
+   # [49, 8]
+   # [50, 15]
+   # [51, 22]
+   # [52, 29]
 
 To generate a full epidemiological calendar for a year as in
 `this document <https://www.paho.org/hq/dmdocuments/2016/2016-cha-epidemiological-calendar.pdf>`__
@@ -316,9 +324,9 @@ exception that can be caught and handled in ``try`` and ``except`` blocks:
    Traceback...
    ValueError: week must be in 1..52 for year
 
-   >>> Week.fromstring("2019W01", "mmwr")
+   >>> Week.fromstring("2019W01", system="mmwr")
    Traceback...
-   ValueError: method must be 'CDC' or 'ISO'
+   ValueError: method must be 'cdc' or 'iso'
 
    >>> Year(22019)
    Traceback...
@@ -327,8 +335,8 @@ exception that can be caught and handled in ``try`` and ``except`` blocks:
 Online Tool
 -----------
 
-The following is a simple online calculation tool that was developed to
-calculate epidemiological weeks by the CDC method using the latest version of
+The following is a simple online tool that was developed to calculate
+epidemiological weeks (CDC system only) using the latest version of
 this package:
 
 https://www.dralshehri.com/epiweeks/
