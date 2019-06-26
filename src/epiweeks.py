@@ -311,11 +311,9 @@ def _check_system(system: str) -> None:
 
 
 def _system_adjustment(system: str) -> int:
-    """Return needed adjustment based on first day of week."""
-    first_day = ("Mon", "Sun")
-    if system.upper() == "CDC":
-        return first_day.index("Sun")
-    return first_day.index("Mon")
+    """Return needed adjustment based on week numbering system."""
+    systems = ("iso", "cdc")  # Monday, Sunday
+    return systems.index(system.lower())
 
 
 def _year_start(year: int, system: str) -> int:
