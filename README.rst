@@ -2,7 +2,7 @@ Epi Weeks
 =========
 
 A Python package to calculate epidemiological weeks using the CDC (MMWR) and
-ISO (WHO) calculation methods.
+ISO week numbering systems.
 
 |travis| |codecov| |docs| |supported| |version| |license|
 
@@ -34,9 +34,9 @@ ISO (WHO) calculation methods.
 Features
 --------
 
-- Accurate and tested calculation.
+- Support for both the CDC (MMWR) and ISO week numbering systems.
+- Accurate and tested calculations.
 - Intuitive, clean, and easy-to-use interface.
-- Support for both CDC (MMWR) and ISO (WHO) calculation methods.
 - Calculation of start and end dates of week.
 - Iteration of year's weeks or week's dates.
 - Rich comparison between weeks.
@@ -74,8 +74,8 @@ Basic Usage
 Online Tool
 -----------
 
-The following is a simple online calculation tool that was developed to
-calculate epidemiological weeks by the CDC method using the latest version of
+The following is a simple online tool that was developed to calculate
+epidemiological weeks (CDC system only) using the latest version of
 this package:
 
 https://www.dralshehri.com/epiweeks/
