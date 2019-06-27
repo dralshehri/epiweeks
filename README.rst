@@ -37,13 +37,13 @@ Features
 - Support for both the CDC (MMWR) and ISO week numbering systems.
 - Accurate and tested calculations.
 - Intuitive, clean, and easy-to-use interface.
-- Calculation of start and end dates of week.
+- Calculation of the start and end dates of weeks.
 - Iteration of year's weeks or week's dates.
 - Rich comparison between weeks.
 - Logical operations for weeks (addition, subtraction and containment).
 - Validation of input data.
 - Works on Python 3.6+ with zero dependencies.
-- Thoroughly tested on all supported python versions.
+- Thoroughly tested on all supported Python versions.
 
 Installation
 ------------
