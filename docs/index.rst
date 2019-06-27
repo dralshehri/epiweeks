@@ -42,25 +42,36 @@ Overview
 
 Epidemiological weeks, commonly referred to as "epi weeks", are simply
 a standardized method for numbering weeks as a period of time to group
-epidemiological events. That allows the comparison of reported events for
-a given year or period of a year, with that of previous years. It also
-facilitates the comparison between countries.
+epidemiological events. This method allows for the comparison of reported
+events for a given year, or period of a year, with those of previous years.
+It also facilitates similar comparison between countries.
 
 There are several systems for numbering weeks. The most common systems when it
 comes to epidemiological weeks are the CDC and ISO systems. The CDC system is
-used in countries including United States, Canada, Australia, India, Egypt,
-and Saudi Arabia. The ISO system is used in all European and most of Asian
-countries.
+used in countries such as the United States, Canada, Australia, India, Egypt,
+and Saudi Arabia. The ISO system is used in all European countries and most of
+Asian ones.
 
-The CDC defines the week (`MMWR week`_) as seven days beginning with Sunday
-and ending with Saturday. The ISO defines the week (`ISO week`_) as seven days
+The CDC defines the week (`MMWR week`_) as seven days, beginning with Sunday
+and ending with Saturday. The ISO defines the week (`ISO week`_) as seven days,
 beginning with Monday and ending with Sunday. In either case, the end of the
-first week of the year by definition must fall at least four days into the
-year. Week numbers range from 1 to 53 for year, although most years consist of
-52 weeks.
+first week of the year, by definition, must fall at least four days into the
+year. Week numbers range from 1 to 53 for year, although most years consist
+of 52 weeks.
+
+Public health professionals, analysts, researchers, and developers need to
+have a tested and reliable tool for calculating epidemiological weeks.
+The `Epi Weeks`_ package provides that functionality using both the CDC and
+ISO week numbering systems. It has been carefully tested against original
+resources, including the `MMWR Weeks Calendars`_ published by the CDC, to
+ensure its accuracy and reliability. *Epi Weeks* package can be used in many
+ways, from identifying the week of a date or the ending date for a week, to
+generating a full epidemiological calendar.
 
 .. _`MMWR week`: https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf
 .. _`ISO week`: https://en.wikipedia.org/wiki/ISO_week_date
+.. _`Epi Weeks`: https://pypi.org/project/epiweeks/
+.. _`MMWR Weeks Calendars`: https://wwwn.cdc.gov/nndss/downloads.html
 
 Features
 --------
@@ -68,13 +79,13 @@ Features
 - Support for both the CDC (MMWR) and ISO week numbering systems.
 - Accurate and tested calculations.
 - Intuitive, clean, and easy-to-use interface.
-- Calculation of start and end dates of week.
+- Calculation of the start and end dates of weeks.
 - Iteration of year's weeks or week's dates.
 - Rich comparison between weeks.
 - Logical operations for weeks (addition, subtraction and containment).
 - Validation of input data.
 - Works on Python 3.6+ with zero dependencies.
-- Thoroughly tested on all supported python versions.
+- Thoroughly tested on all supported Python versions.
 
 Installation
 ------------
