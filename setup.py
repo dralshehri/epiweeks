@@ -30,6 +30,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Topic :: Scientific/Engineering",
         "Topic :: Utilities",
+        "Typing :: Typed"
     ],
     keywords="epidemiology weeks cdc mmwr iso calendar surveillance "
     "public-health",
