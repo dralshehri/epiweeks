@@ -63,11 +63,11 @@ class Week:
         class_name = self.__class__.__name__
         other_name = type(other).__name__
         if not isinstance(other, self.__class__):
-            raise TypeError(f"can't compare '{class_name}' to '{other_name}'")
+            raise TypeError(f"Can't compare '{class_name}' to '{other_name}'")
         if self._system != other._system:
             raise TypeError(
-                f"can't compare '{class_name}' objects with different "
-                f"numbering systems"
+                f"Can't compare '{class_name}' objects with different "
+                f"numbering systems: '{self._system}' and '{other._system}'"
             )
         x = self.weektuple()
         y = other.weektuple()
@@ -75,18 +75,18 @@ class Week:
 
     def __add__(self, other: int) -> "Week":
         if not isinstance(other, int):
-            raise TypeError("second operand must be 'int'")
+            raise TypeError(f"Second operand must be 'int': {type(other).__name__}")
         new_date = self.startdate() + timedelta(weeks=other)
         return self.__class__.fromdate(new_date, self._system)
 
     def __sub__(self, other: int) -> "Week":
         if not isinstance(other, int):
-            raise TypeError("second operand must be 'int'")
+            raise TypeError(f"Second operand must be 'int': {type(other).__name__}")
         return self.__add__(-other)
 
     def __contains__(self, other: date) -> bool:
         if not isinstance(other, date):
-            raise TypeError("tested operand must be 'datetime.date' object")
+            raise TypeError(f"Tested operand must be 'datetime.date' object: {type(other).__name__}")
         return other in self.iterdates()
 
     @classmethod
@@ -139,7 +139,7 @@ class Week:
         """
 
         week_string = week_string.replace("-", "").replace("W", "")
-        year = int(week_string[:4])
+        year = int(week_string[0:4])
         week = int(week_string[4:6])
         return cls(year, week, system, validate)
 
@@ -293,21 +293,21 @@ class Year:
 def _check_year(year: int) -> None:
     """Check value of year."""
     if not 1 <= year <= 9999:
-        raise ValueError("year must be in 1..9999")
+        raise ValueError(f"Year must be in 1..9999: {year}")
 
 
 def _check_week(year: int, week: int, system: str) -> None:
     """Check value of week."""
     weeks = _year_total_weeks(year, system)
     if not 1 <= week <= weeks:
-        raise ValueError(f"week must be in 1..{weeks} for year")
+        raise ValueError(f"Week must be in 1..{weeks} for year: {week}")
 
 
 def _check_system(system: str) -> None:
     """Check value of week numbering system."""
     systems = ("cdc", "iso")
     if system.lower() not in systems:
-        raise ValueError(f"system must be '{systems[0]}' or '{systems[1]}'")
+        raise ValueError(f"System must be in {systems}: '{system}'")
 
 
 def _system_adjustment(system: str) -> int:

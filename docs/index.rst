@@ -320,7 +320,7 @@ caught and handled in ``try`` and ``except`` blocks:
 
    >>> week1 == "2019W01"
    Traceback...
-   TypeError: can't compare 'Week' to 'str'
+   TypeError: Can't compare 'Week' to 'str'
 
 Validation of Input data
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -333,15 +333,15 @@ exception that can be caught and handled in ``try`` and ``except`` blocks:
 
    >>> Week(2018, 53)
    Traceback...
-   ValueError: week must be in 1..52 for year
+   ValueError: Week must be in 1..52 for year: 53
 
    >>> Week.fromstring("2019W01", system="mmwr")
    Traceback...
-   ValueError: method must be 'cdc' or 'iso'
+   ValueError: System must be in ('cdc', 'iso'): 'mmwr'
 
    >>> Year(22019)
    Traceback...
-   ValueError: year must be in 1..9999
+   ValueError: Year must be in 1..9999: 22019
 
 Online Tool
 -----------

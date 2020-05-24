@@ -68,28 +68,28 @@ def test_week_comparison_exception(week_cdc, week_iso, test_input):
     with pytest.raises(TypeError) as e:
         getattr(week_cdc, test_input)("w")
         getattr(week_iso, test_input)("w")
-    assert str(e.value) == "can't compare 'Week' to 'str'"
+    assert str(e.value) == "Can't compare 'Week' to 'str'"
     with pytest.raises(TypeError) as e:
         getattr(week_cdc, test_input)(week_iso)
     assert (
-        str(e.value) == "can't compare 'Week' objects with different "
-        "numbering systems"
+        str(e.value) == "Can't compare 'Week' objects with different "
+        "numbering systems: 'CDC' and 'ISO'"
     )
 
 
 @pytest.mark.parametrize(
     "test_input, expected",
     [
-        ("__add__", "second operand must be 'int'"),
-        ("__sub__", "second operand must be 'int'"),
-        ("__contains__", "tested operand must be 'datetime.date' object"),
+        ("__add__", "Second operand must be 'int'"),
+        ("__sub__", "Second operand must be 'int'"),
+        ("__contains__", "Tested operand must be 'datetime.date' object"),
     ],
 )
 def test_week_operator_exception(week_cdc, week_iso, test_input, expected):
     with pytest.raises(TypeError) as e:
         getattr(week_cdc, test_input)("w")
         getattr(week_iso, test_input)("w")
-    assert str(e.value) == expected
+    assert str(e.value) == f"{expected}: {type('w').__name__}"
 
 
 @pytest.mark.parametrize(
@@ -298,28 +298,28 @@ def test_check_valid_week():
     try:
         epiweeks._check_week(2015, 53, system="iso")
     except ValueError:
-        pytest.fail("week should be valid")
+        pytest.fail("Week should be valid")
 
 
 def test_check_invalid_week():
     with pytest.raises(ValueError) as e:
-        epiweeks._check_week(2015, 0, system="cdc")
-        epiweeks._check_week(2015, 53, system="cdc")
-    assert str(e.value) == "week must be in 1..52 for year"
+        for w in [0, 53]:
+            epiweeks._check_week(2015, w, system="cdc")
+            assert str(e.value) == f"Week must be in 1..52 for year: {w}"
 
 
 def test_check_valid_year():
     try:
         epiweeks._check_year(2018)
     except ValueError:
-        pytest.fail("year should be valid")
+        pytest.fail("Year should be valid")
 
 
 def test_check_invalid_year():
     with pytest.raises(ValueError) as e:
-        epiweeks._check_year(0)
-        epiweeks._check_year(20155)
-    assert str(e.value) == "year must be in 1..9999"
+        for y in [0, 20155]:
+            epiweeks._check_year(y)
+            assert str(e.value) == f"Year must be in 1..9999: {y}"
 
 
 def test_check_valid_system():
@@ -329,13 +329,13 @@ def test_check_valid_system():
         epiweeks._check_system("ISO")
         epiweeks._check_system("iso")
     except ValueError:
-        pytest.fail("method should be valid")
+        pytest.fail("System should be valid")
 
 
 def test_check_invalid_system():
     with pytest.raises(ValueError) as e:
         epiweeks._check_system("mmwr")
-    assert str(e.value) == "system must be 'cdc' or 'iso'"
+    assert str(e.value) == "System must be in ('cdc', 'iso'): 'mmwr'"
 
 
 @pytest.mark.parametrize("test_input, expected", [("cdc", 1), ("iso", 0)])
