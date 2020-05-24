@@ -1,6 +1,12 @@
 Change Log
 ----------
 
+**2.1.2**
+
+- Improved exception messages by including the type or value used.
+- Improved PyPI packaging by removing unnecessary files.
+- Updated related tests and documentations.
+
 **2.1.1**
 
 - Fixed some typos.
