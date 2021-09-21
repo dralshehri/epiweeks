@@ -1,5 +1,7 @@
 from datetime import date, timedelta
-from typing import Tuple, Iterator
+from typing import Iterator, Tuple
+
+__version__ = "2.1.2"
 
 
 class Week:
