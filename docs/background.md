@@ -4,7 +4,7 @@ hide-toc: true
 
 # Background
 
-**Epi Weeks** is a Python package to calculate epidemiological weeks using the US CDC
+**`epiweeks`** is a Python package to calculate epidemiological weeks using the US CDC
 (MMWR) and ISO week numbering systems. Epidemiological weeks, commonly referred to as
 "epi weeks", are simply a standardized method for numbering weeks as a period of time
 to group epidemiological events. This method allows for the comparison of reported
@@ -23,12 +23,12 @@ year, by definition, must fall at least four days into the year. Week numbers ra
 from 1 to 53 for year, although most years consist of 52 weeks.
 
 Public health professionals, analysts, researchers, and developers need to have a
-tested and reliable tool for calculating epidemiological weeks. The **Epi Weeks**
+tested and reliable tool for calculating epidemiological weeks. The **`epiweeks`**
 package provides that functionality using both the US CDC and ISO week numbering
 systems. It has been carefully tested against original resources, including the
 [MMWR Weeks Calendars] published by the US CDC, to ensure its accuracy and reliability.
-**Epi Weeks** package can be used in many ways, from identifying the week of a date or
-the ending date for a week, to generating a full epidemiological calendar.
+The **`epiweeks`** package can be used in many ways, from identifying the week of
+a date or the ending date for a week, to generating a full epidemiological calendar.
 
 [MMWR week]: https://ndc.services.cdc.gov/wp-content/uploads/MMWR_Week_overview.pdf
 [ISO week]: https://en.wikipedia.org/wiki/ISO_week_date

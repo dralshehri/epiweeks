@@ -8,25 +8,30 @@ import sys
 from pathlib import Path
 
 package_name = "epiweeks"
-package_path = Path("../src")
-sys.path.append(str(package_path.resolve()))
+package_path = Path("../src").joinpath(package_name).resolve()
+
+sys.path.append(str(package_path.parent))
+
+
+def read_version():
+    content = package_path.joinpath("__init__.py").read_text()
+    pattern = re.compile(r"(?<=__version__\s=\s\").*(?=\")")
+    return pattern.search(content).group()
 
 
 # -- Project information ---------------------------------------------------------------
 
-project = "Epi Weeks"
+project = "epiweeks"  # project name at PyPI and GitHub
 author = "Mohd Alshehri (@dralshehri)"
 project_copyright = "2018 Mohd Alshehri (@dralshehri) and contributors"
-
-init_file_content = package_path.joinpath(f"{package_name}.py").read_text()
-version = re.search(r"(?<=__version__\s=\s\").*(?=\")", init_file_content).group()
+version = read_version()
 
 #
 # -- General configuration -------------------------------------------------------------
 #
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
+    "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
     "myst_parser",
     "notfound.extension",
@@ -40,6 +45,7 @@ source_suffix = {
     ".md": "markdown",
 }
 pygments_style = "colorful"
+add_module_names = False
 
 #
 # -- Options for autodoc ---------------------------------------------------------------
@@ -48,11 +54,10 @@ autodoc_default_options = {
     "members": True,
     "member-order": "bysource",
     "undoc-members": False,
-    "show_inheritance": True,
+    "show-inheritance": True,
 }
 autoclass_content = "both"
-# autodoc_mock_imports = [package_name]
-autodoc_typehints = "signature"
+autodoc_typehints = "description"
 
 #
 # -- Options for intersphinx -----------------------------------------------------------
@@ -83,7 +88,7 @@ myst_heading_anchors = 2
 #
 # -- Options for HTML output -----------------------------------------------------------
 #
-html_baseurl = "https://epiweeks.readthedocs.io/en/stable/"
+html_baseurl = f"https://{project}.readthedocs.io/en/stable/"
 html_theme = "sphinx_rtd_theme"
 html_theme_options = {
     "collapse_navigation": False,

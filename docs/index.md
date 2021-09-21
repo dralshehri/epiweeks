@@ -2,7 +2,7 @@
 hide-toc: true
 ---
 
-# Epi Weeks
+# `epiweeks`
 
 :::{include} ../README.md
 :start-after: <!-- start description -->
