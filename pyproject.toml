@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.dev-dependencies]
+
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = ["tests/unit"]
+
+[tool.coverage.run]
+branch = true
+source = ["epiweeks"]
+
+[tool.coverage.paths]
+source = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ['py36', 'py37', 'py38', 'py39']
+
+[tool.isort]
+profile = "black"
+
+[tool.taskipy.tasks]
+test_all = "pytest tests"
+test_cov = "pytest --cov --cov-report=term-missing --cov-fail-under=100"
+test_cov_html = "pytest --cov --cov-report=term --cov-report=html"
+test = "task test_cov tests"
+lint_flake8 = "flake8 src tests"
+lint_mypy = "mypy src"
+lint_isort = "isort --check-only src tests"
+lint_black = "black --check --quiet src tests"
+lint = "task lint_flake8 && task lint_mypy && task lint_isort && task lint_black"
+format = "isort src tests docs && black src tests docs"
+docs = "sphinx-build -E docs docs/_build"
+update = "pip install -U -r .reqs/dev.txt"
