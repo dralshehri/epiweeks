@@ -1,6 +1,8 @@
-import pytest
-import epiweeks
 from datetime import date, timedelta
+
+import pytest
+
+import epiweeks
 
 
 @pytest.fixture(scope="module")
@@ -64,11 +66,15 @@ def test_week_containment(week_cdc, week_iso):
 @pytest.mark.parametrize(
     "test_input", ["__eq__", "__gt__", "__ge__", "__lt__", "__le__"]
 )
+def test_week_comparison_notimplemented(week_cdc, week_iso, test_input):
+    assert getattr(week_cdc, test_input)("w") == NotImplemented
+    assert getattr(week_iso, test_input)("w") == NotImplemented
+
+
+@pytest.mark.parametrize(
+    "test_input", ["__eq__", "__gt__", "__ge__", "__lt__", "__le__"]
+)
 def test_week_comparison_exception(week_cdc, week_iso, test_input):
-    with pytest.raises(TypeError) as e:
-        getattr(week_cdc, test_input)("w")
-        getattr(week_iso, test_input)("w")
-    assert str(e.value) == "Can't compare 'Week' to 'str'"
     with pytest.raises(TypeError) as e:
         getattr(week_cdc, test_input)(week_iso)
     assert (
