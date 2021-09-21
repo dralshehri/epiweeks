@@ -1,12 +1,14 @@
-import pytest
-import pathlib
 import json
-import epiweeks
+import pathlib
 from datetime import date
+
+import pytest
+
+import epiweeks
 
 
 def load_params_from_json(file):
-    json_file = pathlib.Path(__file__).parent.joinpath("data", file)
+    json_file = pathlib.Path(__file__).parent.joinpath("fixtures", file)
     content = json_file.read_text(encoding="utf-8")
     data = [[tuple(i) for i in x] for x in json.loads(content)]
     params = [tuple(x) for x in data]
