@@ -8,9 +8,13 @@ recommended by the Python Packaging Authority (PPA).
 
 ## Unreleased
 
-- Changed `Week` rich comparison to return `NotImplemented` when the second operand is not `Week` class.
+- Added `__version__` attribute to the package.
+- Changed `Week` rich comparison to return `NotImplemented` when the second operand
+  is not a `Week` object.
+- Changed the project structure by converting the`epiweeks` module into a package.
 - Updated packaging configuration files and local development workflow.
-- Other minor fixes and documentation enhancements.
+- Updated documentation structure and theme.
+- Other minor fixes and enhancements.
 
 ## 2.1.2 (2020-05-24)
 
