@@ -1,7 +1,13 @@
-from datetime import date, timedelta
-from typing import Iterator, Tuple
+"""Epidemiological weeks calculation based on the US CDC (MMWR) and ISO week
+numbering systems.
+
+https://github.com/dralshehri/epiweeks
+"""
 
 __version__ = "2.1.2"
+
+from datetime import date, timedelta
+from typing import Iterator, Tuple
 
 
 class Week:
