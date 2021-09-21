@@ -45,27 +45,34 @@ class Week:
     def __hash__(self) -> int:
         return hash((self._year, self._week, self._system))
 
-    def __eq__(self, other: "Week") -> bool:
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, self.__class__):
+            return NotImplemented
         return self._compare(other) == 0
 
-    def __gt__(self, other: "Week") -> bool:
+    def __gt__(self, other: object) -> bool:
+        if not isinstance(other, self.__class__):
+            return NotImplemented
         return self._compare(other) > 0
 
-    def __ge__(self, other: "Week") -> bool:
+    def __ge__(self, other: object) -> bool:
+        if not isinstance(other, self.__class__):
+            return NotImplemented
         return self._compare(other) >= 0
 
-    def __lt__(self, other: "Week") -> bool:
+    def __lt__(self, other: object) -> bool:
+        if not isinstance(other, self.__class__):
+            return NotImplemented
         return self._compare(other) < 0
 
-    def __le__(self, other: "Week") -> bool:
+    def __le__(self, other: object) -> bool:
+        if not isinstance(other, self.__class__):
+            return NotImplemented
         return self._compare(other) <= 0
 
     def _compare(self, other: "Week") -> int:
         """Compare two Week objects after checking if they are comparable."""
         class_name = self.__class__.__name__
-        other_name = type(other).__name__
-        if not isinstance(other, self.__class__):
-            raise TypeError(f"Can't compare '{class_name}' to '{other_name}'")
         if self._system != other._system:
             raise TypeError(
                 f"Can't compare '{class_name}' objects with different "
@@ -88,7 +95,9 @@ class Week:
 
     def __contains__(self, other: date) -> bool:
         if not isinstance(other, date):
-            raise TypeError(f"Tested operand must be 'datetime.date' object: {type(other).__name__}")
+            raise TypeError(
+                f"Tested operand must be 'datetime.date' object: {type(other).__name__}"
+            )
         return other in self.iterdates()
 
     @classmethod
