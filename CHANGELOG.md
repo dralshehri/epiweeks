@@ -6,7 +6,7 @@ recommended by the Python Packaging Authority (PPA).
 [semantic versioning]: https://packaging.python.org/guides/distributing-packages-using-setuptools/#semantic-versioning-preferred
 [pre-release versioning]: https://packaging.python.org/guides/distributing-packages-using-setuptools/#pre-release-versioning
 
-## Unreleased
+## 2.1.3 (2021-09-24)
 
 - Added `__version__` attribute to the package.
 - Changed `Week` rich comparison to return `NotImplemented` when the second operand
