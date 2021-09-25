@@ -7,10 +7,19 @@ import re
 import sys
 from pathlib import Path
 
+# Set package variables and add to path
 package_name = "epiweeks"
 package_path = Path("../src").joinpath(package_name).resolve()
-
 sys.path.append(str(package_path.parent))
+
+# Add custom extensions to path
+sys.path.append(str(Path("_extensions").resolve()))
+
+# -- Project information ---------------------------------------------------------------
+
+project = "epiweeks"  # project name at PyPI and GitHub
+author = "Mohd Alshehri (@dralshehri)"
+project_copyright = "2018 Mohd Alshehri (@dralshehri) and contributors"
 
 
 def read_version():
@@ -19,11 +28,6 @@ def read_version():
     return pattern.search(content).group()
 
 
-# -- Project information ---------------------------------------------------------------
-
-project = "epiweeks"  # project name at PyPI and GitHub
-author = "Mohd Alshehri (@dralshehri)"
-project_copyright = "2018 Mohd Alshehri (@dralshehri) and contributors"
 version = read_version()
 
 #
@@ -35,7 +39,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "myst_parser",
     "notfound.extension",
-    "sphinx_sitemap",
+    "custom_sitemap",
 ]
 
 exclude_patterns = ["manpage.*"]
@@ -74,7 +78,10 @@ notfound_urls_prefix = "/en/stable/"
 #
 # -- Options for sitemap ---------------------------------------------------------------
 #
-sitemap_url_scheme = "{link}"
+sitemap_excluded_pages = [
+    "contributing",
+    "license",
+]
 
 #
 # -- Options for Markdown files --------------------------------------------------------
@@ -101,7 +108,7 @@ html_logo = None
 html_favicon = None
 html_css_files = ["custom.css"]
 html_static_path = ["_static"]
-html_extra_path = ["robots.txt"]
+html_extra_path = ["_extra"]
 html_copy_source = False
 html_show_sourcelink = False
 html_show_sphinx = False

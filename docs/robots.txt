@@ -1,5 +1,0 @@
-User-agent: *
-
-Disallow: /en/latest/ # Hidden version
-
-Sitemap: https://epiweeks.readthedocs.io/en/stable/sitemap.xml
