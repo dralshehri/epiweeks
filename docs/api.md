@@ -1,10 +1,10 @@
 # API Reference
 
-This page contains auto-generated API reference documentation
-for the **epiweeks** package.
+This page contains auto-generated API reference documentation for the
+**epiweeks** package.
 
-:::{eval-rst}
+```{eval-rst}
 .. currentmodule:: epiweeks
 .. autoclass:: Week
 .. autoclass:: Year
-:::
+```
