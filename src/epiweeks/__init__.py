@@ -75,30 +75,39 @@ class Week:
     def _compare(self, other: "Week") -> int:
         """Compare two Week objects after checking if they are comparable."""
         class_name = self.__class__.__name__
-        if self._system != other._system:
+        if self._system != other.system:
             raise TypeError(
                 f"Can't compare '{class_name}' objects with different "
-                f"numbering systems: '{self._system}' and '{other._system}'"
+                f"numbering systems: '{self._system}' and '{other.system}'"
             )
-        x = self.weektuple()
-        y = other.weektuple()
-        return 0 if x == y else 1 if x > y else -1
+        self_week = self.weektuple()
+        other_week = other.weektuple()
+        return (
+            0
+            if self_week == other_week
+            else 1
+            if self_week > other_week
+            else -1
+        )
 
     def __add__(self, other: int) -> "Week":
         if not isinstance(other, int):
-            raise TypeError(f"Second operand must be 'int': {type(other).__name__}")
+            other_type = type(other).__name__
+            raise TypeError(f"Second operand must be 'int': {other_type}")
         new_date = self.startdate() + timedelta(weeks=other)
         return self.__class__.fromdate(new_date, self._system)
 
     def __sub__(self, other: int) -> "Week":
         if not isinstance(other, int):
-            raise TypeError(f"Second operand must be 'int': {type(other).__name__}")
+            other_type = type(other).__name__
+            raise TypeError(f"Second operand must be 'int': {other_type}")
         return self.__add__(-other)
 
     def __contains__(self, other: date) -> bool:
         if not isinstance(other, date):
+            other_type = type(other).__name__
             raise TypeError(
-                f"Tested operand must be 'datetime.date' object: {type(other).__name__}"
+                f"Tested operand must be 'datetime.date' object: {other_type}"
             )
         return other in self.iterdates()
 
