@@ -2,28 +2,29 @@
 
 <!-- start description -->
 
-A Python package to calculate epidemiological weeks using the US CDC (MMWR) and ISO week
-numbering systems.
+A Python package to calculate epidemiological weeks using the US CDC (MMWR) and
+ISO week numbering systems.
 
 <!-- end description -->
 
-[![Checks Status](https://img.shields.io/github/workflow/status/dralshehri/epiweeks/Checks/main?event=push&label=checks)][checks]
+[![Build Status](https://img.shields.io/github/workflow/status/mhalshehri/epiweeks/Release)][build]
 [![Coverage Status](https://img.shields.io/badge/coverage-100%25-success)][coverage]
-[![Code Quality](https://img.shields.io/codefactor/grade/github/dralshehri/epiweeks/main?&label=codefactor)][quality]
+[![Code Quality](https://img.shields.io/codefactor/grade/github/mhalshehri/epiweeks/main?&label=codefactor)][quality]
 [![Docs Status](https://img.shields.io/readthedocs/epiweeks/stable)][docs]
 [![PyPI Downloads](https://img.shields.io/pypi/dm/epiweeks?color=blue)][downloads]
 [![PyPI Version](https://img.shields.io/pypi/v/epiweeks)][pypi-version]
 [![Conda Version](https://img.shields.io/conda/vn/bioconda/epiweeks)][conda-version]
-[![Package License](https://img.shields.io/github/license/dralshehri/epiweeks)][license]
+[![Package License](https://img.shields.io/github/license/mhalshehri/epiweeks)][license]
 
-[checks]: https://github.com/dralshehri/epiweeks/actions/workflows/checks.yml
-[coverage]: https://github.com/dralshehri/epiweeks/actions/workflows/checks.yml
-[quality]: https://www.codefactor.io/repository/github/dralshehri/epiweeks/overview/main
+[build]: https://github.com/mhalshehri/epiweeks/actions/workflows/release.yml
+[coverage]: https://github.com/mhalshehri/epiweeks/actions/workflows/release.yml
+[quality]:
+  https://www.codefactor.io/repository/github/mhalshehri/epiweeks/overview/main
 [docs]: https://epiweeks.readthedocs.io
 [downloads]: https://pypistats.org/packages/epiweeks
 [pypi-version]: https://pypi.python.org/pypi/epiweeks
 [conda-version]: https://anaconda.org/bioconda/epiweeks
-[license]: https://github.com/dralshehri/epiweeks/blob/main/LICENSE
+[license]: https://github.com/mhalshehri/epiweeks/blob/main/LICENSE
 
 <!-- start summary -->
 
@@ -43,11 +44,13 @@ numbering systems.
 ## Installation
 
 To install using `pip`, run:
+
 ```shell
 pip install epiweeks
 ```
 
 To install using `conda`, run:
+
 ```shell
 conda install -c bioconda epiweeks
 ```
@@ -74,8 +77,8 @@ for week in Year(2019).iterweeks():
 
 ## Documentation
 
-Please see <https://epiweeks.readthedocs.io> for full documentation of this package,
-including background, more usage examples and API reference.
+Please see <https://epiweeks.readthedocs.io> for full documentation of this
+package, including background, more usage examples and API reference.
 
 ## License
 
