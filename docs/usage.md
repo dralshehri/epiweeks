@@ -4,30 +4,30 @@ hide-toc: true
 
 # Usage Examples
 
-:::{eval-rst}
+```{eval-rst}
 .. currentmodule:: epiweeks
-:::
+```
 
 To import the package:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> from epiweeks import Week, Year
-:::
+```
 
 ## Week Instance and Methods
 
-You can create an instance of {obj}`Week` object by only providing the year
-and week number:
+You can create an instance of {obj}`Week` object by only providing the year and
+week number:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> Week(2019, 1)
 Week(2019, 1, CDC)
-:::
- 
+```
+
 It is also possible to create an instance of {obj}`Week` object from a date,
 formatted string, or current date:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> from datetime import date
 >>> my_date = date(2018, 12, 30)
 >>> Week.fromdate(my_date)
@@ -38,12 +38,12 @@ Week(2019, 1, CDC)
 
 >>> Week.thisweek()
 Week(2019, 26, CDC)
-:::
+```
 
 By default, the US CDC system is assumed when creating the {obj}`Week` object
 instance. To use the ISO system instead:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> Week(2019, 1, system="iso")
 Week(2019, 1, ISO)
 
@@ -57,11 +57,11 @@ Week(2019, 1, ISO)
 
 >>> Week.thisweek(system="iso")
 Week(2019, 26, ISO)
-:::
+```
 
 The instance of {obj}`Week` object has also some other useful methods:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> week = Week(2019, 2)
 
 >>> week.weektuple()
@@ -84,42 +84,42 @@ datetime.date(2019, 1, 12)
 
 >>> week.daydate(3)  # Thursday
 datetime.date(2019, 1, 10)
-:::
+```
 
 ## Year Instance and Methods
 
-You can create an instance of {obj}`Year` object by only providing the year,
-or from current date:
+You can create an instance of {obj}`Year` object by only providing the year, or
+from current date:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> Year(2018)
 Year(2018, CDC)
 
 >>> Year.thisyear()
 Year(2019, CDC)
-:::
+```
 
 By default, the US CDC system is assumed when creating the {obj}`Year` object
 instance. To use the ISO system instead:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> Year(2018, system="iso")
 Year(2018, ISO)
 
 >>> Year.thisyear(system="iso")
 Year(2019, ISO)
-:::
+```
 
 To get a list of {obj}`Week` objects for all weeks of a year:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> list(Year(2019).iterweeks())
 [(Week(2019, 1, CDC), ..., Week(2019, 52, CDC))]
-:::
+```
 
 The instance of {obj}`Year` object has also some other useful methods:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> year = Year(2019)
 
 >>> year.totalweeks()
@@ -130,7 +130,7 @@ datetime.date(2018, 12, 30)
 
 >>> year.enddate()
 datetime.date(2019, 12, 28)
-:::
+```
 
 ## Generating Epidemiological Calendars
 
@@ -140,11 +140,11 @@ demonstrated in the following two examples.
 To generate a week endings calendar for a year as in
 [this document](https://wwwn.cdc.gov/nndss/document/W2018-19.pdf) by US CDC:
 
-:::{code-block} python
+```{code-block} python
 for week in Year(2018).iterweeks():
    day = week.enddate().day
    month_name = week.enddate().strftime("%b")
-   row = [
+    row = [
        week.week,
        day if day // 8 else " ".join([month_name, str(day)])
    ]
@@ -163,13 +163,13 @@ for week in Year(2018).iterweeks():
 # [50, 15]
 # [51, 22]
 # [52, 29]
-:::
+```
 
 To generate a full epidemiological calendar for a year as in
 [this document](https://www.paho.org/hq/dmdocuments/2016/2016-cha-epidemiological-calendar.pdf)
 by PAHO:
 
-:::{code-block} python
+```{code-block} python
 for week in Year(2016).iterweeks():
    row = [
        week.week,
@@ -192,19 +192,19 @@ for week in Year(2016).iterweeks():
 # [50, 'Dec', 11, 12, 13, 14, 15, 16, 17, 'Dec']
 # [51, 'Dec', 18, 19, 20, 21, 22, 23, 24, 'Dec']
 # [52, 'Dec', 25, 26, 27, 28, 29, 30, 31, 'Dec']
-:::
+```
 
 ## Rich Comparison and Logical Operations
 
-Rich comparison (==, !=, >, >=, <, <=) between {obj}`Week` objects is
-supported. Adding or subtracting (+, -) an integer to/from a {obj}`Week` object
-is also supported and results in a new {obj}`Week` with that number of weeks
-added or subtracted. Containment operator (in) allows testing membership of a
-{obj}`datetime.date` to the {obj}`Week` object. Using these operators with
-an unexpected type of object raises a `TypeError` exception that can be
-caught and handled in `try` and `except` blocks:
+Rich comparison (==, !=, >, >=, <, <=) between {obj}`Week` objects is supported.
+Adding or subtracting (+, -) an integer to/from a {obj}`Week` object is also
+supported and results in a new {obj}`Week` with that number of weeks added or
+subtracted. Containment operator (in) allows testing membership of a
+{obj}`datetime.date` to the {obj}`Week` object. Using these operators with an
+unexpected type of object raises a `TypeError` exception that can be caught and
+handled in `try` and `except` blocks:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> week1 = Week(2019, 1)
 >>> week2 = Week(2018, 52)
 
@@ -226,15 +226,15 @@ Traceback (most recent call last):
 ...
 ...
 TypeError: Can't compare 'Week' to 'str'
-:::
+```
 
 ## Validation of Input data
 
 Input values validation is enabled by default ({obj}`Week` validation can be
-disabled to improve performance). Invalid values raises `ValueError`
-exception that can be caught and handled in `try` and `except` blocks:
+disabled to improve performance). Invalid values raises `ValueError` exception
+that can be caught and handled in `try` and `except` blocks:
 
-:::{code-block} pycon
+```{code-block} pycon
 >>> Week(2018, 53)
 Traceback (most recent call last):
 ...
@@ -252,4 +252,4 @@ Traceback (most recent call last):
 ...
 ...
 ValueError: Year must be in 1..9999: 22019
-:::
+```
