@@ -1,7 +1,7 @@
 """Epidemiological weeks calculation based on the US CDC (MMWR) and ISO week
 numbering systems.
 
-https://github.com/dralshehri/epiweeks
+https://github.com/mhalshehri/epiweeks
 """
 
 __version__ = "2.1.3"
@@ -19,15 +19,13 @@ class Week:
         self, year: int, week: int, system: str = "cdc", validate: bool = True
     ):
         """
-        :param year: Epidemiological year.
-        :type year: int
-        :param week: Epidemiological week.
-        :type week: int
-        :param system: Week numbering system, which may be ``cdc`` where the
-            week starts on Sunday or ``iso`` where the week starts on Monday.
-        :type system: str
-        :param validate: Whether to validate year, week and system or not.
-        :type validate: bool
+        Args:
+            year: Epidemiological year.
+            week: Epidemiological week.
+            system: Week numbering system, which may be ``cdc`` where the
+                week starts on Sunday or ``iso`` where the week starts on
+                Monday.
+            validate: Whether to validate year, week and system or not.
         """
 
         if validate:
@@ -108,12 +106,11 @@ class Week:
     def fromdate(cls, date_object: date, system: str = "cdc") -> "Week":
         """Construct Week object from a date.
 
-        :param date_object: Python date object.
-        :type date_object: datetime.date
-        :param system: Week numbering system, which may be ``cdc`` where the
-            week starts on Sunday or ``iso`` where the week starts on Monday.
-        :type system: str
-        :rtype: Week
+        Args:
+            date_object: Python date object.
+            system: Week numbering system, which may be ``cdc`` where the
+                week starts on Sunday or ``iso`` where the week starts on
+                Monday.
         """
 
         _check_system(system)
@@ -139,16 +136,14 @@ class Week:
     ) -> "Week":
         """Construct Week object from a formatted string.
 
-        :param week_string: Week string formatted as ``YYYYww``, ``YYYYWww``,
-            or ``YYYY-Www``. If the string ends with weekday as in ISO formats,
-            weekday will be ignored.
-        :type week_string: str
-        :param system: Week numbering system, which may be ``cdc`` where the
-            week starts on Sunday or ``iso`` where the week starts on Monday.
-        :type system: str
-        :param validate: Whether to validate year, week and system or not.
-        :type validate: bool
-        :rtype: Week
+        Args:
+            week_string: Week string formatted as ``YYYYww``, ``YYYYWww``,
+                or ``YYYY-Www``. If the string ends with weekday as in ISO
+                formats, weekday will be ignored.
+            system: Week numbering system, which may be ``cdc`` where the
+                week starts on Sunday or ``iso`` where the week starts on
+                Monday.
+            validate: Whether to validate year, week and system or not.
         """
 
         week_string = week_string.replace("-", "").replace("W", "")
@@ -160,10 +155,10 @@ class Week:
     def thisweek(cls, system: str = "cdc") -> "Week":
         """Construct Week object from current date.
 
-        :param system: Week numbering system, which may be ``cdc`` where the
-            week starts on Sunday or ``iso`` where the week starts on Monday.
-        :type system: str
-        :rtype: Week
+        Args:
+            system: Week numbering system, which may be ``cdc`` where the
+                week starts on Sunday or ``iso`` where the week starts on
+                Monday.
         """
 
         return cls.fromdate(date.today(), system)
@@ -192,7 +187,9 @@ class Week:
         return f"{self._year:04}{self._week:02}"
 
     def isoformat(self) -> str:
-        """Return a string representing the week in ISO compact format ``YYYYWww``."""
+        """Return a string representing the week in ISO compact format
+        ``YYYYWww``.
+        """
         return f"{self._year:04}W{self._week:02}"
 
     def startdate(self) -> date:
@@ -216,9 +213,9 @@ class Week:
     def daydate(self, weekday: int = 6) -> date:
         """Return date for specific weekday of week.
 
-        :param weekday: Week day, which may be ``0..6`` where Monday is 0 and
-            Sunday is 6.
-        :type weekday: int
+        Args:
+            weekday: Week day, which may be ``0..6`` where Monday is 0 and
+                Sunday is 6.
         """
 
         diff = (_system_adjustment(self._system) + weekday) % 7
@@ -232,11 +229,11 @@ class Year:
 
     def __init__(self, year: int, system: str = "cdc"):
         """
-        :param year: Epidemiological year.
-        :type year: int
-        :param system: Week numbering system, which may be ``cdc`` where the
-            week starts on Sunday or ``iso`` where the week starts on Monday.
-        :type system: str
+        Args:
+            year: Epidemiological year.
+            system: Week numbering system, which may be ``cdc`` where the
+                week starts on Sunday or ``iso`` where the week starts on
+                Monday.
         """
 
         _check_year(year)
@@ -258,10 +255,10 @@ class Year:
     def thisyear(cls, system: str = "cdc") -> "Year":
         """Construct Year object from current date.
 
-        :param system: Week numbering system, which may be ``cdc`` where the
-            week starts on Sunday or ``iso`` where the week starts on Monday.
-        :type system: str
-        :rtype: Year
+        Args:
+            system: Week numbering system, which may be ``cdc`` where the
+                week starts on Sunday or ``iso`` where the week starts on
+                Monday.
         """
 
         return cls(date.today().year, system)
