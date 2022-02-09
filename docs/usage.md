@@ -237,10 +237,10 @@ Week(2019, 4, CDC)
 >>> date(2019, 1, 2) in week1
 True
 
->>> week1 == "2019W01"
+>>> week1 > "2019W01"
 Traceback (most recent call last):
     ...
-TypeError: "Can't compare 'Week' to 'str'"
+TypeError: '>' not supported between instances of 'Week' and 'str'
 ```
 
 ## Validation of Input data
@@ -255,15 +255,15 @@ that can be caught and handled in `try` and `except` blocks:
 >>> Week(2018, 53)
 Traceback (most recent call last):
     ...
-ValueError: Week must be in 1..52 for year: 53
+ValueError: Week must be in 1..52 for year
 
 >>> Week.fromstring("2019W01", system="mmwr")
 Traceback (most recent call last):
     ...
-ValueError: "System must be in ('cdc', 'iso'): 'mmwr'"
+ValueError: System must be in ('cdc', 'iso')
 
 >>> Year(22019)
 Traceback (most recent call last):
     ...
-ValueError: "Year must be in 1..9999: 22019"
+ValueError: Year must be in 1..9999
 ```
