@@ -78,7 +78,7 @@ def test_week_comparison_exception(week_cdc, week_iso, test_input):
     with pytest.raises(TypeError) as e:
         getattr(week_cdc, test_input)(week_iso)
     assert (
-        str(e.value) == "Can't compare 'Week' objects with different "
+        str(e.value) == "Can not compare 'Week' objects with different "
         "numbering systems: 'CDC' and 'ISO'"
     )
 
@@ -311,7 +311,7 @@ def test_check_invalid_week():
     with pytest.raises(ValueError) as e:
         for w in [0, 53]:
             epiweeks._check_week(2015, w, system="cdc")
-            assert str(e.value) == f"Week must be in 1..52 for year: {w}"
+            assert str(e.value) == "Week must be in 1..52 for year"
 
 
 def test_check_valid_year():
@@ -325,7 +325,7 @@ def test_check_invalid_year():
     with pytest.raises(ValueError) as e:
         for y in [0, 20155]:
             epiweeks._check_year(y)
-            assert str(e.value) == f"Year must be in 1..9999: {y}"
+            assert str(e.value) == f"Year must be in 1..9999"
 
 
 def test_check_valid_system():
@@ -341,7 +341,7 @@ def test_check_valid_system():
 def test_check_invalid_system():
     with pytest.raises(ValueError) as e:
         epiweeks._check_system("mmwr")
-    assert str(e.value) == "System must be in ('cdc', 'iso'): 'mmwr'"
+    assert str(e.value) == "System must be in ('cdc', 'iso')"
 
 
 @pytest.mark.parametrize("test_input, expected", [("cdc", 1), ("iso", 0)])
