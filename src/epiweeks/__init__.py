@@ -77,7 +77,7 @@ class Week:
         class_name = self.__class__.__name__
         if self._system != other.system:
             raise TypeError(
-                f"Can't compare '{class_name}' objects with different "
+                f"Can not compare '{class_name}' objects with different "
                 f"numbering systems: '{self._system}' and '{other.system}'"
             )
         self_week = self.weektuple()
@@ -304,22 +304,23 @@ class Year:
 
 def _check_year(year: int) -> None:
     """Check value of year."""
-    if not 1 <= year <= 9999:
-        raise ValueError(f"Year must be in 1..9999: {year}")
+    max_years = 9999
+    if not 1 <= year <= max_years:
+        raise ValueError(f"Year must be in 1..{max_years}")
 
 
 def _check_week(year: int, week: int, system: str) -> None:
     """Check value of week."""
-    weeks = _year_total_weeks(year, system)
-    if not 1 <= week <= weeks:
-        raise ValueError(f"Week must be in 1..{weeks} for year: {week}")
+    max_weeks = _year_total_weeks(year, system)
+    if not 1 <= week <= max_weeks:
+        raise ValueError(f"Week must be in 1..{max_weeks} for year")
 
 
 def _check_system(system: str) -> None:
     """Check value of week numbering system."""
     systems = ("cdc", "iso")
     if system.lower() not in systems:
-        raise ValueError(f"System must be in {systems}: '{system}'")
+        raise ValueError(f"System must be in {systems}")
 
 
 def _system_adjustment(system: str) -> int:
