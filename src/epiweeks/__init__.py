@@ -26,6 +26,11 @@ class Week:
                 week starts on Sunday or ``iso`` where the week starts on
                 Monday.
             validate: Whether to validate year, week and system or not.
+
+        Raises:
+            ValueError: When ``year`` is out of supported range.
+            ValueError: When ``week`` is out of weeks range for year.
+            ValueError: When ``system`` is not within supported systems.
         """
 
         if validate:
@@ -243,6 +248,10 @@ class Year:
             system: Week numbering system, which may be ``cdc`` where the
                 week starts on Sunday or ``iso`` where the week starts on
                 Monday.
+
+        Raises:
+            ValueError: When ``year`` is out of supported range.
+            ValueError: When ``system`` is not within supported systems.
         """
 
         _check_year(year)
