@@ -8,8 +8,12 @@ schemes recommended by the Python Packaging Authority (PPA).
 [pre-release versioning]:
   https://packaging.python.org/guides/distributing-packages-using-setuptools/#pre-release-versioning
 
-[semantic versioning]: https://packaging.python.org/guides/distributing-packages-using-setuptools/#semantic-versioning-preferred
-[pre-release versioning]: https://packaging.python.org/guides/distributing-packages-using-setuptools/#pre-release-versioning
+## 2.1.4 (2022-02-12)
+
+- Changed GitHub username to @mhalshehri and updated related links.
+- Changed package docstrings to Google style and updated documentation.
+- Updated development workflows and configurations.
+- Other minor fixes and enhancements.
 
 ## 2.1.3 (2021-09-24)
 
