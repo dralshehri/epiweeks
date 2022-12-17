@@ -7,7 +7,7 @@ ISO week numbering systems.
 
 <!-- end description -->
 
-[![Build Status](https://img.shields.io/github/workflow/status/mhalshehri/epiweeks/Release)][build]
+[![Release Status](https://img.shields.io/github/actions/workflow/status/mhalshehri/epiweeks/release.yml?branch=v2.1.4&label=release)][release]
 [![Coverage Status](https://img.shields.io/badge/coverage-100%25-success)][coverage]
 [![Code Quality](https://img.shields.io/codefactor/grade/github/mhalshehri/epiweeks/main?&label=codefactor)][quality]
 [![Docs Status](https://img.shields.io/readthedocs/epiweeks/stable)][docs]
@@ -16,7 +16,7 @@ ISO week numbering systems.
 [![Conda Version](https://img.shields.io/conda/vn/bioconda/epiweeks)][conda-version]
 [![Package License](https://img.shields.io/github/license/mhalshehri/epiweeks)][license]
 
-[build]: https://github.com/mhalshehri/epiweeks/actions/workflows/release.yml
+[release]: https://github.com/mhalshehri/epiweeks/actions/workflows/release.yml
 [coverage]: https://github.com/mhalshehri/epiweeks/actions/workflows/release.yml
 [quality]:
   https://www.codefactor.io/repository/github/mhalshehri/epiweeks/overview/main
