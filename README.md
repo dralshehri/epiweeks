@@ -7,6 +7,8 @@ ISO week numbering systems.
 
 <!-- end description -->
 
+<!-- start badges -->
+
 [![Release Status](https://img.shields.io/github/actions/workflow/status/mhalshehri/epiweeks/release.yml?branch=v2.1.4&label=release)][release]
 [![Coverage Status](https://img.shields.io/badge/coverage-100%25-success)][coverage]
 [![Code Quality](https://img.shields.io/codefactor/grade/github/mhalshehri/epiweeks/main?&label=codefactor)][quality]
@@ -25,6 +27,8 @@ ISO week numbering systems.
 [pypi-version]: https://pypi.python.org/pypi/epiweeks
 [conda-version]: https://anaconda.org/bioconda/epiweeks
 [license]: https://github.com/mhalshehri/epiweeks/blob/main/LICENSE
+
+<!-- end badges -->
 
 <!-- start summary -->
 
