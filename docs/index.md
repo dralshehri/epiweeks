@@ -30,6 +30,6 @@ changelog
 
 contributing
 license
-GitHub <https://github.com/mhalshehri/epiweeks>
+GitHub <https://github.com/dralshehri/epiweeks>
 PyPI <https://pypi.org/project/epiweeks>
 ```

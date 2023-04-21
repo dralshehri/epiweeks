@@ -1,7 +1,7 @@
 """Epidemiological weeks calculation based on the US CDC (MMWR) and ISO week
 numbering systems.
 
-https://github.com/mhalshehri/epiweeks
+https://github.com/dralshehri/epiweeks
 """
 
 __version__ = "2.1.4"

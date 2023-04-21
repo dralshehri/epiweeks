@@ -9,24 +9,24 @@ ISO week numbering systems.
 
 <!-- start badges -->
 
-[![Release Status](https://img.shields.io/github/actions/workflow/status/mhalshehri/epiweeks/release.yml?branch=v2.1.4&label=release)][release]
+[![Release Status](https://img.shields.io/github/actions/workflow/status/dralshehri/epiweeks/release.yml?branch=v2.1.4&label=release)][release]
 [![Coverage Status](https://img.shields.io/badge/coverage-100%25-success)][coverage]
-[![Code Quality](https://img.shields.io/codefactor/grade/github/mhalshehri/epiweeks/main?&label=codefactor)][quality]
+[![Code Quality](https://img.shields.io/codefactor/grade/github/dralshehri/epiweeks/main?&label=codefactor)][quality]
 [![Docs Status](https://img.shields.io/readthedocs/epiweeks/stable)][docs]
 [![PyPI Downloads](https://img.shields.io/pypi/dm/epiweeks?color=blue)][downloads]
 [![PyPI Version](https://img.shields.io/pypi/v/epiweeks)][pypi-version]
 [![Conda Version](https://img.shields.io/conda/vn/bioconda/epiweeks)][conda-version]
-[![Package License](https://img.shields.io/github/license/mhalshehri/epiweeks)][license]
+[![Package License](https://img.shields.io/github/license/dralshehri/epiweeks)][license]
 
-[release]: https://github.com/mhalshehri/epiweeks/actions/workflows/release.yml
-[coverage]: https://github.com/mhalshehri/epiweeks/actions/workflows/release.yml
+[release]: https://github.com/dralshehri/epiweeks/actions/workflows/release.yml
+[coverage]: https://github.com/dralshehri/epiweeks/actions/workflows/release.yml
 [quality]:
-  https://www.codefactor.io/repository/github/mhalshehri/epiweeks/overview/main
+  https://www.codefactor.io/repository/github/dralshehri/epiweeks/overview/main
 [docs]: https://epiweeks.readthedocs.io
 [downloads]: https://pypistats.org/packages/epiweeks
 [pypi-version]: https://pypi.python.org/pypi/epiweeks
 [conda-version]: https://anaconda.org/bioconda/epiweeks
-[license]: https://github.com/mhalshehri/epiweeks/blob/main/LICENSE
+[license]: https://github.com/dralshehri/epiweeks/blob/main/LICENSE
 
 <!-- end badges -->
 
