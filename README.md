@@ -9,7 +9,7 @@ ISO week numbering systems.
 
 <!-- start badges -->
 
-[![Release Status](https://img.shields.io/github/actions/workflow/status/dralshehri/epiweeks/release.yml?branch=v2.1.4&label=release)][release]
+[![Release Status](https://img.shields.io/github/actions/workflow/status/dralshehri/epiweeks/release.yml?label=release)][release]
 [![Coverage Status](https://img.shields.io/badge/coverage-100%25-success)][coverage]
 [![Code Quality](https://img.shields.io/codefactor/grade/github/dralshehri/epiweeks/main?&label=codefactor)][quality]
 [![Docs Status](https://img.shields.io/readthedocs/epiweeks/stable)][docs]
