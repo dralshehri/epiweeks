@@ -4,7 +4,7 @@ numbering systems.
 https://github.com/dralshehri/epiweeks
 """
 
-__version__ = "2.1.4"
+__version__ = "2.2.0"
 
 from datetime import date, timedelta
 from typing import Iterator, Tuple

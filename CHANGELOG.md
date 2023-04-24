@@ -4,7 +4,7 @@ The versioning scheme is compliant with the [PEP 440] specification.
 
 [PEP 440]: https://peps.python.org/pep-0440/#public-version-identifiers
 
-## Unreleased
+## 2.2.0 (2023-04-24)
 
 - Dropped support for Python 3.6 and added support for Python 3.11.
 - Fixed location of type-checking marker file.
