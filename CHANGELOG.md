@@ -1,19 +1,24 @@
 # Changelog
 
-The format is based on [semantic versioning] and [pre-release versioning]
-schemes recommended by the Python Packaging Authority (PPA).
+The versioning scheme is compliant with the [PEP 440] specification.
 
-[semantic versioning]:
-  https://packaging.python.org/guides/distributing-packages-using-setuptools/#semantic-versioning-preferred
-[pre-release versioning]:
-  https://packaging.python.org/guides/distributing-packages-using-setuptools/#pre-release-versioning
+[PEP 440]: https://peps.python.org/pep-0440/#public-version-identifiers
+
+## Unreleased
+
+- Dropped support for Python 3.6 and added support for Python 3.11.
+- Fixed location of type-checking marker file.
+- Added more classifiers to package configuration.
+- Updated documentation and removed badges from the package description.
+- Updated development configurations and GitHub actions.
+- Changed GitHub username back to @dralshehri and updated related links.
 
 ## 2.1.4 (2022-02-12)
 
-- Changed GitHub username to @mhalshehri and updated related links.
 - Changed package docstrings to Google style and updated documentation.
 - Updated development workflows and configurations.
 - Other minor fixes and enhancements.
+- Changed GitHub username to @mhalshehri and updated related links.
 
 ## 2.1.3 (2021-09-24)
 
