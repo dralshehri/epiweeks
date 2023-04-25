@@ -1,7 +1,7 @@
 # API Reference
 
 This page contains auto-generated API reference documentation for the
-**epiweeks** package.
+**EpiWeeks** package.
 
 ```{eval-rst}
 .. currentmodule:: epiweeks

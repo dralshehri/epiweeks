@@ -1,4 +1,4 @@
-# epiweeks
+# EpiWeeks
 
 <!-- start description -->
 
