@@ -42,7 +42,7 @@ ISO week numbering systems.
 - Rich comparison between weeks.
 - Logical operations for weeks (addition, subtraction and containment).
 - Validation of input data.
-- Works on Python 3.7+ with zero dependencies.
+- Works on Python 3.8+ with zero dependencies.
 - Thoroughly tested with 100% test coverage.
 
 ## Installation
