@@ -6,7 +6,16 @@ This project follows [PEP 440](https://peps.python.org/pep-0440/) semantic versi
 - **MINOR** (e.g., `2.3.0` → `2.4.0`) — New features that are backward compatible
 - **PATCH** (e.g., `2.3.0` → `2.3.1`) — Bug fixes and small improvements
 
-[PEP 440]: https://peps.python.org/pep-0440/#public-version-identifiers
+## Unreleased
+
+- Dropped support for Python 3.8 and 3.9, and added support for Python 3.13 and 3.14
+- Extended reference test data to cover weeks 2007-2025
+- Moved package version to project metadata
+- Changed the `validate` argument to be a keyword-only argument
+- Changed type hints to modern syntax
+- Changed copyright notice to a simplified format
+- Updated documentation theme and structure
+- Updated development tools and workflows
 
 ## 2.3.0 (2023-12-18)
 
