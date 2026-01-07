@@ -124,6 +124,7 @@ class Week:
                 Monday.
         """
         _check_system(system)
+        min_weeks_per_year = 52
         year = date_object.year
         date_ordinal = date_object.toordinal()
         year_start_ordinal = _year_start(year, system)
@@ -132,7 +133,7 @@ class Week:
             year -= 1
             year_start_ordinal = _year_start(year, system)
             week = (date_ordinal - year_start_ordinal) // 7
-        elif week >= 52:
+        elif week >= min_weeks_per_year:
             year_start_ordinal = _year_start(year + 1, system)
             if date_ordinal >= year_start_ordinal:
                 year += 1
