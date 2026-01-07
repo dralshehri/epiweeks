@@ -81,10 +81,11 @@ class Week:
         """Compare two Week objects after checking if they are comparable."""
         class_name = self.__class__.__name__
         if self._system != other.system:
-            raise TypeError(
+            message = (
                 f"Can not compare '{class_name}' objects with different "
                 f"numbering systems: '{self._system}' and '{other.system}'"
             )
+            raise TypeError(message)
         self_week = self.weektuple()
         other_week = other.weektuple()
         return (
@@ -98,22 +99,23 @@ class Week:
     def __add__(self, other: int) -> "Week":
         if not isinstance(other, int):
             other_type = type(other).__name__
-            raise TypeError(f"Second operand must be 'int': {other_type}")
+            message = f"Second operand must be 'int': {other_type}"
+            raise TypeError(message)
         new_date = self.startdate() + timedelta(weeks=other)
         return self.__class__.fromdate(new_date, self._system)
 
     def __sub__(self, other: int) -> "Week":
         if not isinstance(other, int):
             other_type = type(other).__name__
-            raise TypeError(f"Second operand must be 'int': {other_type}")
+            message = f"Second operand must be 'int': {other_type}"
+            raise TypeError(message)
         return self.__add__(-other)
 
     def __contains__(self, other: date) -> bool:
         if not isinstance(other, date):
             other_type = type(other).__name__
-            raise TypeError(
-                f"Tested operand must be 'datetime.date' object: {other_type}"
-            )
+            message = f"Tested operand must be 'datetime.date' object: {other_type}"
+            raise TypeError(message)
         return other in self.iterdates()
 
     @classmethod
@@ -308,21 +310,24 @@ def _check_year(year: int) -> None:
     """Check value of year."""
     max_years = 9999
     if not 1 <= year <= max_years:
-        raise ValueError(f"Year must be in 1..{max_years}")
+        message = f"Year must be in 1..{max_years}"
+        raise ValueError(message)
 
 
 def _check_week(year: int, week: int, system: str) -> None:
     """Check value of week."""
     max_weeks = _year_total_weeks(year, system)
     if not 1 <= week <= max_weeks:
-        raise ValueError(f"Week must be in 1..{max_weeks} for year")
+        message = f"Week must be in 1..{max_weeks} for year"
+        raise ValueError(message)
 
 
 def _check_system(system: str) -> None:
     """Check value of week numbering system."""
     systems = ("cdc", "iso")
     if system.lower() not in systems:
-        raise ValueError(f"System must be in {systems}")
+        message = f"System must be in {systems}"
+        raise ValueError(message)
 
 
 def _system_adjustment(system: str) -> int:
