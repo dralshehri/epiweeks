@@ -21,8 +21,8 @@ keywords:
   - calendar
   - surveillance
   - public health
-version: 2.3.0
-date-released: 2023-12-18
+version: 2.4.0
+date-released: 2026-01-07
 license: MIT
 doi: 10.5281/zenodo.18171641
 repository-code: 'https://github.com/dralshehri/epiweeks'
