@@ -17,7 +17,7 @@ class Week:
     __slots__ = "_system", "_week", "_year"
 
     def __init__(
-        self, year: int, week: int, system: str = "cdc", validate: bool = True
+        self, year: int, week: int, system: str = "cdc", *, validate: bool = True
     ):
         """Initialize Week object.
 
@@ -142,7 +142,7 @@ class Week:
 
     @classmethod
     def fromstring(
-        cls, week_string: str, system: str = "cdc", validate: bool = True
+        cls, week_string: str, system: str = "cdc", *, validate: bool = True
     ) -> "Week":
         """Construct Week object from a formatted string.
 
@@ -158,7 +158,7 @@ class Week:
         week_string = week_string.replace("-", "").replace("W", "")
         year = int(week_string[0:4])
         week = int(week_string[4:6])
-        return cls(year, week, system, validate)
+        return cls(year, week, system, validate=validate)
 
     @classmethod
     def thisweek(cls, system: str = "cdc") -> "Week":
