@@ -1,5 +1,6 @@
-"""Epidemiological weeks calculation based on the US CDC (MMWR) and ISO week
-numbering systems.
+"""Epidemiological weeks calculation.
+
+Based on the US CDC (MMWR) and ISO week numbering systems.
 
 https://github.com/dralshehri/epiweeks
 """
@@ -17,7 +18,8 @@ class Week:
     def __init__(
         self, year: int, week: int, system: str = "cdc", validate: bool = True
     ):
-        """
+        """Initialize Week object.
+
         Args:
             year: Epidemiological year.
             week: Epidemiological week.
@@ -31,7 +33,6 @@ class Week:
             ValueError: When ``week`` is out of weeks range for year.
             ValueError: When ``system`` is not within supported systems.
         """
-
         if validate:
             _check_year(year)
             _check_system(system)
@@ -125,7 +126,6 @@ class Week:
                 week starts on Sunday or ``iso`` where the week starts on
                 Monday.
         """
-
         _check_system(system)
         year = date_object.year
         date_ordinal = date_object.toordinal()
@@ -158,7 +158,6 @@ class Week:
                 Monday.
             validate: Whether to validate year, week and system or not.
         """
-
         week_string = week_string.replace("-", "").replace("W", "")
         year = int(week_string[0:4])
         week = int(week_string[4:6])
@@ -173,22 +172,21 @@ class Week:
                 week starts on Sunday or ``iso`` where the week starts on
                 Monday.
         """
-
         return cls.fromdate(date.today(), system)
 
     @property
     def year(self) -> int:
-        """Return year as an integer"""
+        """Return year as an integer."""
         return self._year
 
     @property
     def week(self) -> int:
-        """Return week number as an integer"""
+        """Return week number as an integer."""
         return self._week
 
     @property
     def system(self) -> str:
-        """Return week numbering system as a string"""
+        """Return week numbering system as a string."""
         return self._system
 
     def weektuple(self) -> Tuple[int, int]:
@@ -200,9 +198,7 @@ class Week:
         return f"{self._year:04}{self._week:02}"
 
     def isoformat(self) -> str:
-        """Return a string representing the week in ISO compact format
-        ``YYYYWww``.
-        """
+        """Return a string representing the week in ISO compact format ``YYYYWww``."""
         return f"{self._year:04}W{self._week:02}"
 
     def startdate(self) -> date:
@@ -230,7 +226,6 @@ class Week:
             weekday: Week day, which may be ``0..6`` where Monday is 0 and
                 Sunday is 6.
         """
-
         diff = (_system_adjustment(self._system) + weekday) % 7
         return self.startdate() + timedelta(days=diff)
 
@@ -241,7 +236,8 @@ class Year:
     __slots__ = "_year", "_system"
 
     def __init__(self, year: int, system: str = "cdc"):
-        """
+        """Initialize Year object.
+
         Args:
             year: Epidemiological year.
             system: Week numbering system, which may be ``cdc`` where the
@@ -252,7 +248,6 @@ class Year:
             ValueError: When ``year`` is out of supported range.
             ValueError: When ``system`` is not within supported systems.
         """
-
         _check_year(year)
         _check_system(system)
         self._year = year
@@ -277,17 +272,16 @@ class Year:
                 week starts on Sunday or ``iso`` where the week starts on
                 Monday.
         """
-
         return cls(date.today().year, system)
 
     @property
     def year(self) -> int:
-        """Return year as an integer"""
+        """Return year as an integer."""
         return self._year
 
     @property
     def system(self) -> str:
-        """Return week numbering system as a string"""
+        """Return week numbering system as a string."""
         return self._system
 
     def totalweeks(self) -> int:
