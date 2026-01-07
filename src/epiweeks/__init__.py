@@ -10,10 +10,11 @@ from datetime import date, timedelta
 
 __all__ = ["Week", "Year"]
 
+
 class Week:
     """A Week object represents a week in epidemiological week calendar."""
 
-    __slots__ = "_year", "_week", "_system"
+    __slots__ = "_system", "_week", "_year"
 
     def __init__(
         self, year: int, week: int, system: str = "cdc", validate: bool = True
@@ -88,13 +89,7 @@ class Week:
             raise TypeError(message)
         self_week = self.weektuple()
         other_week = other.weektuple()
-        return (
-            0
-            if self_week == other_week
-            else 1
-            if self_week > other_week
-            else -1
-        )
+        return 0 if self_week == other_week else 1 if self_week > other_week else -1
 
     def __add__(self, other: int) -> "Week":
         if not isinstance(other, int):
@@ -235,7 +230,7 @@ class Week:
 class Year:
     """A Year object represents a year in epidemiological week calendar."""
 
-    __slots__ = "_year", "_system"
+    __slots__ = "_system", "_year"
 
     def __init__(self, year: int, system: str = "cdc"):
         """Initialize Year object.
