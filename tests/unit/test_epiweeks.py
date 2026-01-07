@@ -84,22 +84,20 @@ def test_week_comparison_exception(week_cdc, week_iso, test_input):
 
 
 @pytest.mark.parametrize(
-    "test_input, expected",
+    ("test_input", "expected"),
     [
         ("__add__", "Second operand must be 'int'"),
         ("__sub__", "Second operand must be 'int'"),
         ("__contains__", "Tested operand must be 'datetime.date' object"),
     ],
 )
-def test_week_operator_exception(week_cdc, week_iso, test_input, expected):
-    with pytest.raises(TypeError) as e:
+def test_week_operator_exception(week_cdc, test_input, expected):
+    with pytest.raises(TypeError, match=f"{expected}: {str.__name__}"):
         getattr(week_cdc, test_input)("w")
-        getattr(week_iso, test_input)("w")
-    assert str(e.value) == f"{expected}: {type('w').__name__}"
 
 
 @pytest.mark.parametrize(
-    "test_input, expected",
+    ("test_input", "expected"),
     [
         ((date(2014, 12, 28), "cdc"), (2014, 53)),
         ((date(2014, 12, 28), "iso"), (2014, 52)),
@@ -117,7 +115,7 @@ def test_week_fromdate(test_input, expected):
 
 
 @pytest.mark.parametrize(
-    "test_input, expected",
+    ("test_input", "expected"),
     [
         (("201453", "cdc"), (2014, 53)),
         (("201607", "cdc"), (2016, 7)),
@@ -307,11 +305,10 @@ def test_check_valid_week():
         pytest.fail("Week should be valid")
 
 
-def test_check_invalid_week():
-    with pytest.raises(ValueError) as e:
-        for w in [0, 53]:
-            epiweeks._check_week(2015, w, system="cdc")
-            assert str(e.value) == "Week must be in 1..52 for year"
+@pytest.mark.parametrize("week", [0, 53])
+def test_check_invalid_week(week):
+    with pytest.raises(ValueError, match=r"Week must be in 1\.\.52 for year"):
+        epiweeks._check_week(2015, week, system="cdc")
 
 
 def test_check_valid_year():
@@ -321,11 +318,10 @@ def test_check_valid_year():
         pytest.fail("Year should be valid")
 
 
-def test_check_invalid_year():
-    with pytest.raises(ValueError) as e:
-        for y in [0, 20155]:
-            epiweeks._check_year(y)
-            assert str(e.value) == f"Year must be in 1..9999"
+@pytest.mark.parametrize("year", [0, 20155])
+def test_check_invalid_year(year):
+    with pytest.raises(ValueError, match=r"Year must be in 1\.\.9999"):
+        epiweeks._check_year(year)
 
 
 def test_check_valid_system():
@@ -339,25 +335,24 @@ def test_check_valid_system():
 
 
 def test_check_invalid_system():
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r"System must be in \('cdc', 'iso'\)"):
         epiweeks._check_system("mmwr")
-    assert str(e.value) == "System must be in ('cdc', 'iso')"
 
 
-@pytest.mark.parametrize("test_input, expected", [("cdc", 1), ("iso", 0)])
+@pytest.mark.parametrize(("test_input", "expected"), [("cdc", 1), ("iso", 0)])
 def test_system_adjustment(test_input, expected):
     assert epiweeks._system_adjustment(test_input) == expected
 
 
 @pytest.mark.parametrize(
-    "test_input, expected", [((2015, "cdc"), 735602), ((2015, "iso"), 735596)]
+    ("test_input", "expected"), [((2015, "cdc"), 735602), ((2015, "iso"), 735596)]
 )
 def test_year_start_ordinal(test_input, expected):
     assert epiweeks._year_start(*test_input) == expected
 
 
 @pytest.mark.parametrize(
-    "test_input, expected", [((2015, "cdc"), 52), ((2015, "iso"), 53)]
+    ("test_input", "expected"), [((2015, "cdc"), 52), ((2015, "iso"), 53)]
 )
 def test_year_total_weeks(test_input, expected):
     assert epiweeks._year_total_weeks(*test_input) == expected
