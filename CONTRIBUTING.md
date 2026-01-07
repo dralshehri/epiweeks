@@ -1,76 +1,93 @@
 # Contributing
 
-Any contribution is welcome, and it's much appreciated! Every little helps, and
-a credit will always be given.
+Thank you for your interest in contributing to EpiWeeks! We welcome all types of contributions, from questions to code changes.
 
-## Reporting Issues
+## Quick Start
 
-An issue may be a simple comment, question, feature request, or bug report. When
-[reporting an issue], please make sure to provide enough information to
-understand it.
+```bash
+# 1. Fork the repository on GitHub
+# 2. Clone your fork locally
+git clone https://github.com/YOUR_USERNAME/epiweeks.git
+cd epiweeks
 
-[reporting an issue]: https://github.com/dralshehri/epiweeks/issues/new
+# 3. Set up development environment
+uv sync
 
-## Changing Code
-
-You may want to make some changes to the project codebase. For example, to fix a
-bug, to add a new feature, or to update documentation. You can do so by
-following these simple steps:
-
-1. Fork the [project repository] on GitHub.
-2. Clone your fork to your local machine.
-3. Add the [project repository] as the "upstream" remote.
-4. Create a new branch from the `develop` branch.
-5. Make your changes, format code, and run tests.
-6. Pull the latest changes from upstream.
-7. Commit and push your changes to your fork.
-8. Create a pull request on GitHub and select the `develop` base branch.
-
-[project repository]: https://github.com/dralshehri/epiweeks
-
-## Developing Locally
-
-The following are some commands you may need to use when coding on a local
-machine. It's assumed that you have already created and activated a **virtual
-environment** with Python 3.10 or newer.
-
-### Preparing for development:
-
-The project and development dependencies can be installed using:
-
-```shell
-pip install -r requirements-dev.txt && pip install -e .
+# 4. Run tests to make sure everything works
+uv run pytest --cov
 ```
 
-### Formatting code:
+## How to Contribute
 
-After changing code, run the formatter to ensure consistency:
+### 🐛 Bug Reports
 
-```shell
-task format
+- Check [Issues](https://github.com/dralshehri/epiweeks/issues) for existing reports
+- Create a new issue with:
+  - Version number
+  - Steps to reproduce
+  - Expected vs actual behavior
+  - Your operating system
+
+### 💻 Code Changes
+
+1. **Prerequisites**: [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
+2. **Setup**: Fork the repo and run `uv sync` to install dependencies
+3. **Before committing**: Run these commands to ensure your changes pass all checks:
+   ```bash
+   uv run ruff format          # Format code
+   uv run ruff check --fix     # Fix linting issues
+   uv run mypy                 # Check types
+   uv run pytest --cov         # Run tests with coverage
+   ```
+4. **Submit**: Push to your fork and create a pull request
+
+## Development Commands
+
+```bash
+# Setup
+uv sync                       # Install dependencies
+
+# Code quality
+uv run ruff format            # Format code
+uv run ruff check --fix       # Fix linting issues
+uv run mypy                   # Type checking
+
+# Testing
+uv run pytest                # Run all tests
+uv run pytest --cov          # Run tests with coverage report
+
+# Documentation
+uv run sphinx-build -E docs docs/_build  # Build docs
+
+# Build
+uv build                     # Build distribution packages
 ```
 
-### Running tests and quality checks:
+## Maintainers Only
 
-Before committing changes, make sure to pass all tests and quality checks:
+### Changelog
 
-```shell
-task test
-task lint
+Add `## Unreleased` section to `CHANGELOG.md` when there are unreleased changes. The release script replaces it with the version number.
+
+### Updating Dependencies
+
+To update all development dependencies to their latest versions:
+
+```bash
+uv sync --upgrade
 ```
 
-## Compiling documentation:
+### Releasing
 
-To build and browse documentation locally, run:
+To create a new release, ensure you're on the `main` branch with all changes committed and synced with the remote:
 
-```shell
-pip install -r docs/requirements.txt
-sphinx-build -E docs docs/_build
+```bash
+bash release.sh <major|minor|patch>
 ```
-
-The resulting HTML can be found in `docs/_build`
 
 ## Need Help?
 
-Don't let anything discourage you from making the pull request. I can help you!
-Just go ahead and submit the pull request.
+- Review the [GitHub documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests) on forking and pull requests
+- Check existing [issues](https://github.com/dralshehri/epiweeks/issues)
+
+We appreciate your contribution! 🎉
