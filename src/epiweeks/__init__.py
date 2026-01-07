@@ -8,6 +8,7 @@ https://github.com/dralshehri/epiweeks
 from collections.abc import Iterator
 from datetime import date, timedelta
 
+__all__ = ["Week", "Year"]
 
 class Week:
     """A Week object represents a week in epidemiological week calendar."""
