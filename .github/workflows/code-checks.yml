@@ -1,0 +1,141 @@
+name: Code Checks
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
+
+concurrency:
+  group: '${{ github.workflow }}-${{ github.event.pull_request && github.head_ref || github.ref_name }}'
+  cancel-in-progress: true
+
+jobs:
+  analysis:
+    name: Static analysis
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: '.python-version'
+
+      - name: Check style
+        run: |
+          uv run --group dev --locked ruff format --check
+          uv run --group dev --locked ruff check
+
+      - name: Check typing
+        if: ${{ !cancelled() }}
+        run: uv run --group dev --locked mypy
+
+  tests:
+    name: Python ${{ matrix.python-version }} test
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run tests with coverage
+        run: uv run --group dev --locked coverage run -m pytest
+
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-data-${{ matrix.python-version }}
+          path: '.coverage.*'
+          include-hidden-files: true
+          compression-level: 0
+          if-no-files-found: error
+
+  coverage:
+    name: Code coverage
+    if: ${{ !cancelled() }}
+    needs: tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: '.python-version'
+
+      - name: Download coverage data
+        uses: actions/download-artifact@v7
+        with:
+          pattern: 'coverage-data-*'
+          merge-multiple: true
+
+      - name: Generate coverage report
+        run: |
+          uv run --group dev --locked coverage combine
+          uv run --group dev --locked coverage report
+
+      - name: Print coverage report
+        run: uv run --group dev --locked coverage report --format=markdown | grep '^|' >> $GITHUB_STEP_SUMMARY
+
+      - name: Clean up coverage data
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            try {
+              const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+                owner,
+                repo,
+                run_id: context.runId,
+              });
+              const artifactIds = artifacts.data.artifacts
+                .filter(artifact => artifact.name.startsWith('coverage-data-'))
+                .map(artifact => artifact.id);
+              for (const artifact_id of artifactIds) {
+                await github.rest.actions.deleteArtifact({ owner, repo, artifact_id });
+              }
+            } catch (error) {
+              core.setFailed(error.message);
+            }

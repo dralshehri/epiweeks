@@ -1,0 +1,91 @@
+name: Draft Preparation
+run-name: Draft ${{ github.ref_name }} on GitHub
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  validation:
+    name: Version validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Get release information
+        env:
+          COMMIT_TIMESTAMP: ${{ github.event.head_commit.timestamp }}
+        run: |
+          echo "GIT_VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+          echo "PY_VERSION=$(grep '^version' pyproject.toml | awk -F '"' '{print $2}')" >> $GITHUB_ENV
+          echo "MD_VERSION=$(grep -m 1 '##' CHANGELOG.md | awk -F ' ' '{print $2}')" >> $GITHUB_ENV
+          echo "CF_VERSION=$(grep '^version' CITATION.cff | awk '{print $2}')" >> $GITHUB_ENV
+          echo "GIT_DATE=${COMMIT_TIMESTAMP%T*}" >> $GITHUB_ENV
+          echo "MD_DATE=$(grep -m 1 '##' CHANGELOG.md | awk -F ' - ' '{print $2}')" >> $GITHUB_ENV
+          echo "CF_DATE=$(grep 'date-released' CITATION.cff | awk '{print $2}')" >> $GITHUB_ENV
+
+      - name: Validate release version
+        if: ${{ !cancelled() }}
+        run: |
+          {
+            [[ "$GIT_VERSION" == "$PY_VERSION" ]] &&
+            [[ "$GIT_VERSION" == "$MD_VERSION" ]] &&
+            [[ "$GIT_VERSION" == "$CF_VERSION" ]]
+          } || exit 1
+
+      - name: Validate release date
+        if: ${{ !cancelled() }}
+        run: |
+          {
+            [[ "$GIT_DATE" == "$MD_DATE" ]] &&
+            [[ "$GIT_DATE" == "$CF_DATE" ]]
+          } || exit 1
+
+  draft:
+    name: Draft preparation
+    needs: validation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Prepare release title
+        run: |
+          echo "RELEASE_TITLE=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+
+      - name: Prepare release content
+        run: |
+          {
+            echo 'RELEASE_CONTENT<<EOF'
+            cat CHANGELOG.md |
+            sed -n '/^## '"${GITHUB_REF_NAME#v}"'/,/^## /p' |
+            sed '1,2d;$d' |
+            sed '1i ## What'\''s Changed\n' |
+            sed -r 's/\[([^\[]+)\]\(([^)]*github.com[^)]+)\)/\1/g'
+            echo 'EOF'
+          } >> $GITHUB_ENV
+
+      - name: Create draft release
+        id: draft-release
+        uses: actions/github-script@v8
+        with:
+          script: |
+            try {
+              const response = await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: process.env.GITHUB_REF_NAME,
+                name: process.env.RELEASE_TITLE,
+                body: process.env.RELEASE_CONTENT,
+                draft: true,
+              });
+              const editUrl = response.data.html_url.replace('/tag/', '/edit/');
+              return editUrl;
+            } catch (error) {
+              core.setFailed(error.message);
+            }
+
+      - name: Output draft release info
+        run: echo "${{ steps.draft-release.outputs.result }}" >> $GITHUB_STEP_SUMMARY

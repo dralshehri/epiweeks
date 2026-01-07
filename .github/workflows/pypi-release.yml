@@ -1,0 +1,98 @@
+name: PyPI Release
+run-name: Release ${{ github.ref_name }} on PyPI
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  checks:
+    name: Code checks
+    uses: ./.github/workflows/code-checks.yml
+
+  build:
+    name: Distribution build
+    needs: checks
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: '.python-version'
+
+      - name: Build distributions
+        run: uv build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ github.event.repository.name }}-dist
+          path: 'dist'
+
+  release:
+    name: PyPI release
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ github.event.repository.name }}-dist
+          path: 'dist'
+          merge-multiple: true
+
+      - name: Attach artifacts to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for file in dist/*; do
+            gh release upload ${{ github.ref_name }} "$file"
+          done
+
+      - name: Publish build distributions
+        id: pypi
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Output new version URL
+        run: |
+          url="https://pypi.org/project/${GITHUB_REPOSITORY#*/}/${GITHUB_REF_NAME#v}/"
+          echo "$(echo "$url")" >> $GITHUB_STEP_SUMMARY
+
+  cleanup:
+    name: Workflows cleanup
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Clean up draft runs
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            try {
+              const runs = await github.rest.actions.listWorkflowRuns({
+                owner,
+                repo,
+                workflow_id: 'draft-prep.yml',
+                status: 'completed',
+              });
+              const runIds = runs.data.workflow_runs.map(run => run.id);
+              for (const run_id of runIds) {
+                await github.rest.actions.deleteWorkflowRun({ owner, repo, run_id });
+              }
+            } catch (error) {
+              core.setFailed(error.message);
+            }
