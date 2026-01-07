@@ -87,3 +87,7 @@ package, including background, more usage examples and API reference.
 ## License
 
 This project is licensed under the terms of the MIT license.
+
+## 📝 Citation
+
+If you plan to cite this project in your academic publication, please refer to <https://doi.org/10.5281/zenodo.18171641> for citation information.

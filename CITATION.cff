@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: 'If you use this software, please cite it using the metadata from this file.'
+type: software
+title: 'EpiWeeks: A Python package for epidemiological weeks calculation'
+authors:
+  - given-names: Mohammed H
+    family-names: Alshehri
+    orcid: 'https://orcid.org/0000-0001-5852-3363'
+abstract: >-
+  EpiWeeks is a Python package for accurate epidemiological weeks calculation using
+  the US CDC (MMWR) and ISO week numbering systems. Validated against CDC reference
+  data, it provides reliable week calculations for disease surveillance, public health
+  reporting, and epidemiological research. The package features comprehensive type
+  safety, optimized performance, and zero dependencies.
+keywords:
+  - epidemiology
+  - epiweek
+  - cdc
+  - iso
+  - mmwr
+  - calendar
+  - surveillance
+  - public health
+version: 2.3.0
+date-released: 2023-12-18
+license: MIT
+doi: 10.5281/zenodo.18171641
+repository-code: 'https://github.com/dralshehri/epiweeks'
