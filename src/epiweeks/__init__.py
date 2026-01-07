@@ -5,9 +5,8 @@ Based on the US CDC (MMWR) and ISO week numbering systems.
 https://github.com/dralshehri/epiweeks
 """
 
-
+from collections.abc import Iterator
 from datetime import date, timedelta
-from typing import Iterator, Tuple
 
 
 class Week:
@@ -191,7 +190,7 @@ class Week:
         """Return week numbering system as a string."""
         return self._system
 
-    def weektuple(self) -> Tuple[int, int]:
+    def weektuple(self) -> tuple[int, int]:
         """Return week as a tuple of (year, week)."""
         return self._year, self._week
 
