@@ -54,7 +54,7 @@ pip install epiweeks
 To install using `conda`, run:
 
 ```shell
-conda install -c bioconda epiweeks
+conda install bioconda::epiweeks
 ```
 
 ## 🚀 Basic Usage
