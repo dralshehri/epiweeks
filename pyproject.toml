@@ -1,7 +1,7 @@
 [project]
 name = "epiweeks"
 version = "2.4.0"
-description = "Epidemiological weeks calculation based on CDC and ISO week numbering systems"
+description = "Epidemiological weeks calculation based on CDC (MMWR) and ISO week numbering systems"
 dynamic = ["readme"]
 authors = [{ name = "Mohammed Alshehri" }]
 requires-python = ">=3.10"
