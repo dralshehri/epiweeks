@@ -7,11 +7,11 @@ authors:
     family-names: Alshehri
     orcid: 'https://orcid.org/0000-0001-5852-3363'
 abstract: >-
-  EpiWeeks is a Python package for accurate epidemiological weeks calculation using
-  the US CDC (MMWR) and ISO week numbering systems. Validated against CDC reference
-  data, it provides reliable week calculations for disease surveillance, public health
-  reporting, and epidemiological research. The package features comprehensive type
-  safety, optimized performance, and zero dependencies.
+  EpiWeeks is a Python package for accurate epidemiological weeks calculation using the
+  US CDC (MMWR) and ISO week numbering systems. Validated against CDC reference data, it
+  provides reliable week calculations for disease surveillance, public health reporting,
+  and epidemiological research. The package features comprehensive type safety,
+  optimized performance, and zero dependencies.
 keywords:
   - epidemiology
   - epiweek

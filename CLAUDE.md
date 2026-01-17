@@ -7,15 +7,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 A Python package for accurate epidemiological weeks calculation using the US CDC (MMWR) and ISO week numbering systems.
 
 ### Core Structure
+
 - **`src/epiweeks/`** - Main package code
   - `__init__.py` - Contains `Week` and `Year` classes with week calculation logic
 
 ### Key Classes
+
 - **`Week`** - Represents a week in CDC (MMWR) or ISO week numbering system
 - **`Year`** - Represents a year for epidemiological week calculations
 - Both classes provide methods for week iteration, date ranges, and arithmetic operations
 
 ### Limitations
+
 - **Week Systems**: Only supports CDC (MMWR) and ISO week systems
 - **Date Range**: Limited by Python's `datetime.date` range
 
@@ -24,6 +27,7 @@ A Python package for accurate epidemiological weeks calculation using the US CDC
 The project uses `uv` as the package manager. Run `uv sync` to set up the environment.
 
 ### Commands
+
 ```bash
 uv run ruff format       # Format code
 uv run ruff check --fix  # Lint code
@@ -32,6 +36,7 @@ uv run pytest --cov      # Test with coverage
 ```
 
 ### Testing Structure
+
 - `tests/unit/` - Unit tests for individual modules
 - `tests/integration/` - Integration tests against reference data
 - Fixtures in `tests/integration/fixtures/` contain verified CDC reference calendars

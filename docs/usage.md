@@ -10,8 +10,7 @@ hide-toc: true
 
 ## Week Instance and Methods
 
-You can create an instance of {obj}`Week` object by only providing the year and
-week number:
+You can create an instance of {obj}`Week` object by only providing the year and week number:
 
 ```pycon
 >>> from epiweeks import Week
@@ -20,8 +19,7 @@ week number:
 Week(2019, 1, CDC)
 ```
 
-It is also possible to create an instance of {obj}`Week` object from a date,
-formatted string, or current date:
+It is also possible to create an instance of {obj}`Week` object from a date, formatted string, or current date:
 
 ```pycon
 >>> from datetime import date
@@ -38,8 +36,7 @@ Week(2019, 1, CDC)
 Week(2019, 26, CDC)
 ```
 
-By default, the US CDC system is assumed when creating the {obj}`Week` object
-instance. To use the ISO system instead:
+By default, the US CDC system is assumed when creating the {obj}`Week` object instance. To use the ISO system instead:
 
 ```pycon
 >>> from epiweeks import Week
@@ -90,8 +87,7 @@ datetime.date(2019, 1, 10)
 
 ## Year Instance and Methods
 
-You can create an instance of {obj}`Year` object by only providing the year, or
-from current date:
+You can create an instance of {obj}`Year` object by only providing the year, or from current date:
 
 ```pycon
 >>> from epiweeks import Year
@@ -103,8 +99,7 @@ Year(2018, CDC)
 Year(2019, CDC)
 ```
 
-By default, the US CDC system is assumed when creating the {obj}`Year` object
-instance. To use the ISO system instead:
+By default, the US CDC system is assumed when creating the {obj}`Year` object instance. To use the ISO system instead:
 
 ```pycon
 >>> from epiweeks import Year
@@ -144,11 +139,9 @@ datetime.date(2019, 12, 28)
 
 ## Generating Epidemiological Calendars
 
-The epidemiological calendar can be easily generated using this package as
-demonstrated in the following two examples.
+The epidemiological calendar can be easily generated using this package as demonstrated in the following two examples.
 
-To generate a week endings calendar for a year as in
-[this document](https://wwwn.cdc.gov/nndss/document/W2018-19.pdf) by US CDC:
+To generate a week endings calendar for a year as in [this document](https://wwwn.cdc.gov/nndss/document/W2018-19.pdf) by US CDC:
 
 ```python
 from epiweeks import Year
@@ -177,9 +170,7 @@ for week in Year(2018).iterweeks():
 # [52, 29]
 ```
 
-To generate a full epidemiological calendar for a year as in
-[this document](https://www.paho.org/hq/dmdocuments/2016/2016-cha-epidemiological-calendar.pdf)
-by PAHO:
+To generate a full epidemiological calendar for a year as in [this document](https://www.paho.org/hq/dmdocuments/2016/2016-cha-epidemiological-calendar.pdf) by PAHO:
 
 ```python
 from epiweeks import Year
@@ -210,13 +201,7 @@ for week in Year(2016).iterweeks():
 
 ## Rich Comparison and Logical Operations
 
-Rich comparison (==, !=, >, >=, <, <=) between {obj}`Week` objects is supported.
-Adding or subtracting (+, -) an integer to/from a {obj}`Week` object is also
-supported and results in a new {obj}`Week` with that number of weeks added or
-subtracted. Containment operator (in) allows testing membership of a
-{obj}`datetime.date` to the {obj}`Week` object. Using these operators with an
-unexpected type of object raises a `TypeError` exception that can be caught and
-handled in `try` and `except` blocks:
+Rich comparison (==, !=, >, >=, <, <=) between {obj}`Week` objects is supported. Adding or subtracting (+, -) an integer to/from a {obj}`Week` object is also supported and results in a new {obj}`Week` with that number of weeks added or subtracted. Containment operator (in) allows testing membership of a {obj}`datetime.date` to the {obj}`Week` object. Using these operators with an unexpected type of object raises a `TypeError` exception that can be caught and handled in `try` and `except` blocks:
 
 ```pycon
 >>> from datetime import date
@@ -245,9 +230,7 @@ TypeError: '>' not supported between instances of 'Week' and 'str'
 
 ## Validation of Input data
 
-Input values validation is enabled by default ({obj}`Week` validation can be
-disabled to improve performance). Invalid values raises `ValueError` exception
-that can be caught and handled in `try` and `except` blocks:
+Input values validation is enabled by default ({obj}`Week` validation can be disabled to improve performance). Invalid values raises `ValueError` exception that can be caught and handled in `try` and `except` blocks:
 
 ```pycon
 >>> from epiweeks import Week, Year
